@@ -65,6 +65,7 @@ namespace XLabs.Forms.Controls
                 e.PropertyName == IconLabel.TextProperty.PropertyName ||
                 e.PropertyName == IconLabel.IconColorProperty.PropertyName ||
                 e.PropertyName == IconLabel.TextColorProperty.PropertyName ||
+                e.PropertyName == IconLabel.BackgroundColorProperty.PropertyName ||
                 e.PropertyName == IconLabel.IsVisibleProperty.PropertyName ||
                 e.PropertyName == IconLabel.IconSizeProperty.PropertyName ||
                 e.PropertyName == IconLabel.FontSizeProperty.PropertyName ||

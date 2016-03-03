@@ -39,6 +39,15 @@ namespace XLabs.Sample.Pages.Controls
 
 
             };
+            btn1.Clicked += (s, arg) =>
+              {
+                  if (btn1.BackgroundColor == Color.Gray)
+                      btn1.BackgroundColor = Color.Red;
+                  else
+                      btn1.BackgroundColor = Color.Gray;
+  
+
+              };
 
             IconButton btn2 = new IconButton()
             {

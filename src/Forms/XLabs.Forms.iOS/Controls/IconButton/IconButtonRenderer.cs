@@ -190,8 +190,14 @@ namespace XLabs.Forms.Controls
 
             // Only update the text if the icon or button text changes
             if (e.PropertyName == IconButton.IconProperty.PropertyName ||
-                e.PropertyName == IconButton.TextProperty.PropertyName ||
-                e.PropertyName == IconButton.IsEnabledProperty.PropertyName)
+               e.PropertyName == IconButton.TextProperty.PropertyName ||
+               e.PropertyName == IconButton.IconColorProperty.PropertyName ||
+               e.PropertyName == IconButton.TextColorProperty.PropertyName ||
+               e.PropertyName == IconButton.BackgroundColorProperty.PropertyName ||
+               e.PropertyName == IconButton.IsVisibleProperty.PropertyName ||
+               e.PropertyName == IconButton.IconSizeProperty.PropertyName ||
+               e.PropertyName == IconButton.FontSizeProperty.PropertyName ||
+               e.PropertyName == IconButton.OrientationProperty.PropertyName)
             {
                 var sourceButton = Element as IconButton;
                 if (sourceButton != null && sourceButton.Icon != null)
