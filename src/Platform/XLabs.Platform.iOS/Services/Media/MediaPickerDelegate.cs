@@ -368,8 +368,11 @@ namespace XLabs.Platform.Services.Media
 			{
 				image = (UIImage)info[UIImagePickerController.OriginalImage];
 			}
+            //Get exif reader according to the platform
 
-			var path = GetOutputPath(
+            NSUrl assetURL = (NSUrl)info[UIImagePickerController.ReferenceUrl];
+            IJpegInfo jinfo = new JpegInfo(assetURL);
+            var path = GetOutputPath(
 				MediaPicker.TypeImage,
 				_options.Directory ?? ((IsCaptured) ? String.Empty : "temp"),
 				_options.Name);
@@ -387,7 +390,7 @@ namespace XLabs.Platform.Services.Media
 				dispose = d => File.Delete(path);
 			}
 
-			return new MediaFile(path, () => File.OpenRead(path), dispose);
+			return new MediaFile(path,jinfo, () => File.OpenRead(path), dispose);
 		}
 
 		/// <summary>

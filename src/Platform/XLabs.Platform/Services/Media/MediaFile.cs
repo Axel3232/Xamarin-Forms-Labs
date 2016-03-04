@@ -60,19 +60,34 @@ namespace XLabs.Platform.Services.Media
 		/// Initializes a new instance of the <see cref="MediaFile" /> class.
 		/// </summary>
 		/// <param name="path">The path.</param>
+        /// <param name="jpegInfo">Exif metadata extracted from the image</param>
 		/// <param name="streamGetter">The stream getter.</param>
 		/// <param name="dispose">The dispose.</param>
-		public MediaFile(string path, Func<Stream> streamGetter, Action<bool> dispose = null)
+		public MediaFile(string path, IJpegInfo jpegInfo, Func<Stream> streamGetter, Action<bool> dispose = null)
 		{
 			_dispose = dispose;
 			_streamGetter = streamGetter;
 			_path = path;
-		}
+            _ExifTags = jpegInfo;
+        }
 
-		/// <summary>
-		/// Finalizes an instance of the <see cref="MediaFile" /> class.
+        /// <summary>
+		/// Initializes a new instance of the <see cref="MediaFile" /> class.
 		/// </summary>
-		~MediaFile()
+		/// <param name="path">The path.</param>
+		/// <param name="streamGetter">The stream getter.</param>
+		/// <param name="dispose">The dispose.</param>
+		public MediaFile(string path, Func<Stream> streamGetter, Action<bool> dispose = null)
+        {
+            _dispose = dispose;
+            _streamGetter = streamGetter;
+            _path = path;
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="MediaFile" /> class.
+        /// </summary>
+        ~MediaFile()
 		{
 			Dispose(false);
 		}
@@ -118,35 +133,31 @@ namespace XLabs.Platform.Services.Media
 			}
 		}
 
-		/// <summary>
-		/// Gets the exif.
-		/// </summary>
-		/// <value>The exif.</value>
-		/// <exception cref="System.ObjectDisposedException">null</exception>
-		public JpegInfo Exif
-		{
-			get
-			{
-				if (_isDisposed)
-				{
-					throw new ObjectDisposedException(null);
-				}
+        private IJpegInfo _ExifTags;
+        /// <summary>
+        /// Property containing all available Exif tags.
+        /// </summary>
+        public IJpegInfo ExifTags
+        {
+            get
+            {
+                if (_isDisposed)
+                {
 
-				var result = ExifReader.ReadJpeg(Source);
+                    throw new ObjectDisposedException(null);
+                }
 
-				Source.Seek(0, SeekOrigin.Begin);
+                return _ExifTags;
+            }
+        }
+        #endregion Public Properties
 
-				return result;
-			}
-		}
-		#endregion Public Properties
+        #region Public Methods
 
-		#region Public Methods
-
-		/// <summary>
-		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-		/// </summary>
-		public void Dispose()
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);

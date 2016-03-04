@@ -72,13 +72,14 @@ namespace XLabs.Sample.ViewModel
 
 		private string _status;
 
+        private IJpegInfo _exifInfo;
 
-		////private CancellationTokenSource cancelSource;
+        ////private CancellationTokenSource cancelSource;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CameraViewModel" /> class.
-		/// </summary>
-		public CameraViewModel()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CameraViewModel" /> class.
+        /// </summary>
+        public CameraViewModel()
 		{
 			Setup();
 		}
@@ -115,11 +116,27 @@ namespace XLabs.Sample.ViewModel
 			}
 		}
 
-		/// <summary>
-		/// Gets the take picture command.
-		/// </summary>
-		/// <value>The take picture command.</value>
-		public Command TakePictureCommand 
+        /// <summary>
+        /// Gets or sets the video info.
+        /// </summary>
+        /// <value>The video info.</value>
+        public IJpegInfo ExifInfo
+        {
+            get
+            {
+                return _exifInfo;
+            }
+            set
+            {
+                SetProperty(ref _exifInfo, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the take picture command.
+        /// </summary>
+        /// <value>The take picture command.</value>
+        public Command TakePictureCommand 
 		{
 			get
 			{
@@ -235,7 +252,9 @@ namespace XLabs.Sample.ViewModel
 						MaxPixelDimension = 400
 					});
 				ImageSource = ImageSource.FromStream(() => mediaFile.Source);
-			}
+
+                ExifInfo = mediaFile.ExifTags;
+            }
 			catch (System.Exception ex)
 			{
 				Status = ex.Message;
