@@ -20,6 +20,7 @@
 // 
 
 using System;
+using XLabs.Platform.Services.GeoLocation;
 
 namespace XLabs.Platform.Services.Geolocation
 {
@@ -39,7 +40,7 @@ namespace XLabs.Platform.Services.Geolocation
 		/// <param name="a">Location a</param>
 		/// <param name="b">Location b</param>
 		/// <returns>The <see cref="System.Double" />The distance in meters</returns>
-		public static double DistanceFrom(this Position a, Position b)
+		public static double DistanceFrom(this Location a, Location b)
 		{
 			/*
 			double distance = Math.Acos(
@@ -63,7 +64,7 @@ namespace XLabs.Platform.Services.Geolocation
 		/// <param name="start">Start coordinates.</param>
 		/// <param name="stop">Stop coordinates.</param>
 		/// <returns>The <see cref="System.Double" />.</returns>
-		public static double BearingFrom(this Position start, Position stop)
+		public static double BearingFrom(this Location start, Location stop)
 		{
 			var deltaLon = stop.Longitude - start.Longitude;
 			var cosStop = Math.Cos(stop.Latitude);

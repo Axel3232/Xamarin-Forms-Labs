@@ -83,6 +83,14 @@ namespace XLabs.Platform.Services.Media
 		Front
 	}
 
+    public enum SaveMediaOnCaptureTarget
+    {
+       
+        Local = 1,
+        DefaultLibrary = 2,
+        LocalAndDefaultLibrary = 3
+    }
+
 	/// <summary>
 	///     Class CameraMediaStorageOptions.
 	/// </summary>
@@ -93,8 +101,11 @@ namespace XLabs.Platform.Services.Media
 		/// </summary>
 		public CameraMediaStorageOptions()
 		{
-			SaveMediaOnCapture = true;
-		}
+            SaveMediaOnCapture = true;
+            SaveCopyInDefaultLibraryOnCapture = false;
+            GetGpsPosition = false;
+
+        }
 
 		/// <summary>
 		///     Gets or sets the default camera.
@@ -107,7 +118,17 @@ namespace XLabs.Platform.Services.Media
 		/// </summary>
 		/// <value><c>true</c> if [save media on capture]; otherwise, <c>false</c>.</value>
 		public bool SaveMediaOnCapture { get; set; }
-	}
+        /// <summary>
+		///     Gets or sets a value indicating whether to save a copy of the captured picture un default device piture gallery.
+		/// </summary>
+		/// <value><c>true</c> if [save media on capture]; otherwise, <c>false</c>.</value>
+		public bool SaveCopyInDefaultLibraryOnCapture { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether to record GPS position in the photo metadata 
+        /// </summary>
+        public bool GetGpsPosition { get; set; }
+
+    }
 
 	#endregion Camera Options
 

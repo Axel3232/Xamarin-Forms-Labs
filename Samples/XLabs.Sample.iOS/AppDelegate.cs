@@ -34,6 +34,8 @@ using XLabs.Platform.Services;
 using XLabs.Platform.Services.Email;
 using XLabs.Platform.Services.Media;
 using XLabs.Serialization;
+using XLabs.Platform.Services.GeoLocation;
+using XLabs.Platform.Services.Geolocation;
 
 namespace XLabs.Sample.iOS
 {
@@ -120,6 +122,7 @@ namespace XLabs.Sample.iOS
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage, SecureStorage>()
                 .Register<IDependencyContainer>(t => resolverContainer)
+                .Register<ILocationManager, LocationManager>()
                 .Register<ICacheProvider>(
                     t => new SQLiteSimpleCache(new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS(),
                         new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));

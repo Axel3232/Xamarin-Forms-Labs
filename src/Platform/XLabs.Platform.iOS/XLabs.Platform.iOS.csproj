@@ -59,6 +59,7 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\NSArrayExtensions.cs" />
     <Compile Include="Extensions\NSDataStream.cs" />
+    <Compile Include="Extensions\NSDateExtensions.cs" />
     <Compile Include="Extensions\NSObjectExtension.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UIViewExtensions.cs" />
@@ -69,7 +70,9 @@
     <Compile Include="Services\Email\EmailService.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleUpdateDelegate.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Geolocation\LocationManager.cs" />
     <Compile Include="Services\Media\ExifAssetsCatalogReader.cs" />
+    <Compile Include="Services\Media\ExifNSDictionnaryReader.cs" />
     <Compile Include="Services\Media\ExifPhotoKitReader.cs" />
     <Compile Include="Services\Media\ExifReaderBase.cs" />
     <Compile Include="Services\Media\JpegInfo.cs" />

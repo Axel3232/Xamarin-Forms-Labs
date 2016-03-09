@@ -212,7 +212,7 @@ namespace XLabs.Sample.ViewModel
 
 			ImageSource = null;
 
-			return await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400 }).ContinueWith(t =>
+			return await _mediaPicker.TakePhotoAsync(new CameraMediaStorageOptions { DefaultCamera = CameraDevice.Front, MaxPixelDimension = 400, GetGpsPosition = true, SaveCopyInDefaultLibraryOnCapture=true }).ContinueWith(t =>
 			{
 				if (t.IsFaulted)
 				{

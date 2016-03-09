@@ -22,6 +22,7 @@
 using System;
 using System.Globalization;
 using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.GeoLocation;
 
 namespace XLabs.Platform
 {
@@ -35,7 +36,7 @@ namespace XLabs.Platform
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>Uri.</returns>
-        public static Uri ToUri(this Position position)
+        public static Uri ToUri(this Location position)
         {
             return new Uri(string.Format(new CultureInfo("en-US"), "geo:{0},{1}", position.Latitude, position.Longitude));
         }
@@ -45,7 +46,7 @@ namespace XLabs.Platform
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>Uri.</returns>
-        public static Uri ToBingMaps(this Position position)
+        public static Uri ToBingMaps(this Location position)
         {
             return new Uri(string.Format(new CultureInfo("en-US"), "http://www.bing.com/maps/?q={0},{1}", position.Latitude, position.Longitude));
             //return new Uri(string.Format(new CultureInfo("en-US"), "maps:{0} {1}", position.Latitude, position.Longitude));
@@ -56,7 +57,7 @@ namespace XLabs.Platform
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>Uri.</returns>
-        public static Uri ToGoogleMaps(this Position position)
+        public static Uri ToGoogleMaps(this Location position)
         {
             return new Uri(string.Format(new CultureInfo("en-US"), "http://maps.google.com/?q={0},{1}", position.Latitude, position.Longitude));
         }
@@ -66,7 +67,7 @@ namespace XLabs.Platform
         /// </summary>
         /// <param name="position">The position.</param>
         /// <returns>Uri.</returns>
-        public static Uri ToAppleMaps(this Position position)
+        public static Uri ToAppleMaps(this Location position)
         {
             return new Uri(string.Format(new CultureInfo("en-US"), "http://maps.apple.com/?q={0},{1}", position.Latitude, position.Longitude));
         }
@@ -77,7 +78,7 @@ namespace XLabs.Platform
         /// <param name="position">The position.</param>
         /// <param name="destination">The destination.</param>
         /// <returns>Uri.</returns>
-        public static Uri DriveToLink(this Position position, string destination = "Driving instructions")
+        public static Uri DriveToLink(this Location position, string destination = "Driving instructions")
         {
             return new Uri(string.Format(
                 new CultureInfo("en-US"), 

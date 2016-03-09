@@ -20,7 +20,8 @@ namespace XLabs.Platform.Services.Media
         public JpegInfo(NSUrl assetURL)
         {
             if (assetURL == null) throw new ArgumentNullException("assetUrl");
-            if (UIDevice.CurrentDevice.CheckSystemVersion(7, 9))
+            
+            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
 
                 _reader = new ExifPhotoKitReader(assetURL);
@@ -30,6 +31,12 @@ namespace XLabs.Platform.Services.Media
                 //If iOS<8 use Assets Catalog
                 _reader = new ExifAssetsCatalogReader(assetURL);
             }
+        }
+
+        public JpegInfo(NSDictionary info)
+        {
+            if (info == null) throw new ArgumentNullException("NSDictionary");
+            _reader = new ExifNSDictionnaryReader(info);
         }
 
 

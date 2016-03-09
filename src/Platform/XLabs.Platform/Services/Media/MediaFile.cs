@@ -52,18 +52,19 @@ namespace XLabs.Platform.Services.Media
 		/// </summary>
 		private bool _isDisposed;
 
-		#endregion Private Member Variables
+       
+        #endregion Private Member Variables
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MediaFile" /> class.
-		/// </summary>
-		/// <param name="path">The path.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MediaFile" /> class.
+        /// </summary>
+        /// <param name="path">The path.</param>
         /// <param name="jpegInfo">Exif metadata extracted from the image</param>
-		/// <param name="streamGetter">The stream getter.</param>
-		/// <param name="dispose">The dispose.</param>
-		public MediaFile(string path, IJpegInfo jpegInfo, Func<Stream> streamGetter, Action<bool> dispose = null)
+        /// <param name="streamGetter">The stream getter.</param>
+        /// <param name="dispose">The dispose.</param>
+        public MediaFile(string path, IJpegInfo jpegInfo, Func<Stream> streamGetter, Action<bool> dispose = null)
 		{
 			_dispose = dispose;
 			_streamGetter = streamGetter;
@@ -148,6 +149,10 @@ namespace XLabs.Platform.Services.Media
                 }
 
                 return _ExifTags;
+            }
+            set
+            {
+                _ExifTags = value;
             }
         }
         #endregion Public Properties

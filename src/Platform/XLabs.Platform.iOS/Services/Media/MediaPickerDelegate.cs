@@ -26,6 +26,11 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 using XLabs.Platform.Extensions;
+using AssetsLibrary;
+using Photos;
+using ImageIO;
+using XLabs.Platform.Services.Geolocation;
+using System.Diagnostics;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -73,7 +78,7 @@ namespace XLabs.Platform.Services.Media
 		internal MediaPickerDelegate(
 			UIViewController viewController,
 			UIImagePickerControllerSourceType sourceType,
-			MediaStorageOptions options)
+            MediaStorageOptions options)
 		{
 			_viewController = viewController;
 			_source = sourceType;
@@ -136,11 +141,55 @@ namespace XLabs.Platform.Services.Media
 		/// <exception cref="NotSupportedException"></exception>
 		public override void FinishedPickingMedia(UIImagePickerController picker, NSDictionary info)
 		{
+            
 			MediaFile mediaFile;
 			switch ((NSString)info[UIImagePickerController.MediaType])
 			{
 				case MediaPicker.TypeImage:
 					mediaFile = GetPictureMediaFile(info);
+                    if(picker.SourceType == UIImagePickerControllerSourceType.PhotoLibrary || picker.SourceType == UIImagePickerControllerSourceType.SavedPhotosAlbum)
+                    {
+                        //Photo gallery
+                        NSUrl assetURL = (NSUrl)info[UIImagePickerController.ReferenceUrl];
+                        //Read ExifTag and set it to the mediafile
+                        mediaFile.ExifTags = new JpegInfo(assetURL);
+                    }
+                    else
+                    {
+
+                       
+                        CameraMediaStorageOptions opt = ((CameraMediaStorageOptions)_options);
+                        //Photo taken with the Camera
+                        //1 update media file with metadata
+                        if (UpdateCapturedPictureWithMetaData(mediaFile, info, opt.GetGpsPosition).Result)
+                        {
+                            mediaFile.ExifTags = new JpegInfo(info);
+                        }
+                        //2 save media according to options
+                       
+                        if (!opt.SaveCopyInDefaultLibraryOnCapture)
+                            break;
+                       else
+                        {
+                            if (UIDevice.CurrentDevice.CheckSystemVersion(8,0))
+                            {
+                                System.Threading.Tasks.Task.Run(async () =>
+                                {
+                                    await WritePhotoToPhotoKit(info, NSUrl.FromFilename(mediaFile.Path));
+                                }).Wait();
+
+                            }
+                            else
+                            {
+                                System.Threading.Tasks.Task.Run(async () =>
+                                {
+                                    await WritePhotoToAssetLibrary(info);
+                                }).Wait();
+
+                            }
+
+                        }
+                    }
 					break;
 
 				case MediaPicker.TypeMovie:
@@ -154,11 +203,192 @@ namespace XLabs.Platform.Services.Media
 			Dismiss(picker, () => _tcs.TrySetResult(mediaFile));
 		}
 
-		/// <summary>
-		/// Canceleds the specified picker.
-		/// </summary>
-		/// <param name="picker">The picker.</param>
-		public override void Canceled(UIImagePickerController picker)
+        private async Task<bool> UpdateCapturedPictureWithMetaData(MediaFile mediaFile, NSDictionary info, bool updateGpsCoordinate)
+        {
+            var photo = info.ValueForKey(new NSString("UIImagePickerControllerOriginalImage")) as UIImage;
+            var meta = new NSMutableDictionary(info.ValueForKey(new NSString("UIImagePickerControllerMediaMetadata")) as NSDictionary);
+            var exifDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.ExifDictionary) as NSDictionary ?? new NSDictionary());
+            var tiffDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.TIFFDictionary) as NSDictionary ?? new NSDictionary());
+            var gpsDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.GPSDictionary) as NSDictionary ?? new NSDictionary());
+            if(((CameraMediaStorageOptions)_options).GetGpsPosition)
+            {
+                try
+                {
+                    NSDictionary pos = await GetGpsTask(gpsDic);
+                    //await System.Threading.Tasks.Task.Run(() =>
+                    //{
+                    //    try
+                    //    {
+                    //        pos.Start();
+                    //        pos.Wait();
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        Debug.WriteLine(ex.ToString());
+                    //        throw;
+                    //    }
+                    //});
+                    //if (!pos.IsFaulted)
+                    //{
+                    //    gpsDic = (NSMutableDictionary)pos.Result;
+                    //}
+                    //else
+                    //{
+                       
+                    //}
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+
+                }
+                
+            }
+            var makerDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.MakerAppleDictionary) as NSDictionary ?? new NSDictionary());
+
+            var ciffDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.CIFFDictionary) as NSDictionary ?? new NSDictionary());
+            var dngDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.DNGDictionary) as NSDictionary ?? new NSDictionary());
+            var exifAux = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.ExifAuxDictionary) as NSDictionary ?? new NSDictionary());
+
+            var iptcDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.IPTCDictionary) as NSDictionary ?? new NSDictionary());
+            var jfifDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.JFIFDictionary) as NSDictionary ?? new NSDictionary());
+
+            //Rebuild metadata dictionnary
+            NSMutableDictionary metadata = new NSMutableDictionary();
+           
+            metadata.SetValueForKey(exifDic, ImageIO.CGImageProperties.ExifDictionary);
+            metadata.SetValueForKey(tiffDic, ImageIO.CGImageProperties.TIFFDictionary);
+            metadata.SetValueForKey(gpsDic, ImageIO.CGImageProperties.GPSDictionary);
+            metadata.SetValueForKey(makerDic, ImageIO.CGImageProperties.MakerAppleDictionary);
+
+            metadata.SetValueForKey(ciffDic, ImageIO.CGImageProperties.CIFFDictionary);
+            metadata.SetValueForKey(dngDic, ImageIO.CGImageProperties.DNGDictionary);
+            metadata.SetValueForKey(exifAux, ImageIO.CGImageProperties.ExifAuxDictionary);
+
+            metadata.SetValueForKey(iptcDic, ImageIO.CGImageProperties.IPTCDictionary);
+            metadata.SetValueForKey(jfifDic, ImageIO.CGImageProperties.JFIFDictionary);
+
+            NSUrl imgUrl = NSUrl.FromFilename(mediaFile.Path);
+            CGImageSource imageSource = CGImageSource.FromUrl(imgUrl);
+            var outImageData = new NSMutableData();
+            var imgdest = CGImageDestination.Create(outImageData, MobileCoreServices.UTType.JPEG, imageCount: 1);
+            //Set image and metadata
+            imgdest.AddImage(imageSource, 0, metadata);
+            imgdest.Close();
+            //Save image to disk
+            NSFileManager filemanager = NSFileManager.DefaultManager;
+            NSError writeError;
+            if (filemanager.FileExists(imgUrl.AbsoluteString))
+                filemanager.Remove(imgUrl, out writeError);
+            //write image data to an location of application (pathTempImage). That’s all.
+            return outImageData.Save(imgUrl, NSDataWritingOptions.Atomic, out writeError);
+        }
+
+        private  Task WritePhotoToPhotoKit(NSDictionary info, NSUrl imgUrl)
+        {
+            TaskCompletionSource<int> tcs = new TaskCompletionSource<int>();
+            try
+            {
+                if (PHPhotoLibrary.AuthorizationStatus != PHAuthorizationStatus.Authorized)
+                {
+                    PHPhotoLibrary.RequestAuthorization((status) =>
+                    {
+                        if (status != PHAuthorizationStatus.Authorized)
+                        {
+                            tcs.SetCanceled();
+                            return;
+                        }
+                    });
+                }
+                PHAssetChangeRequest req = null;
+                PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(()=> {
+                    //build temp image
+                        req = PHAssetChangeRequest.FromImage(imgUrl);
+                }, (success, error) =>
+                {
+                    if(success)
+                    {
+                       
+                        tcs.SetResult(0);
+                    }
+                    else
+                    {
+                        tcs.SetException(new Exception(error.LocalizedDescription));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+
+                tcs.SetException(ex);
+            }
+            return tcs.Task;
+        }
+
+        private  Task<NSUrl> WritePhotoToAssetLibrary(NSDictionary info)
+        {
+            //If iOS<8 use Assets Catalog
+           
+            TaskCompletionSource<NSUrl> tcs = new TaskCompletionSource<NSUrl>();
+            try
+            {
+                ALAssetsLibrary library = new ALAssetsLibrary();
+                var photo = info.ValueForKey(new NSString("UIImagePickerControllerOriginalImage")) as UIImage;
+                var meta = info.ValueForKey(new NSString("UIImagePickerControllerMediaMetadata")) as NSDictionary;
+                library.WriteImageToSavedPhotosAlbum(photo.CGImage, meta, (assetUrl, error) =>
+                {
+
+                    if (error != null)
+                    {
+                        tcs.SetException(new Exception(error.ToString()));
+                    }
+                    else
+                    {
+                        tcs.TrySetResult(assetUrl);
+                    }
+                });
+            }
+            catch (Exception ex )
+            {
+
+                tcs.SetException(ex);
+            }
+            return tcs.Task;
+        }
+
+        private async Task<NSDictionary> GetGpsTask(NSDictionary gpsDict)
+        {
+            //return new Task<NSDictionary>(() =>
+            //{
+            try
+            {
+                //var geo = new XLabs.Platform.Services.Geolocation.Geolocator();
+                    //Position position = await geo.GetPositionAsync(5000);
+                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Longitude), ImageIO.CGImageProperties.GPSLongitude);
+
+                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Latitude), ImageIO.CGImageProperties.GPSLatitude);
+
+                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Altitude), ImageIO.CGImageProperties.GPSAltitude);
+
+
+
+                    return gpsDict;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                    throw;
+                }
+            //});
+            
+
+        }
+
+        /// <summary>
+        /// Canceleds the specified picker.
+        /// </summary>
+        /// <param name="picker">The picker.</param>
+        public override void Canceled(UIImagePickerController picker)
 		{
 			Dismiss(picker, () => _tcs.TrySetCanceled());
 		}
@@ -363,15 +593,13 @@ namespace XLabs.Platform.Services.Media
 		/// <returns>MediaFile.</returns>
 		private MediaFile GetPictureMediaFile(NSDictionary info)
 		{
-			var image = (UIImage)info[UIImagePickerController.EditedImage];
-			if (image == null)
-			{
-				image = (UIImage)info[UIImagePickerController.OriginalImage];
-			}
-            //Get exif reader according to the platform
+            var image = (UIImage)info[UIImagePickerController.EditedImage];
+            if (image == null)
+            {
+                image = (UIImage)info[UIImagePickerController.OriginalImage];
+            }
+            
 
-            NSUrl assetURL = (NSUrl)info[UIImagePickerController.ReferenceUrl];
-            IJpegInfo jinfo = new JpegInfo(assetURL);
             var path = GetOutputPath(
 				MediaPicker.TypeImage,
 				_options.Directory ?? ((IsCaptured) ? String.Empty : "temp"),
@@ -390,7 +618,7 @@ namespace XLabs.Platform.Services.Media
 				dispose = d => File.Delete(path);
 			}
 
-			return new MediaFile(path,jinfo, () => File.OpenRead(path), dispose);
+			return new MediaFile(path, () => File.OpenRead(path), dispose);
 		}
 
 		/// <summary>
