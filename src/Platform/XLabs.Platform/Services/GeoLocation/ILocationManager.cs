@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace XLabs.Platform.Services.GeoLocation
@@ -21,7 +22,7 @@ namespace XLabs.Platform.Services.GeoLocation
 
         bool IsStarted { get; }
 
-        Task<Location> GetCurrentPosition(int timeout);
+        Task<Location> GetCurrentPosition(int timeout, CancellationToken token,bool includeHeading=false);
 
 
 

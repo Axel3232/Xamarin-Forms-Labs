@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XLabs.Platform.Services.GeoLocation;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -46,6 +47,8 @@ namespace XLabs.Platform.Services.Media
         ExifTagResolutionUnit? ResolutionUnit { get; }
         string Software { get; }
         bool TryGetRawTagValue<T>(ExifTags tag, out T result);
+
+        Task TrySetGpsData(Location loc, string ressourcePath);
         string UserComment { get; }
         double? XResolution { get; }
         double? YResolution { get; }

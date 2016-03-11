@@ -72,10 +72,19 @@ namespace XLabs.Platform.Services.Media
                         //Get the orginial image (FullSize)
                         CIImage img = CIImage.FromUrl(input.FullSizeImageUrl);
                         var prop = img.Properties;
-
+                        
                         SetGlobalData(prop.Dictionary);
+                        //si il y a des tags GPS au sein du fichier
                         if (prop.Gps != null)
                             SetGpsData(prop.Gps.Dictionary);
+                        else
+                        {
+                            //Sinon on essaye de recuperer ces valeurs GPS au sein de la BD photoKit
+                            if(photo.Location != null)
+                            {
+                                SetGpsData(photo.Location);
+                            }
+                        }
                         if (prop.Exif != null)
                             SetExifData(prop.Exif.Dictionary);
                         if (prop.Tiff != null)

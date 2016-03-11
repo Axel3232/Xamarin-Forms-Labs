@@ -52,6 +52,8 @@ namespace XLabs.Platform.Services.Media
 		/// </summary>
 		private bool _isDisposed;
 
+
+        private string _platformPath;
        
         #endregion Private Member Variables
 
@@ -153,6 +155,22 @@ namespace XLabs.Platform.Services.Media
             set
             {
                 _ExifTags = value;
+            }
+        }
+
+        /// <summary>
+        /// Reference to the image if it as been saved in a platform specific media repositiry (like photoKit on ios)
+        /// </summary>
+        public string PlatformPath
+        {
+            get
+            {
+                return _platformPath;
+            }
+
+            set
+            {
+                _platformPath = value;
             }
         }
         #endregion Public Properties

@@ -25,6 +25,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UIKit;
+using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.GeoLocation;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -210,7 +212,15 @@ namespace XLabs.Platform.Services.Media
             {
                 throw new InvalidOperationException("There's no current active window");
             }
-
+            CameraMediaStorageOptions cameraOptions = options as CameraMediaStorageOptions;
+            Task<Location> loctask = null;
+            CancellationTokenSource dismiss = null;
+            if (cameraOptions != null && cameraOptions.GetGpsPosition && sourceType == UIImagePickerControllerSourceType.Camera)
+            {
+                //Dont await on purpose
+                dismiss = new CancellationTokenSource();
+                loctask = new LocationManager().GetCurrentPosition(5000, dismiss.Token);
+            }
             var viewController = window.RootViewController;
 
 #if __IOS_10__
@@ -264,7 +274,37 @@ namespace XLabs.Platform.Services.Media
                             _popover.Dispose();
                             _popover = null;
                         }
+                        if (loctask != null)
+                        {
+                            if (t.IsCanceled || t.IsFaulted)
+                            {
+                                dismiss.Cancel();
 
+                            }
+                            else
+                            {
+                                if (loctask.IsCompleted)
+                                {
+                                    var loc = loctask.Result;
+                                    t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath).Wait();
+
+                                }
+                                else
+                                {
+                                    if (!loctask.IsFaulted && !loctask.IsCanceled)
+                                    {
+                                        loctask.Wait(5000);
+                                        if (loctask.IsCompleted)
+                                        {
+                                            var loc = loctask.Result;
+                                            t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath);
+                                        }
+                                      
+                                    }
+                                    
+                                }
+                            }
+                        }
                         Interlocked.Exchange(ref _pickerDelegate, null);
                         return t;
                     }).Unwrap();

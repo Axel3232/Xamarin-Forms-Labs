@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using CoreLocation;
+using Foundation;
 using System;
 using System.Collections.Generic;
 using XLabs.Platform.Extensions;
@@ -42,6 +43,22 @@ namespace XLabs.Platform.Services.Media
             _exifCache.Add(ExifTags.GPSSpeedRef, (gpsdico[ImageIO.CGImageProperties.GPSSpeedRef] != null) ? ((string)gpsdico[ImageIO.CGImageProperties.GPSSpeedRef].ToObject(typeof(string))) : null);
 
         }
+
+        protected void SetGpsData(CLLocation loc)
+        {
+            _exifCache.Add(ExifTags.GPSAltitude, loc.Altitude); //meters
+            _exifCache.Add(ExifTags.GPSAltitudeRef, ImageIO.CGImageProperties.GPSAltitudeRef);
+            _exifCache.Add(ExifTags.GPSLatitude, loc.Coordinate.Latitude);
+            _exifCache.Add(ExifTags.GPSLongitude, loc.Coordinate.Longitude);
+            //_exifCache.Add(ExifTags.GPSLongitudeRef, (gpsdico[ImageIO.CGImageProperties.GPSLongitudeRef] != null) ? ((string)gpsdico[ImageIO.CGImageProperties.GPSLongitudeRef].ToObject(typeof(string))) : null);
+            //_exifCache.Add(ExifTags.GPSLatitudeRef, (gpsdico[ImageIO.CGImageProperties.GPSLatitudeRef] != null) ? ((string)gpsdico[ImageIO.CGImageProperties.GPSLatitudeRef].ToObject(typeof(string))) : null);
+            _exifCache.Add(ExifTags.GPSDestBearing, loc.Course<0? null : new Nullable<double>(loc.Course));
+           // _exifCache.Add(ExifTags.GPSDestBearingRef, (gpsdico[ImageIO.CGImageProperties.GPSDestBearingRef] != null) ? ((string)gpsdico[ImageIO.CGImageProperties.GPSDestBearingRef].ToObject(typeof(string))) : null);
+            _exifCache.Add(ExifTags.GPSSpeed, loc.Speed < 0 ? null : new Nullable<double>(loc.Speed)); //meter per sec
+            //_exifCache.Add(ExifTags.GPSSpeedRef, (gpsdico[ImageIO.CGImageProperties.GPSSpeedRef] != null) ? ((string)gpsdico[ImageIO.CGImageProperties.GPSSpeedRef].ToObject(typeof(string))) : null);
+
+        }
+
         /// <summary>
         /// Tiff data
         /// </summary>
@@ -166,6 +183,21 @@ namespace XLabs.Platform.Services.Media
         {
 
             return TryGetTagValue((ushort)tag, out result);
+        }
+
+        /// <summary>
+        /// Set an Exif Tag in the cache only (dont write it to the file)
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="obj"></param>
+        public void SetTagValueInCache(ExifTags tag, object obj)
+        {
+            if(_exifCache.ContainsKey(tag))
+            {
+                _exifCache[tag] = obj;
+            }
+            else
+                _exifCache.Add(tag, obj);
         }
 
     }

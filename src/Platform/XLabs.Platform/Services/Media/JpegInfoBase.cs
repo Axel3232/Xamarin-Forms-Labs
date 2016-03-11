@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Threading.Tasks;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -293,6 +294,10 @@ namespace XLabs.Platform.Services.Media
 
 
             }
+            protected set
+            {
+                _reader.SetTagValueInCache(ExifTags.GPSLatitudeRef, value);
+            }
         }
 
         /// <summary>
@@ -308,6 +313,9 @@ namespace XLabs.Platform.Services.Media
                 return _reader.TryGetTagValue<double>(ExifTags.GPSLatitude, out result2) ? new Nullable<double>(result2) : null;
 
 
+            }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSLatitude, value);
             }
         }
 
@@ -330,6 +338,9 @@ namespace XLabs.Platform.Services.Media
 
 
             }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSLongitudeRef, value);
+            }
         }
 
         /// <summary>
@@ -343,6 +354,9 @@ namespace XLabs.Platform.Services.Media
                 double result2 = -1;
                 return _reader.TryGetTagValue<double>(ExifTags.GPSLongitude, out result2) ? new Nullable<double>(result2) : null;
             }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSLongitude, value);
+            }
         }
         /// <summary>
         /// Gps altitude in meters
@@ -353,6 +367,9 @@ namespace XLabs.Platform.Services.Media
             {
                 double result;
                 return _reader.TryGetTagValue<double>(ExifTags.GPSAltitude, out result) ? new Nullable<double>(result) : new Nullable<double>();
+            }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSAltitude, value);
             }
         }
         /// <summary>
@@ -365,6 +382,9 @@ namespace XLabs.Platform.Services.Media
                 ushort result;
                 return _reader.TryGetTagValue<ushort>(ExifTags.GPSAltitudeRef, out result) ? new Nullable<ExifTagGpsAltitudeRef>((ExifTagGpsAltitudeRef)(Convert.ToUInt16(result))) : new Nullable<ExifTagGpsAltitudeRef>();
             }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSAltitudeRef, value);
+            }
         }
         /// <summary>
         /// Gps bearing when the piture was taken
@@ -375,6 +395,9 @@ namespace XLabs.Platform.Services.Media
             {
                 double result;
                 return _reader.TryGetTagValue<double>(ExifTags.GPSDestBearing, out result) ? new Nullable<double>(result) : new Nullable<double>();
+            }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSDestBearing, value);
             }
         }
         /// <summary>
@@ -394,6 +417,9 @@ namespace XLabs.Platform.Services.Media
                 else
                     return new Nullable<ExifTagGpsBearingRef>();
             }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSDestBearingRef, value);
+            }
         }
         /// <summary>
         /// Indicates the speed of GPS receiver movement, unit is given by the GPSSpeedRef property
@@ -404,6 +430,9 @@ namespace XLabs.Platform.Services.Media
             {
                 double result;
                 return _reader.TryGetTagValue<double>(ExifTags.GPSSpeed, out result) ? new Nullable<double>(result) : new Nullable<double>();
+            }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSSpeed, value);
             }
         }
         /// <summary>
@@ -424,6 +453,9 @@ namespace XLabs.Platform.Services.Media
                     return new Nullable<ExifTagGpsSpeedRef>();
 
 
+            }
+            protected set {
+                _reader.SetTagValueInCache(ExifTags.GPSSpeedRef, value);
             }
         }
 
@@ -452,7 +484,8 @@ namespace XLabs.Platform.Services.Media
             }
         }
 
-
+        
+        
 
         public void Dispose()
         {

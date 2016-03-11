@@ -8,6 +8,7 @@ using UIKit;
 using XLabs.Platform.Services.GeoLocation;
 using XLabs.Platform.Extensions;
 using System.Threading;
+using System.Diagnostics;
 
 namespace XLabs.Platform.Services.Geolocation
 {
@@ -205,9 +206,10 @@ namespace XLabs.Platform.Services.Geolocation
             return true;
         }
 
-        public Task<Location> GetCurrentPosition(int timeout)
+        public Task<Location> GetCurrentPosition(int timeout, CancellationToken token, bool includeHeading = false)
         {
             TaskCompletionSource<Location> tcs = new TaskCompletionSource<Location>();
+            
             Location result = null;
             bool shouldStopAfterFix = !IsStarted;
            
@@ -219,7 +221,11 @@ namespace XLabs.Platform.Services.Geolocation
             {
                 currentAccuracy = manager.DesiredAccuracy;
             }
-            manager.StartUpdatingHeading();
+            if (includeHeading)
+            {
+               
+                manager.StartUpdatingHeading();
+            }
             double trueHeading = -1;
             manager.UpdatedHeading += (s, arg) =>
             {
@@ -231,63 +237,92 @@ namespace XLabs.Platform.Services.Geolocation
             {
                 if (!tcs.Task.IsFaulted && !tcs.Task.IsCompleted && !tcs.Task.IsCanceled)
                 {
-
-                    if (clearCachedLocations)
-                        e.Locations = ClearCachedLocation(e.Locations.ToList()).ToArray();
-                    List<Location> l = Convert(e.Locations);
-                    if (l.Count == 0)
-                        return;
-                    result = l.OrderBy(t => t.LocalTimeStamp).Last();
-
-
-                    result.Direction = trueHeading;
-                    if (trueHeading != -1)
+                    try
                     {
-                        tcs.SetResult(result);
-                        manager.StopUpdatingHeading();
-                        //Si on a demarrer le gps uniquement pour ce fix, on l'arrete apres, 
-                        //Si il etait deja en marche on remet l'accuracy a la valeur ou elle etait
-                        if (shouldStopAfterFix)
+                        if (token.IsCancellationRequested)
+                        {
                             this.Stop();
+                            tcs.SetCanceled();
+
+                        }
                         else
-                            manager.DesiredAccuracy = currentAccuracy;
+                        {
+                            if (clearCachedLocations)
+                                e.Locations = ClearCachedLocation(e.Locations.ToList()).ToArray();
+                            List<Location> l = Convert(e.Locations);
+                            if (l.Count == 0)
+                                return;
+                            result = l.OrderBy(t => t.LocalTimeStamp).Last();
+
+
+
+                            if (trueHeading != -1)
+                            {
+                                result.Direction = trueHeading;
+
+
+
+                            }
+                            //Si on a demarrer le gps uniquement pour ce fix, on l'arrete apres, 
+                            //Si il etait deja en marche on remet l'accuracy a la valeur ou elle etait
+                            if (shouldStopAfterFix)
+                                this.Stop();
+                            else
+                                manager.DesiredAccuracy = currentAccuracy;
+                            tcs.SetResult(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.ToString());
+                        throw;
                     }
                 }
             };
-            int currentTimerCount = 0;
+            //int currentTimerCount = 0;
             
-            Timer timer = new Timer((obj) =>
-            {
+            //Timer timer = new Timer((obj) =>
+            //{
+            //    Debug.WriteLine("locationManger Timer tick");
+            //    if (tcs.Task.Status == TaskStatus.Canceled || tcs.Task.Status == TaskStatus.Faulted || tcs.Task.Status == TaskStatus.RanToCompletion)
+            //        return;
 
-                if (tcs.Task.Status == TaskStatus.Canceled || tcs.Task.Status == TaskStatus.Faulted || tcs.Task.Status == TaskStatus.RanToCompletion)
-                    return;
-               
-                if (result != null)
-                {
-                  
-                    tcs.TrySetResult(result);
-                    if (shouldStopAfterFix)
-                        this.Stop();
-                    else
-                        manager.DesiredAccuracy = currentAccuracy;
-                }
-                else
-                {
-                    tcs.SetCanceled();
-                    if (shouldStopAfterFix)
-                        this.Stop();
-                    else
-                        manager.DesiredAccuracy = currentAccuracy;
+            //    if(token.IsCancellationRequested)
+            //    { 
+            //        this.Stop();
+            //        tcs.SetCanceled();
+            //        return;
+
+            //    }
+            //    else
+            //    {
+            //        if (result != null)
+            //        {
+
+            //            tcs.TrySetResult(result);
+            //            if (shouldStopAfterFix)
+            //                this.Stop();
+            //            else
+            //                manager.DesiredAccuracy = currentAccuracy;
+            //        }
+            //        else
+            //        {
+            //            tcs.SetCanceled();
+            //            if (shouldStopAfterFix)
+            //                this.Stop();
+            //            else
+            //                manager.DesiredAccuracy = currentAccuracy;
 
 
-                        
-                }
+
+            //        }
+            //    }
 
 
                 
                
 
-            }, null, timeout, 0);
+            //}, null, timeout, 0);
            
 
             return tcs.Task;
@@ -299,6 +334,8 @@ namespace XLabs.Platform.Services.Geolocation
             if (manager != null)
             {
                 manager.StopUpdatingLocation();
+                
+                manager.StopUpdatingHeading();
                 manager.Dispose();
                 manager = null;
             }

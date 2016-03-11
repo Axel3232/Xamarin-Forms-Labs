@@ -31,6 +31,8 @@ using Photos;
 using ImageIO;
 using XLabs.Platform.Services.Geolocation;
 using System.Diagnostics;
+using CoreLocation;
+using System.Threading;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -161,7 +163,7 @@ namespace XLabs.Platform.Services.Media
                         CameraMediaStorageOptions opt = ((CameraMediaStorageOptions)_options);
                         //Photo taken with the Camera
                         //1 update media file with metadata
-                        if (UpdateCapturedPictureWithMetaData(mediaFile, info, opt.GetGpsPosition).Result)
+                        if (UpdateCapturedPictureWithMetaData(mediaFile, info).Result)
                         {
                             mediaFile.ExifTags = new JpegInfo(info);
                         }
@@ -175,7 +177,7 @@ namespace XLabs.Platform.Services.Media
                             {
                                 System.Threading.Tasks.Task.Run(async () =>
                                 {
-                                    await WritePhotoToPhotoKit(info, NSUrl.FromFilename(mediaFile.Path));
+                                 mediaFile.PlatformPath = await WritePhotoToPhotoKit(info, NSUrl.FromFilename(mediaFile.Path));
                                 }).Wait();
 
                             }
@@ -183,7 +185,7 @@ namespace XLabs.Platform.Services.Media
                             {
                                 System.Threading.Tasks.Task.Run(async () =>
                                 {
-                                    await WritePhotoToAssetLibrary(info);
+                                    mediaFile.PlatformPath =  await WritePhotoToAssetLibrary(info);
                                 }).Wait();
 
                             }
@@ -203,47 +205,21 @@ namespace XLabs.Platform.Services.Media
 			Dismiss(picker, () => _tcs.TrySetResult(mediaFile));
 		}
 
-        private async Task<bool> UpdateCapturedPictureWithMetaData(MediaFile mediaFile, NSDictionary info, bool updateGpsCoordinate)
+        /// <summary>
+        /// Update the phyisical image file created by the MediaFile class with the metadata
+        /// </summary>
+        /// <param name="mediaFile"></param>
+        /// <param name="info"></param>
+        /// <param name="updateGpsCoordinate"></param>
+        /// <returns></returns>
+        private async Task<bool> UpdateCapturedPictureWithMetaData(MediaFile mediaFile, NSDictionary info)
         {
             var photo = info.ValueForKey(new NSString("UIImagePickerControllerOriginalImage")) as UIImage;
             var meta = new NSMutableDictionary(info.ValueForKey(new NSString("UIImagePickerControllerMediaMetadata")) as NSDictionary);
             var exifDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.ExifDictionary) as NSDictionary ?? new NSDictionary());
             var tiffDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.TIFFDictionary) as NSDictionary ?? new NSDictionary());
             var gpsDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.GPSDictionary) as NSDictionary ?? new NSDictionary());
-            if(((CameraMediaStorageOptions)_options).GetGpsPosition)
-            {
-                try
-                {
-                    NSDictionary pos = await GetGpsTask(gpsDic);
-                    //await System.Threading.Tasks.Task.Run(() =>
-                    //{
-                    //    try
-                    //    {
-                    //        pos.Start();
-                    //        pos.Wait();
-                    //    }
-                    //    catch (Exception ex)
-                    //    {
-                    //        Debug.WriteLine(ex.ToString());
-                    //        throw;
-                    //    }
-                    //});
-                    //if (!pos.IsFaulted)
-                    //{
-                    //    gpsDic = (NSMutableDictionary)pos.Result;
-                    //}
-                    //else
-                    //{
-                       
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.ToString());
-
-                }
-                
-            }
+           
             var makerDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.MakerAppleDictionary) as NSDictionary ?? new NSDictionary());
 
             var ciffDic = new NSMutableDictionary(meta.ValueForKey(ImageIO.CGImageProperties.CIFFDictionary) as NSDictionary ?? new NSDictionary());
@@ -280,13 +256,14 @@ namespace XLabs.Platform.Services.Media
             NSError writeError;
             if (filemanager.FileExists(imgUrl.AbsoluteString))
                 filemanager.Remove(imgUrl, out writeError);
-            //write image data to an location of application (pathTempImage). That’s all.
+            //write image data to a location of application (pathTempImage). That’s all.
             return outImageData.Save(imgUrl, NSDataWritingOptions.Atomic, out writeError);
         }
 
-        private  Task WritePhotoToPhotoKit(NSDictionary info, NSUrl imgUrl)
+        private  Task<string> WritePhotoToPhotoKit(NSDictionary info, NSUrl imgUrl)
         {
-            TaskCompletionSource<int> tcs = new TaskCompletionSource<int>();
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+            string localIdentifier = null;
             try
             {
                 if (PHPhotoLibrary.AuthorizationStatus != PHAuthorizationStatus.Authorized)
@@ -302,14 +279,15 @@ namespace XLabs.Platform.Services.Media
                 }
                 PHAssetChangeRequest req = null;
                 PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(()=> {
-                    //build temp image
-                        req = PHAssetChangeRequest.FromImage(imgUrl);
+                   
+                       req = PHAssetChangeRequest.FromImage(imgUrl);
+                      localIdentifier = req.PlaceholderForCreatedAsset.LocalIdentifier;
                 }, (success, error) =>
                 {
                     if(success)
                     {
-                       
-                        tcs.SetResult(0);
+                        
+                        tcs.SetResult(localIdentifier);
                     }
                     else
                     {
@@ -325,11 +303,11 @@ namespace XLabs.Platform.Services.Media
             return tcs.Task;
         }
 
-        private  Task<NSUrl> WritePhotoToAssetLibrary(NSDictionary info)
+        private  Task<string> WritePhotoToAssetLibrary(NSDictionary info)
         {
             //If iOS<8 use Assets Catalog
            
-            TaskCompletionSource<NSUrl> tcs = new TaskCompletionSource<NSUrl>();
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
             try
             {
                 ALAssetsLibrary library = new ALAssetsLibrary();
@@ -344,7 +322,7 @@ namespace XLabs.Platform.Services.Media
                     }
                     else
                     {
-                        tcs.TrySetResult(assetUrl);
+                        tcs.TrySetResult(assetUrl.AbsoluteString);
                     }
                 });
             }
@@ -356,28 +334,33 @@ namespace XLabs.Platform.Services.Media
             return tcs.Task;
         }
 
-        private async Task<NSDictionary> GetGpsTask(NSDictionary gpsDict)
+
+        
+
+        private async Task<NSDictionary> GetGpsTask(MediaFile file, NSDictionary gpsDict)
         {
             //return new Task<NSDictionary>(() =>
             //{
             try
             {
-                //var geo = new XLabs.Platform.Services.Geolocation.Geolocator();
-                    //Position position = await geo.GetPositionAsync(5000);
-                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Longitude), ImageIO.CGImageProperties.GPSLongitude);
+                var geo = new LocationManager();
+                var loc = await geo.GetCurrentPosition(5000, CancellationToken.None);
+             
+                gpsDict.SetValueForKey(NSObject.FromObject(loc.Longitude), ImageIO.CGImageProperties.GPSLongitude);
 
-                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Latitude), ImageIO.CGImageProperties.GPSLatitude);
+                gpsDict.SetValueForKey(NSObject.FromObject(loc.Latitude), ImageIO.CGImageProperties.GPSLatitude);
 
-                    //gpsDict.SetValueForKey(NSObject.FromObject(position.Altitude), ImageIO.CGImageProperties.GPSAltitude);
+                gpsDict.SetValueForKey(NSObject.FromObject(loc.Altitude), ImageIO.CGImageProperties.GPSAltitude);
 
+               
 
-
-                    return gpsDict;
+                return gpsDict;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.ToString());
-                    throw;
+                    //Fail silently on purpose
+                    return gpsDict;
                 }
             //});
             

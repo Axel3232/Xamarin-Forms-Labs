@@ -202,7 +202,7 @@ namespace XLabs.Sample.ViewModel
 					(_openPositionUri = new Command(
 						async () => 
 							{
-								var pos = await Locator.GetCurrentPosition(5000);
+								var pos = await Locator.GetCurrentPosition(5000, CancellationToken.None);
 								var uri = Device.OnPlatform(
 									pos.ToAppleMaps(),
 									pos.ToUri(),
@@ -225,7 +225,7 @@ namespace XLabs.Sample.ViewModel
 					(_getDrivingDirections = new Command(
 						async () =>
 						{
-							var pos = await Locator.GetCurrentPosition(5000);
+							var pos = await Locator.GetCurrentPosition(5000, CancellationToken.None);
 							var uri = Device.OnPlatform(
 								pos.ToAppleMaps(),
 								pos.ToUri(),
@@ -316,7 +316,7 @@ namespace XLabs.Sample.ViewModel
 			PositionLongitude = string.Empty;
 			IsBusy = true;
 			await
-				Locator.GetCurrentPosition(timeout)
+				Locator.GetCurrentPosition(timeout, CancellationToken.None)
 					.ContinueWith(t =>
 					{
 						IsBusy = false;
@@ -344,7 +344,7 @@ namespace XLabs.Sample.ViewModel
 		/// <returns>Task.</returns>
 		private async Task EmailPosition(int timeout = 5000)
 		{
-			var position = await Locator.GetCurrentPosition(timeout);
+			var position = await Locator.GetCurrentPosition(timeout, CancellationToken.None);
 
 			var builder = new System.Text.StringBuilder();
 			builder.Append("WP8 link: ");
@@ -369,7 +369,7 @@ namespace XLabs.Sample.ViewModel
 		/// <returns>Task.</returns>
 		private async Task SmsPosition(int timeout = 5000)
 		{
-			var position = await Locator.GetCurrentPosition(timeout);
+			var position = await Locator.GetCurrentPosition(timeout, CancellationToken.None);
 
 			PhoneService.SendSMS(string.Empty, position.ToUri().ToString());
 

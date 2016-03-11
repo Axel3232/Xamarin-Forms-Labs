@@ -30,6 +30,12 @@ namespace XLabs.Platform.Services.Media
         /// <param name="result">The result</param>
         /// <returns>True is successfull false otherwise</returns>
         bool TryGetTagValue<T>(ExifTags tag, out T result);
+        /// <summary>
+        /// Add an exif tag in the cached dictionnary but dont write to the underlying file
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="obj"></param>
+        void SetTagValueInCache(ExifTags tag, object obj);
 
 
 
