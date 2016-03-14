@@ -23,10 +23,12 @@ using System;
 using System.ComponentModel;
 using CoreGraphics;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XLabs.Forms.Controls;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
 namespace XLabs.Forms.Controls
@@ -36,6 +38,7 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class ExtendedEntryRenderer : EntryRenderer
     {
+        ExtendedEntry XFEntry;
         /// <summary>
         /// The _left swipe gesture recognizer
         /// </summary>
@@ -53,33 +56,35 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            var view = e.NewElement as ExtendedEntry;
+            XFEntry = e.NewElement as ExtendedEntry;
 
-            if (view != null)
+            if (XFEntry != null)
             {
-                SetFont (view);
-                SetTextAlignment (view);
-                SetBorder (view);
-                SetPlaceholderTextColor (view);
-                SetMaxLength (view);
+                SetFont (XFEntry);
+                SetTextAlignment (XFEntry);
+                SetBorder (XFEntry);
+                SetPlaceholderTextColor (XFEntry);
+                SetMaxLength (XFEntry);
 
                 ResizeHeight ();
             }
 
             if (e.OldElement == null)
             {
-                _leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => view.OnLeftSwipe(this, EventArgs.Empty))
+                _leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => XFEntry.OnLeftSwipe(this, EventArgs.Empty))
                     {
                         Direction = UISwipeGestureRecognizerDirection.Left
                     };
 
-                _rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> view.OnRightSwipe(this, EventArgs.Empty))
+                _rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(()=> XFEntry.OnRightSwipe(this, EventArgs.Empty))
                     {
                         Direction = UISwipeGestureRecognizerDirection.Right
                     };
 
                 Control.AddGestureRecognizer(_leftSwipeGestureRecognizer);
                 Control.AddGestureRecognizer(_rightSwipeGestureRecognizer);
+                
+               
             }
 
             if (e.NewElement == null)
@@ -88,6 +93,17 @@ namespace XLabs.Forms.Controls
                 Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
             }
         }
+
+        public override bool CanPerform(Selector action, NSObject withSender)
+        {
+            Debug.WriteLine(action.Name);
+            if (!XFEntry.EnableContextMenu)
+                return false;
+            else
+                return base.CanPerform(action, withSender);
+        }
+
+
 
         /// <summary>
         /// The on element property changed callback

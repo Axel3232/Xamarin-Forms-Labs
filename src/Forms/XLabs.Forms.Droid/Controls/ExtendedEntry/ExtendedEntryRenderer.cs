@@ -75,6 +75,8 @@ namespace XLabs.Forms.Controls
             {
                 this.Touch += HandleTouch;
             }
+            if(!view.EnableContextMenu)
+                Control.LongClickable = false;
         }
 
         /// <summary>

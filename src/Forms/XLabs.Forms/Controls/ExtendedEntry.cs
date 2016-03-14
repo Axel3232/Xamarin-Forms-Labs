@@ -67,11 +67,25 @@ namespace XLabs.Forms.Controls
             BindableProperty.Create("MaxLength", typeof(int), typeof(ExtendedEntry), int.MaxValue);
 
         /// <summary>
+        /// The MaxLength property
+        /// </summary>
+        public static readonly BindableProperty EnableContextMenuProperty =
+            BindableProperty.Create("EnableContextMenu", typeof(bool), typeof(ExtendedEntry), true);
+
+        /// <summary>
         /// Gets or sets the MaxLength
         /// </summary>
         public int MaxLength
         {
             get { return (int)this.GetValue(MaxLengthProperty);}
+            set { this.SetValue(MaxLengthProperty, value); }
+        }
+        /// <summary>
+        /// Enable the context menu (copy/past)
+        /// </summary>
+        public bool EnableContextMenu
+        {
+            get { return (bool)this.GetValue(EnableContextMenuProperty); }
             set { this.SetValue(MaxLengthProperty, value); }
         }
 
@@ -137,5 +151,8 @@ namespace XLabs.Forms.Controls
                 handler(this, e);
             }
         }
+
+
+        
     }
 }
