@@ -72,7 +72,7 @@ namespace XLabs.Forms.Controls
         /// Gets or sets the content.
         /// </summary>
         /// <value>The content.</value>
-        public new View Content
+        public  View PageContent
         {
             get { return this.content; }
             set
@@ -86,6 +86,9 @@ namespace XLabs.Forms.Controls
                 this.layout.Children.Add(this.content, () => this.Bounds);
             }
         }
+
+       
+
 
         /// <summary>
         /// Gets a value indicating whether this instance is popup active.

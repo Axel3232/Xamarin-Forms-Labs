@@ -6,9 +6,9 @@
 
 	<ContentPage.Content>
 		<controls:PopupLayout>
-			<controls:PopupLayout.Content>
+			<controls:PopupLayout.PageContent>
 				<Button x:Name="OpenButton" Text="Open selector popup" />
-			</controls:PopupLayout.Content>
+			</controls:PopupLayout.PageContent>
 		</controls:PopupLayout>
 	</ContentPage.Content>
 </ContentPage>
