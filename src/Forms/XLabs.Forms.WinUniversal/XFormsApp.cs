@@ -104,7 +104,7 @@ namespace XLabs.Forms
                 if (initServices)
                 {
                     DependencyService.Register<XLabs.Platform.Services.TextToSpeechService>();
-                    DependencyService.Register<XLabs.Platform.Services.Geolocation.Geolocator>();
+                    //DependencyService.Register<XLabs.Platform.Services.Geolocation.Geolocator>();
                     //DependencyService.Register<MediaPicker>();
                     DependencyService.Register<XLabs.Platform.Services.Media.SoundService>();
                     //DependencyService.Register<XLabs.Platform.Services.Email.EmailService>();

@@ -338,7 +338,7 @@ namespace XLabs.Forms
             if (initServices) 
             {
                 DependencyService.Register<TextToSpeechService> ();
-                DependencyService.Register<Geolocator> ();
+                //DependencyService.Register<Geolocator> ();
                 DependencyService.Register<MediaPicker> ();
                 DependencyService.Register<SoundService> ();
                 DependencyService.Register<EmailService> ();

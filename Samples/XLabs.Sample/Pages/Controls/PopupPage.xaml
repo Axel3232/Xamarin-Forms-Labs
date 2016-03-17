@@ -6,8 +6,34 @@
 
 	<ContentPage.Content>
 		<controls:PopupLayout>
-			<controls:PopupLayout.PageContent>
-				<Button x:Name="OpenButton" Text="Open selector popup" />
+			<controls:PopupLayout.PageContent >
+        
+			
+        <controls:WrapLayout BackgroundColor="Blue"  Orientation="Horizontal"  VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="1">
+      
+          <Label Text="1dsqsdcwxcxxwc" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1wxcwxcxwcwxcxwcwxcxwxwxwxwcxwc" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+          <Label Text="1" BackgroundColor="Silver"></Label>
+            <Button x:Name="OpenButton" Text="Open selector popup" />
+        
+        </controls:WrapLayout>
 			</controls:PopupLayout.PageContent>
 		</controls:PopupLayout>
 	</ContentPage.Content>
