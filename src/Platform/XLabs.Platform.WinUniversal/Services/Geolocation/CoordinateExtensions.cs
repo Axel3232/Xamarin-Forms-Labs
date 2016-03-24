@@ -33,18 +33,18 @@ namespace XLabs.Platform.Services.Geolocation
 		/// </summary>
 		/// <param name="geocoordinate">The Geocoordinate.</param>
 		/// <returns>The <see cref="Position" />.</returns>
-		public static Position GetPosition(this Geocoordinate geocoordinate)
-		{
-			return new Position
-				       {
-					       Accuracy = geocoordinate.Accuracy,
-					       Altitude = geocoordinate.Altitude,
-					       Heading = geocoordinate.Heading,
-					       Latitude = geocoordinate.Latitude,
-					       Longitude = geocoordinate.Longitude,
-					       Speed = geocoordinate.Speed,
-					       Timestamp = geocoordinate.Timestamp
-				       };
-		}
+		//public static Position GetPosition(this Geocoordinate geocoordinate)
+		//{
+		//	return new Position
+		//		       {
+		//			       Accuracy = geocoordinate.Accuracy,
+		//			       Altitude = geocoordinate.Altitude,
+		//			       Heading = geocoordinate.Heading,
+		//			       Latitude = geocoordinate.Latitude,
+		//			       Longitude = geocoordinate.Longitude,
+		//			       Speed = geocoordinate.Speed,
+		//			       Timestamp = geocoordinate.Timestamp
+		//		       };
+		//}
 	}
 }

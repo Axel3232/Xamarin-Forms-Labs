@@ -123,7 +123,7 @@ namespace XLabs.Forms.Controls
             {
                 try
                 {
-                    var font = UIFont.FromName(view.FontFamily, (float)view.FontSize);
+                    var font = UIFont.FromName(view.FontName, (float)view.FontSize);
                     if (font != null)
                         this.Control.Font = font;
                 }

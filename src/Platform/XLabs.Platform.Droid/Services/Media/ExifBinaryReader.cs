@@ -929,6 +929,11 @@ namespace XLabs.Platform.Services.Media
                 _stream.Dispose();
         }
 
+        public void SetTagValueInCache(ExifTags tag, object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

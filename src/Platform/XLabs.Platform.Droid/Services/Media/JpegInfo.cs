@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using XLabs.Platform.Services.GeoLocation;
 
 namespace XLabs.Platform.Services.Media
 {
@@ -38,6 +40,11 @@ namespace XLabs.Platform.Services.Media
                 result = default(T);
                 return false;
             }
+        }
+
+        public Task TrySetGpsData(Location loc, string ressourcePath)
+        {
+            throw new NotImplementedException();
         }
 
         private double ExifLatCoordinateToDouble(double deg, double min, double sec, ExifTagGpsLatitudeRef coordRef)

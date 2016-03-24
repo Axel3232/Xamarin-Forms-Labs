@@ -77,7 +77,7 @@ namespace XLabs.Platform.Services.Geolocation
                 handler(this, new LocationUpdatedEventArgs(Convert(location).FirstOrDefault()));
         }
 
-        public Task<GeoLocation.Location> GetCurrentPosition()
+        public Task<GeoLocation.Location> GetCurrentPosition(int timeout, CancellationToken token, bool includeHeading = false)
         {
             throw new NotImplementedException();
         }

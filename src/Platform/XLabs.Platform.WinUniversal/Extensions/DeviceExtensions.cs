@@ -36,9 +36,9 @@ namespace XLabs.Platform
 		/// <param name="device">The device.</param>
 		/// <param name="position">The position.</param>
 		/// <returns>Task&lt;System.Boolean&gt;.</returns>
-		public static Task<bool> DriveTo(this IDevice device, Position position)
-		{
-			return device.LaunchUriAsync(position.DriveToLink());
-		}
+		//public static Task<bool> DriveTo(this IDevice device, Position position)
+		//{
+		//	return device.LaunchUriAsync(position.DriveToLink());
+		//}
 	}
 }

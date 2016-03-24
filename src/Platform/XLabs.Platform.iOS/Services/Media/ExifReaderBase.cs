@@ -86,6 +86,7 @@ namespace XLabs.Platform.Services.Media
         protected void SetGlobalData(NSDictionary metadata)
         {
             _exifCache.Add(ExifTags.Orientation, (metadata[ImageIO.CGImageProperties.Orientation] != null) ? (ExifTagOrientation?)metadata[ImageIO.CGImageProperties.Orientation].ToObject(typeof(ushort)) : null);
+ 
         }
 
         protected void SetExifData(NSDictionary exifdico)

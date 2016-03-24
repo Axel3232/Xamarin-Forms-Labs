@@ -27,6 +27,8 @@ namespace XLabs.Platform.Services.Media
             var exifDic = new NSMutableDictionary(((NSDictionary)meta.ValueForKey(ImageIO.CGImageProperties.ExifDictionary))  ?? new NSDictionary());
             var tiffDic = new NSMutableDictionary(((NSDictionary)meta.ValueForKey(ImageIO.CGImageProperties.TIFFDictionary)) ?? new NSDictionary());
             var gpsDic = new NSMutableDictionary(((NSDictionary)meta.ValueForKey(ImageIO.CGImageProperties.GPSDictionary)) ?? new NSDictionary());
+            if (meta != null)
+                SetGlobalData(meta);
             if (gpsDic != null)
                 SetGpsData(gpsDic);
             if (exifDic != null)
@@ -36,6 +38,7 @@ namespace XLabs.Platform.Services.Media
             var photo = dico.ValueForKey(new NSString("UIImagePickerControllerOriginalImage")) as UIImage;
             PixelHeight = (int)photo.Size.Height;
             PixelWidth = (int)photo.Size.Width;
+
         }
     }
 }

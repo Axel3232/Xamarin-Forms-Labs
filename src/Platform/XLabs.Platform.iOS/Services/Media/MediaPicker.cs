@@ -35,6 +35,9 @@ namespace XLabs.Platform.Services.Media
     /// </summary>
     public class MediaPicker : IMediaPicker
     {
+        internal Task<Location> getGpsCoordTask = null;
+
+        private CancellationTokenSource dismissGpsTask = null;
         /// <summary>
         /// The type image
         /// </summary>
@@ -143,10 +146,55 @@ namespace XLabs.Platform.Services.Media
             {
                 throw new NotSupportedException();
             }
+            if (options != null && options.GetGpsPosition)
+            {
+                //Dont await on purpose
+                dismissGpsTask = new CancellationTokenSource();
+                getGpsCoordTask = new LocationManager().GetCurrentPosition(5000, dismissGpsTask.Token);
+            }
 
             VerifyCameraOptions(options);
 
-            return GetMediaAsync(UIImagePickerControllerSourceType.Camera, TypeImage, options);
+            Task<MediaFile> takePic = GetMediaAsync(UIImagePickerControllerSourceType.Camera, TypeImage, options);
+            if (options != null && options.GetGpsPosition)
+                return Task.Run<MediaFile>(() =>
+               {
+                   return takePic.ContinueWith<MediaFile>((t) =>
+                   {
+
+                       if (t.IsCanceled || t.IsFaulted)
+                       {
+                           dismissGpsTask.Cancel();
+
+                       }
+                       else
+                       {
+                           if (getGpsCoordTask.IsCompleted)
+                           {
+                               var loc = getGpsCoordTask.Result;
+                               t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath).Wait();
+
+                           }
+                           else
+                           {
+                               if (!getGpsCoordTask.IsFaulted && !getGpsCoordTask.IsCanceled)
+                               {
+                                   getGpsCoordTask.Wait(3000);
+                                   if (getGpsCoordTask.IsCompleted)
+                                   {
+                                       var loc = getGpsCoordTask.Result;
+                                       t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath);
+                                   }
+
+                               }
+
+                           }
+                       }
+                       return t.Result;
+
+                   });
+               });
+            return takePic;
         }
 
         /// <summary>
@@ -213,14 +261,9 @@ namespace XLabs.Platform.Services.Media
                 throw new InvalidOperationException("There's no current active window");
             }
             CameraMediaStorageOptions cameraOptions = options as CameraMediaStorageOptions;
-            Task<Location> loctask = null;
-            CancellationTokenSource dismiss = null;
-            if (cameraOptions != null && cameraOptions.GetGpsPosition && sourceType == UIImagePickerControllerSourceType.Camera)
-            {
-                //Dont await on purpose
-                dismiss = new CancellationTokenSource();
-                loctask = new LocationManager().GetCurrentPosition(5000, dismiss.Token);
-            }
+           
+            
+           
             var viewController = window.RootViewController;
 
 #if __IOS_10__
@@ -232,6 +275,8 @@ namespace XLabs.Platform.Services.Media
 
                 if (window == null)
                 {
+                    if (dismissGpsTask != null)
+                        dismissGpsTask.Cancel();
                     throw new InvalidOperationException("Could not find current view controller");
                 }
 
@@ -247,6 +292,8 @@ namespace XLabs.Platform.Services.Media
             var od = Interlocked.CompareExchange(ref _pickerDelegate, ndelegate, null);
             if (od != null)
             {
+                if (dismissGpsTask != null)
+                    dismissGpsTask.Cancel();
                 throw new InvalidOperationException("Only one operation can be active at at time");
             }
 
@@ -274,41 +321,13 @@ namespace XLabs.Platform.Services.Media
                             _popover.Dispose();
                             _popover = null;
                         }
-                        if (loctask != null)
-                        {
-                            if (t.IsCanceled || t.IsFaulted)
-                            {
-                                dismiss.Cancel();
-
-                            }
-                            else
-                            {
-                                if (loctask.IsCompleted)
-                                {
-                                    var loc = loctask.Result;
-                                    t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath).Wait();
-
-                                }
-                                else
-                                {
-                                    if (!loctask.IsFaulted && !loctask.IsCanceled)
-                                    {
-                                        loctask.Wait(5000);
-                                        if (loctask.IsCompleted)
-                                        {
-                                            var loc = loctask.Result;
-                                            t.Result.ExifTags.TrySetGpsData(loc, t.Result.PlatformPath);
-                                        }
-                                      
-                                    }
-                                    
-                                }
-                            }
-                        }
+                        
                         Interlocked.Exchange(ref _pickerDelegate, null);
                         return t;
                     }).Unwrap();
         }
+
+        
 
         /// <summary>
         /// Setups the controller.

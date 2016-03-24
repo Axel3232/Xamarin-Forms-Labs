@@ -231,7 +231,10 @@ namespace XLabs.Platform.Services.Media
 
             //Rebuild metadata dictionnary
             NSMutableDictionary metadata = new NSMutableDictionary();
-           
+
+            metadata.SetValueForKey(meta[ImageIO.CGImageProperties.Orientation], ImageIO.CGImageProperties.Orientation);
+            metadata.SetValueForKey(meta[ImageIO.CGImageProperties.DPIHeight], ImageIO.CGImageProperties.DPIHeight);
+            metadata.SetValueForKey(meta[ImageIO.CGImageProperties.DPIWidth], ImageIO.CGImageProperties.DPIWidth);
             metadata.SetValueForKey(exifDic, ImageIO.CGImageProperties.ExifDictionary);
             metadata.SetValueForKey(tiffDic, ImageIO.CGImageProperties.TIFFDictionary);
             metadata.SetValueForKey(gpsDic, ImageIO.CGImageProperties.GPSDictionary);
@@ -246,10 +249,12 @@ namespace XLabs.Platform.Services.Media
 
             NSUrl imgUrl = NSUrl.FromFilename(mediaFile.Path);
             CGImageSource imageSource = CGImageSource.FromUrl(imgUrl);
+            
             var outImageData = new NSMutableData();
             var imgdest = CGImageDestination.Create(outImageData, MobileCoreServices.UTType.JPEG, imageCount: 1);
             //Set image and metadata
             imgdest.AddImage(imageSource, 0, metadata);
+            
             imgdest.Close();
             //Save image to disk
             NSFileManager filemanager = NSFileManager.DefaultManager;
