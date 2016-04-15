@@ -20,6 +20,7 @@
 // 
 using Xamarin.Forms;
 
+
 #if __ANDROID__
 using Xamarin.Forms.Platform.Android;
 
@@ -30,7 +31,7 @@ using Xamarin.Forms.Platform.iOS;
 using Xamarin.Forms.Platform.WinPhone;
 
 #elif NETFX_CORE
-using Xamarin.Forms.Platform.WinRT;
+using Xamarin.Forms.Platform.UWP;
 
 #endif
 

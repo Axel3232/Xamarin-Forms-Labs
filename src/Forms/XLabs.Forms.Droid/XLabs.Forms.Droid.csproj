@@ -156,6 +156,7 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="XFormsApp.cs" />
+    <Compile Include="XFormsAppCompact.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

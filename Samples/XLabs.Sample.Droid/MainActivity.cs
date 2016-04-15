@@ -37,6 +37,7 @@ using XLabs.Platform.Services.Email;
 using XLabs.Platform.Services.Media;
 using XLabs.Serialization;
 using XLabs.Serialization.ServiceStack;
+using Xamarin.Forms.Platform.Android;
 
 namespace XLabs.Sample.Droid
 {
@@ -45,7 +46,7 @@ namespace XLabs.Sample.Droid
     /// </summary>
     [Activity(Label = "XLabs.Sample.Droid", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
-    public class MainActivity : XFormsApplicationDroid
+    public class MainActivity : XFormsCompactApplicationDroid
     {
         /// <summary>
         /// Called when [create].
@@ -53,6 +54,9 @@ namespace XLabs.Sample.Droid
         /// <param name="bundle">The bundle.</param>
         protected override void OnCreate(Bundle bundle)
         {
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+
             base.OnCreate(bundle);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat) 
@@ -69,7 +73,7 @@ namespace XLabs.Sample.Droid
             }
             else
             {
-                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
+                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsCompactApplicationDroid>;
                 if (app != null) app.AppContext = this;
             }
 
@@ -93,7 +97,7 @@ namespace XLabs.Sample.Droid
         {
             var resolverContainer = new SimpleContainer();
 
-            var app = new XFormsAppDroid();
+            var app = new XFormsAppCompactDroid();
 
             app.Init(this);
 

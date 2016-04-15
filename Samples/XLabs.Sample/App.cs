@@ -98,8 +98,8 @@ namespace XLabs.Sample
                 TintColor = Color.White,
                 BarTintColor = Color.Blue,
                 Badges = { "1", "2", "3" },
-                TabBarBackgroundImage = "ToolbarGradient2.png",
-                TabBarSelectedImage = "blackbackground.png",
+                //TabBarBackgroundImage = "ToolbarGradient2.png",
+                //TabBarSelectedImage = "blackbackground.png",
             };
 
             var mainPage = new NavigationPage(mainTab);
@@ -280,7 +280,7 @@ namespace XLabs.Sample
             var controls = new ContentPage
             {
                 Title = "Controls",
-                Icon = Device.OnPlatform("settings20_32.png", "settings20.png", "Images/settings20.png"),
+                Icon = Device.OnPlatform("settings20_32.png", "settings20_32.png", "Images/settings20.png"),
                 Content = BuildListView(mainPage, listItems),
             };
 

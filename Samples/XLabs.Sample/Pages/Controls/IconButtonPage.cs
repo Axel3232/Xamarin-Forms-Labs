@@ -31,11 +31,15 @@ namespace XLabs.Sample.Pages.Controls
             this.Title = "Icon Button (Font anwsome)";
             IconButton btn1 = new IconButton()
             {
-                Icon = "\uf1d8",
+                //Icon = "\uf1d8",
                 Text = "Text and icon",
                 TextColor = Color.White,
                 IconColor = Color.White,
-                BackgroundColor = Color.Gray
+                BackgroundColor = Color.Gray,
+                BorderColor = Color.Red,
+                BorderWidth = 5,
+                BorderRadius = 0
+                
 
 
             };

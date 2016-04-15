@@ -28,6 +28,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XLabs.Enums;
 using XLabs.Forms.Controls;
+using System.Collections.Generic;
+using Android.Graphics.Drawables;
 
 [assembly: ExportRenderer(typeof(IconButton), typeof(IconButtonRenderer))]
 namespace XLabs.Forms.Controls
@@ -63,7 +65,14 @@ namespace XLabs.Forms.Controls
                 {
                     _nativeBtn = (Android.Widget.Button)this.Control;
                     _iconButton = (IconButton)e.NewElement;
-
+                    //if( _iconButton.BorderWidth>0)
+                    //{
+                    //    GradientDrawable gd1 = new GradientDrawable();
+                    //    gd1.SetColor(_iconButton.BackgroundColor.ToAndroid());
+                    //    gd1.SetCornerRadius(_iconButton.BorderRadius);
+                    //    gd1.SetStroke((int)_iconButton.BorderWidth, _iconButton.BorderColor.ToAndroid());
+                    //    _nativeBtn.Background = gd1;
+                    //}
                     _iconFont = _helper.TrySetFont("fontawesome-webfont.ttf");
                     _textFont = _iconButton.Font.ToTypeface();
                     _iconButton.IconSize = _iconButton.IconSize == 0 ? (float)_iconButton.FontSize : _iconButton.IconSize;
@@ -101,8 +110,15 @@ namespace XLabs.Forms.Controls
         {
 
             ISpannable spannable = e.Editable;
-            var indice = spannable.ToString().IndexOf(_iconButton.Icon);
-            var spans = spannable.GetSpans(indice, indice + _iconButton.Icon.Length, Java.Lang.Class.FromType(typeof(TypefaceSpan))).ToList();
+            var indice = spannable.ToString().Length;
+            List<Java.Lang.Object> spans = null;
+            if (_iconButton.Icon != null)
+            {
+                indice = spannable.ToString().IndexOf(_iconButton.Icon);
+                spans = spannable.GetSpans(indice, indice + _iconButton.Icon.Length, Java.Lang.Class.FromType(typeof(TypefaceSpan))).ToList();
+            }
+            else
+                spans = spannable.GetSpans(0, indice, Java.Lang.Class.FromType(typeof(TypefaceSpan))).ToList();
             if (spans.Count == 0)
                 _nativeBtn.SetText(_iconSpan, TextView.BufferType.Spannable);
 
@@ -186,12 +202,12 @@ namespace XLabs.Forms.Controls
             if (!string.IsNullOrEmpty(_iconButton.Text))
             {
                 span.SetSpan(new CustomTypefaceSpan("", _textFont, _helper.GetSpanColor(_iconButton.TextColor, Control.TextColors)),
-                     _textStartIndex,
-                     _textStopIndex,
+                     _textStartIndex==-1 ? 0: _textStartIndex,
+                     _textStopIndex == -1 ? _iconButton.Text.Length : _textStopIndex,
                      SpanTypes.ExclusiveExclusive);
                 span.SetSpan(new AbsoluteSizeSpan((int)_iconButton.FontSize, true),
-                    _textStartIndex,
-                     _textStopIndex,
+                   _textStartIndex == -1 ? 0 : _textStartIndex,
+                     _textStopIndex == -1 ? _iconButton.Text.Length : _textStopIndex,
                     SpanTypes.ExclusiveExclusive);
 
 

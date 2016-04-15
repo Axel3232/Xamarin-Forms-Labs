@@ -24,7 +24,8 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.WinRT;
+using Xamarin.Forms.Platform.UWP;
+
 using XLabs.Enums;
 using XLabs.Forms.Controls;
 using Button = Xamarin.Forms.Button;
