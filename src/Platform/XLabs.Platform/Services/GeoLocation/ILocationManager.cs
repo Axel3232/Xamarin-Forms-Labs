@@ -18,7 +18,7 @@ namespace XLabs.Platform.Services.GeoLocation
 
         double Accuracy { get; }
 
-
+        string[] PermissionSet { get; }
 
         bool IsStarted { get; }
 

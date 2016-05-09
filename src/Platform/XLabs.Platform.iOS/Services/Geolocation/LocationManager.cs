@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UIKit;
 using XLabs.Platform.Services.GeoLocation;
@@ -31,7 +30,13 @@ namespace XLabs.Platform.Services.Geolocation
         private bool clearCachedLocations;
 
 
-
+        public string[] PermissionSet
+        {
+            get
+            {
+                return new string[] { };
+            }
+        }
         private AuthorizationStatus GetAuthStatus()
         {
 

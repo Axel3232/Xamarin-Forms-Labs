@@ -293,13 +293,13 @@ namespace XLabs.Platform.Services.Media
 
                 if (!ran)
                 {
-                    if (global::Android.OS.Build.VERSION.Release == "6.0")
-                                        {
-                                    if (CheckSelfPermission(Manifest.Permission.Camera) != Android.Content.PM.Permission.Granted)
-                                    {
-                                        RequestPermissions(new string[] { Manifest.Permission.Camera }, 1);
-                                    }
-                                        }
+                    //if (global::Android.OS.Build.VERSION.Release == "6.0")
+                    //                    {
+                    //                if (CheckSelfPermission(Manifest.Permission.Camera) != Android.Content.PM.Permission.Granted)
+                    //                {
+                    //                    RequestPermissions(new string[] { Manifest.Permission.Camera }, 1);
+                    //                }
+                    //                    }
                     StartActivityForResult(pickIntent, _id);
                 }
             }

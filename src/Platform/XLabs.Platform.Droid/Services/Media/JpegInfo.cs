@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using XLabs.Platform.Services.GeoLocation;
 
@@ -13,7 +14,70 @@ namespace XLabs.Platform.Services.Media
     /// </remarks>
     public class JpegInfo : JpegInfoBase, IJpegInfo
     {
-      
+        /// <summary>
+        /// Sous android, les tag Exif sont lus a partir du fichier lui meme contrairement a ios, la latitude est donc renvoyée
+        /// sous la forme d'un tableau (deg, min, sec) au lieu d'un double, il font donc le retransformer.
+        /// </summary>
+        public override double? GpsLatitude
+        {
+            get
+            {
+                try
+                {
+                    double[] result2 = new double[3];
+                    if (_reader.TryGetTagValue<double[]>(ExifTags.GPSLatitude, out result2) && this.GpsLatitudeRef.HasValue)
+                    {
+                        return this.ExifLatCoordinateToDouble(result2[0], result2[1], result2[2], this.GpsLatitudeRef.Value);
+                    }
+                    return null;
+                }
+                catch (Exception ex)
+	            {
+                    Debug.WriteLine(ex.ToString());
+                    return null;
+                }
+
+               
+            }
+
+            protected set
+            {
+                
+            }
+        }
+
+
+        /// <summary>
+        /// Sous android, les tag Exif sont lus a partir du fichier lui meme contrairement a ios, la longitude est donc renvoyée
+        /// sous la forme d'un tableau (deg, min, sec) au lieu d'un double, il font donc le retransformer.
+        /// </summary>
+        public override double? GpsLongitude
+        {
+            get
+            {
+                try
+                {
+                    double[] result2 = new double[3];
+                    if (_reader.TryGetTagValue<double[]>(ExifTags.GPSLongitude, out result2) && this.GpsLongitudeRef.HasValue)
+                    {
+                        return this.ExifLngCoordinateToDouble(result2[0], result2[1], result2[2], this.GpsLongitudeRef.Value);
+                    }
+                    return null;
+                }
+                catch (Exception ex)
+	            {
+                    Debug.WriteLine(ex.ToString());
+                    return null;
+                }
+
+               
+            }
+
+            protected set
+            {
+                base.GpsLongitude = value;
+            }
+        }
 
         public JpegInfo(string filePath)
         {

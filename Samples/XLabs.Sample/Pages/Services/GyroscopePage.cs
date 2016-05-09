@@ -98,11 +98,11 @@ namespace XLabs.Sample.Pages.Services
 
 
             grid.Children.Add (new Label () { Text = string.Format ("Accelerometer data for {0}", device.Name) });
-            grid.Children.Add (new Label () { Text = "X", XAlign = TextAlignment.Center });
+            grid.Children.Add (new Label () { Text = "X", HorizontalTextAlignment = TextAlignment.Center });
             grid.Children.Add (this.xsensor);
-            grid.Children.Add (new Label () { Text = "Y", XAlign = TextAlignment.Center });
+            grid.Children.Add (new Label () { Text = "Y", VerticalTextAlignment = TextAlignment.Center });
             grid.Children.Add (this.ysensor);
-            grid.Children.Add (new Label () { Text = "Z", XAlign = TextAlignment.Center });
+            grid.Children.Add (new Label () { Text = "Z", HorizontalTextAlignment = TextAlignment.Center });
             grid.Children.Add (this.zsensor);
 
             Content = grid;

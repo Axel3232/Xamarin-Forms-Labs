@@ -55,7 +55,7 @@ namespace XLabs.Sample.Pages.Services
                     Font = font,
                     HeightRequest = heightRequest + 10,
                     Text = string.Format("System font {0} is {1:0.000}in tall.", namedSize, height),
-                    XAlign = TextAlignment.Center
+                    HorizontalTextAlignment = TextAlignment.Center
                 };
 
                 stack.Children.Add(label);
@@ -68,7 +68,7 @@ namespace XLabs.Sample.Pages.Services
             stack.Children.Add(new Label()
             {
                 Text = "The below text should be " + FontSize + "in height from its highest point to lowest.",
-                XAlign = TextAlignment.Center
+                HorizontalTextAlignment = TextAlignment.Center
             });
 
 
@@ -77,18 +77,18 @@ namespace XLabs.Sample.Pages.Services
                 Text = "FfTtLlGgJjPp",
                 TextColor = Color.Lime,
                 FontSize = inchFont.FontSize,
-//                BackgroundColor = Color.Gray,
-//                FontFamily = inchFont.FontFamily,
-                XAlign = TextAlignment.Center,
-                YAlign = TextAlignment.Start
+                //                BackgroundColor = Color.Gray,
+                //                FontFamily = inchFont.FontFamily,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Start
             });
 
 
             stack.Children.Add(new Label()
             {
                 Text = FontSize + "in height = SystemFontOfSize(" + inchFont.FontSize + ")",
-                XAlign = TextAlignment.Center,
-                YAlign = TextAlignment.End
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.End
             });
 
             this.Children.Add(new ContentPage() { Title = "Sizes", Content = stack });

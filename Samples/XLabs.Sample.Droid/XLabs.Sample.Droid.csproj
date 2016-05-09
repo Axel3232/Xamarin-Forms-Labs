@@ -90,9 +90,7 @@
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.ObjectModel" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
@@ -143,15 +141,15 @@
     <Compile Include="CustomHybridRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <AndroidAsset Include="Assets\fonts\Open 24 Display St.ttf" />
     <AndroidAsset Include="Assets\fonts\fontawesome-webfont.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\layout\tabs.axml" />
-    <AndroidResource Include="Resources\layout\toolbar.axml" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\color\" />
+    <Folder Include="Resources\layout\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\imgNotAvailable.png" />

@@ -38,6 +38,11 @@ using XLabs.Platform.Services.Media;
 using XLabs.Serialization;
 using XLabs.Serialization.ServiceStack;
 using Xamarin.Forms.Platform.Android;
+using System;
+using System.Threading.Tasks;
+using Android.Support.V4.Content;
+using Android.Support.V4.App;
+using Android.Runtime;
 
 namespace XLabs.Sample.Droid
 {
@@ -46,16 +51,71 @@ namespace XLabs.Sample.Droid
     /// </summary>
     [Activity(Label = "XLabs.Sample.Droid", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
-    public class MainActivity : XFormsCompactApplicationDroid
+    public class MainActivity : XFormsApplicationDroid, IPermissionManager
     {
+
+        public TaskCompletionSource<bool> PermissionGranted;
+        public Task<bool> CheckPermission(string[] Permissions)
+        {
+
+            PermissionGranted = new TaskCompletionSource<bool>();
+
+            if (((int)Android.OS.Build.VERSION.SdkInt) >= 23)
+            {
+                const int RequestLocationId = 0;
+                bool shouldAskPermission = false;
+                foreach (string perm in Permissions)
+                {
+                    if (ContextCompat.CheckSelfPermission(this.ApplicationContext, perm) != (int)Permission.Granted)
+                    {
+                        shouldAskPermission = true;
+                        break;
+                    }
+
+                }
+
+                if (shouldAskPermission)
+                {
+                    RunOnUiThread(() =>
+                    {
+                        ActivityCompat.RequestPermissions(this, Permissions, RequestLocationId);
+                    });
+
+                    return PermissionGranted.Task;
+                }
+                else
+                {
+                    return Task.FromResult<bool>(true);
+                }
+
+
+
+            }
+            return Task.FromResult<bool>(true);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            foreach (var perm in grantResults)
+            {
+                if (perm == Permission.Denied)
+                {
+                    PermissionGranted.SetResult(false);
+                    return;
+                }
+            }
+            PermissionGranted.SetResult(true);
+        }
+
         /// <summary>
         /// Called when [create].
         /// </summary>
         /// <param name="bundle">The bundle.</param>
         protected override void OnCreate(Bundle bundle)
         {
-            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
-            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+            //FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            //FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
 
             base.OnCreate(bundle);
 
@@ -73,7 +133,7 @@ namespace XLabs.Sample.Droid
             }
             else
             {
-                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsCompactApplicationDroid>;
+                var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
                 if (app != null) app.AppContext = this;
             }
 
@@ -97,7 +157,7 @@ namespace XLabs.Sample.Droid
         {
             var resolverContainer = new SimpleContainer();
 
-            var app = new XFormsAppCompactDroid();
+            var app = new XFormsAppDroid();
 
             app.Init(this);
 
@@ -115,6 +175,7 @@ namespace XLabs.Sample.Droid
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
                 .Register<ISecureStorage>(t => new KeyVaultStorage(t.Resolve<IDevice>().Id.ToCharArray()))
+                .Register<IPermissionManager>(this)
                 .Register<ICacheProvider>(
                     t => new SQLiteSimpleCache(new SQLitePlatformAndroid(),
                         new SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));

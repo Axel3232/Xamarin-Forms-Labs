@@ -19,11 +19,13 @@
 // ***********************************************************************
 // 
 
+using Android;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XLabs.Forms.Mvvm;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
+using XLabs.Platform.Services;
 using XLabs.Platform.Services.Media;
 using XLabs.Sample.Pages.Services;
 
@@ -81,14 +83,16 @@ namespace XLabs.Sample.ViewModel
         /// </summary>
         public CameraViewModel()
 		{
-			Setup();
+			
 		}
 
-		/// <summary>
-		/// Gets or sets the image source.
-		/// </summary>
-		/// <value>The image source.</value>
-		public ImageSource ImageSource
+      
+
+        /// <summary>
+        /// Gets or sets the image source.
+        /// </summary>
+        /// <value>The image source.</value>
+        public ImageSource ImageSource
 		{
 			get
 			{
@@ -189,13 +193,20 @@ namespace XLabs.Sample.ViewModel
 		/// <summary>
 		/// Setups this instance.
 		/// </summary>
-		private void Setup()
+		private async Task  Setup()
 		{
 			if (_mediaPicker != null)
 			{
 				return;
 			}
 
+            string[] perm =
+            {
+                Manifest.Permission.Camera,
+                  Manifest.Permission.ReadExternalStorage
+            };
+
+            bool res = await Resolver.Resolve<IPermissionManager>().CheckPermission(perm);
 			var device = Resolver.Resolve<IDevice>();
 
 			////RM: hack for working on windows phone? 
@@ -208,7 +219,7 @@ namespace XLabs.Sample.ViewModel
 		/// <returns>Take Picture Task.</returns>
 		private async Task<MediaFile> TakePicture()
 		{
-			Setup();
+			await Setup();
 
 			ImageSource = null;
 
@@ -241,7 +252,7 @@ namespace XLabs.Sample.ViewModel
 		/// <returns>Select Picture Task.</returns>
 		private async Task SelectPicture()
 		{
-			Setup();
+			await Setup();
 
 			ImageSource = null;
 			try
@@ -267,7 +278,7 @@ namespace XLabs.Sample.ViewModel
 		/// <returns>Select Video Task.</returns>
 		private async Task SelectVideo()
 		{
-			Setup();
+			await Setup();
 
 			//TODO Localize
 			VideoInfo = "Selecting video";

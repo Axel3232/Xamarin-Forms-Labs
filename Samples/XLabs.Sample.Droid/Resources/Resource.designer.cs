@@ -5333,9 +5333,6 @@ namespace XLabs.Sample.Droid
 			// aapt resource value: 0x7f0c0012
 			public const int showTitle = 2131492882;
 			
-			// aapt resource value: 0x7f0c0085
-			public const int sliding_tabs = 2131492997;
-			
 			// aapt resource value: 0x7f0c0068
 			public const int snackbar_action = 2131492968;
 			
@@ -5392,9 +5389,6 @@ namespace XLabs.Sample.Droid
 			
 			// aapt resource value: 0x7f0c0044
 			public const int title_template = 2131492932;
-			
-			// aapt resource value: 0x7f0c0086
-			public const int toolbar = 2131492998;
 			
 			// aapt resource value: 0x7f0c0030
 			public const int top = 2131492912;
@@ -5618,13 +5612,7 @@ namespace XLabs.Sample.Droid
 			public const int support_simple_spinner_dropdown_item = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int tabs = 2130903092;
-			
-			// aapt resource value: 0x7f030035
-			public const int toolbar = 2130903093;
-			
-			// aapt resource value: 0x7f030036
-			public const int week = 2130903094;
+			public const int week = 2130903092;
 			
 			static Layout()
 			{

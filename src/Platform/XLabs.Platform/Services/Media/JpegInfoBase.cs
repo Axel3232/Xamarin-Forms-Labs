@@ -303,7 +303,7 @@ namespace XLabs.Platform.Services.Media
         /// <summary>
         /// GPS latitude in decimal form.
         /// </summary>
-        public double? GpsLatitude
+        public virtual double? GpsLatitude
         {
             get
             {
@@ -346,7 +346,7 @@ namespace XLabs.Platform.Services.Media
         /// <summary>
         /// GPS longitudein decimal form.
         /// </summary>
-        public double? GpsLongitude
+        public virtual double? GpsLongitude
         {
             get
             {

@@ -116,6 +116,7 @@ namespace XLabs.Platform.Services.Media
                 using (MemoryStream ms = new MemoryStream())
                 {
                     _stream.CopyTo(ms);
+                    ms.Position = 0;
                     Bitmap bm = BitmapFactory.DecodeStream(ms);
                     PixelHeight = bm.Height;
                     PixelWidth = bm.Width;

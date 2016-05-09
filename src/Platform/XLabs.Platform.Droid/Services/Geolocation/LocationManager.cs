@@ -32,6 +32,18 @@ namespace XLabs.Platform.Services.Geolocation
             return true;
         }
 
+        public string[] PermissionSet
+        {
+            get
+            {
+                return new string[]
+                {
+                     Android.Manifest.Permission.AccessCoarseLocation,
+                     Android.Manifest.Permission.AccessFineLocation
+                };
+            }
+        }
+
         public double Accuracy
         {
             get { throw new NotImplementedException(); }

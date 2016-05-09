@@ -71,6 +71,7 @@
     <Compile Include="Services\INetwork.cs" />
     <Compile Include="Services\INfcDevice.cs" />
     <Compile Include="Services\IO\IFileManager.cs" />
+    <Compile Include="Services\IPermissionManager.cs" />
     <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ISecureStorage.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />

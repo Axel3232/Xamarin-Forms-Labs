@@ -35,9 +35,11 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing Storage for the Orientation property
         /// </summary>
+        //public static readonly BindableProperty OrientationProperty =
+        //    BindableProperty.Create<WrapLayout, StackOrientation>(w => w.Orientation, StackOrientation.Vertical);
+
         public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create<WrapLayout, StackOrientation>(w => w.Orientation, StackOrientation.Vertical,
-                propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
+            BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(WrapLayout), StackOrientation.Vertical);
 
         /// <summary>
         /// Orientation (Horizontal or Vertical)
@@ -51,9 +53,13 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing Storage for the Spacing property
         /// </summary>
+        //public static readonly BindableProperty SpacingProperty =
+        //    BindableProperty.Create<WrapLayout, double>(w => w.Spacing, 6,
+        //        propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
+
         public static readonly BindableProperty SpacingProperty =
-            BindableProperty.Create<WrapLayout, double>(w => w.Spacing, 6,
-                propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
+            BindableProperty.Create(nameof(Spacing), typeof(double), typeof(WrapLayout), 6d, propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
+
 
         /// <summary>
         /// Spacing added between elements (both directions)
@@ -71,19 +77,8 @@ namespace XLabs.Forms.Controls
         /// </summary>
         private void OnSizeChanged()
         {
-            ForceLayout();
+            this.ForceLayout();
         }
-
-        //http://forums.xamarin.com/discussion/17961/stacklayout-with-horizontal-orientation-how-to-wrap-vertically#latest
-        //		protected override void OnPropertyChanged
-        //		(string propertyName = null)
-        //		{
-        //			base.OnPropertyChanged(propertyName);
-        //			if ((propertyName == WrapLayout.OrientationProperty.PropertyName) ||
-        //				(propertyName == WrapLayout.SpacingProperty.PropertyName)) {
-        //				this.OnSizeChanged();
-        //			}
-        //		}
 
         /// <summary>
         /// This method is called during the measure pass of a layout cycle to get the desired size of an element.
@@ -93,21 +88,17 @@ namespace XLabs.Forms.Controls
         protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
         {
             if (WidthRequest > 0)
-            {
                 widthConstraint = Math.Min(widthConstraint, WidthRequest);
-            }
-
             if (HeightRequest > 0)
-            {
                 heightConstraint = Math.Min(heightConstraint, HeightRequest);
-            }
 
-            var internalWidth = double.IsPositiveInfinity(widthConstraint) ? double.PositiveInfinity : Math.Max(0, widthConstraint);
-            var internalHeight = double.IsPositiveInfinity(heightConstraint) ? double.PositiveInfinity : Math.Max(0, heightConstraint);
-            
+            double internalWidth = double.IsPositiveInfinity(widthConstraint) ? double.PositiveInfinity : Math.Max(0, widthConstraint);
+            double internalHeight = double.IsPositiveInfinity(heightConstraint) ? double.PositiveInfinity : Math.Max(0, heightConstraint);
+
             return Orientation == StackOrientation.Vertical
                 ? DoVerticalMeasure(internalWidth, internalHeight)
                     : DoHorizontalMeasure(internalWidth, internalHeight);
+
         }
 
         /// <summary>
@@ -118,7 +109,7 @@ namespace XLabs.Forms.Controls
         /// <param name="heightConstraint">Height constraint.</param>
         private SizeRequest DoVerticalMeasure(double widthConstraint, double heightConstraint)
         {
-            var columnCount = 1;
+            int columnCount = 1;
 
             double width = 0;
             double height = 0;
@@ -126,12 +117,12 @@ namespace XLabs.Forms.Controls
             double minHeight = 0;
             double heightUsed = 0;
 
-            foreach (var size in Children.Where(c => c.IsVisible).Select(item => item.GetSizeRequest(widthConstraint, heightConstraint)))
+            foreach (var item in Children)
             {
+                var size = item.GetSizeRequest(widthConstraint, heightConstraint);
                 width = Math.Max(width, size.Request.Width);
 
                 var newHeight = height + size.Request.Height + Spacing;
-
                 if (newHeight > heightConstraint)
                 {
                     columnCount++;
@@ -139,21 +130,17 @@ namespace XLabs.Forms.Controls
                     height = size.Request.Height;
                 }
                 else
-                {
                     height = newHeight;
-                }
 
                 minHeight = Math.Max(minHeight, size.Minimum.Height);
                 minWidth = Math.Max(minWidth, size.Minimum.Width);
             }
 
-            if (columnCount <= 1)
+            if (columnCount > 1)
             {
-                return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
+                height = Math.Max(height, heightUsed);
+                width *= columnCount;  // take max width
             }
-
-            height = Math.Max(height, heightUsed);
-            width *= columnCount;  // take max width
 
             return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
         }
@@ -166,7 +153,7 @@ namespace XLabs.Forms.Controls
         /// <param name="heightConstraint">Height constraint.</param>
         private SizeRequest DoHorizontalMeasure(double widthConstraint, double heightConstraint)
         {
-            var rowCount = 1;
+            int rowCount = 1;
 
             double width = 0;
             double height = 0;
@@ -174,14 +161,12 @@ namespace XLabs.Forms.Controls
             double minHeight = 0;
             double widthUsed = 0;
 
-            foreach (var item in Children.Where(c => c.IsVisible))
+            foreach (var item in Children)
             {
                 var size = item.GetSizeRequest(widthConstraint, heightConstraint);
-
                 height = Math.Max(height, size.Request.Height);
 
                 var newWidth = width + size.Request.Width + Spacing;
-
                 if (newWidth > widthConstraint)
                 {
                     rowCount++;
@@ -189,22 +174,17 @@ namespace XLabs.Forms.Controls
                     width = size.Request.Width;
                 }
                 else
-                {
                     width = newWidth;
-                }
 
                 minHeight = Math.Max(minHeight, size.Minimum.Height);
                 minWidth = Math.Max(minWidth, size.Minimum.Width);
             }
 
-            if (rowCount <= 1)
+            if (rowCount > 1)
             {
-                return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
+                width = Math.Max(width, widthUsed);
+                height *= rowCount;  // take max height
             }
-
-            width = Math.Max(width, widthUsed);
-            height = (height + Spacing)*rowCount;   // - Spacing;
-            //height *= rowCount;  // take max height
 
             return new SizeRequest(new Size(width, height), new Size(minWidth, minHeight));
         }
@@ -221,16 +201,14 @@ namespace XLabs.Forms.Controls
             if (Orientation == StackOrientation.Vertical)
             {
                 double colWidth = 0;
-                var yPos = y;
-                var xPos = x;
+                double yPos = y, xPos = x;
 
                 foreach (var child in Children.Where(c => c.IsVisible))
                 {
                     var request = child.GetSizeRequest(width, height);
 
-                    var childWidth = request.Request.Width;
-                    var childHeight = request.Request.Height;
-
+                    double childWidth = request.Request.Width;
+                    double childHeight = request.Request.Height;
                     colWidth = Math.Max(colWidth, childWidth);
 
                     if (yPos + childHeight > height)
@@ -241,33 +219,21 @@ namespace XLabs.Forms.Controls
                     }
 
                     var region = new Rectangle(xPos, yPos, childWidth, childHeight);
-
                     LayoutChildIntoBoundingRegion(child, region);
-
                     yPos += region.Height + Spacing;
                 }
             }
             else
             {
                 double rowHeight = 0;
-                var yPos = y;
-                var xPos = x;
-
-                double max = 0;
-
-                foreach (var child in Children.Where(c => c.IsVisible))
-                {
-                    var request = child.GetSizeRequest(width, height);
-                    max = Math.Max(max, request.Request.Width);
-                }
+                double yPos = y, xPos = x;
 
                 foreach (var child in Children.Where(c => c.IsVisible))
                 {
                     var request = child.GetSizeRequest(width, height);
 
-                    var childWidth = request.Request.Width;
-                    var childHeight = request.Request.Height;
-
+                    double childWidth = request.Request.Width;
+                    double childHeight = request.Request.Height;
                     rowHeight = Math.Max(rowHeight, childHeight);
 
                     if (xPos + childWidth > width)
@@ -278,9 +244,7 @@ namespace XLabs.Forms.Controls
                     }
 
                     var region = new Rectangle(xPos, yPos, childWidth, childHeight);
-
                     LayoutChildIntoBoundingRegion(child, region);
-
                     xPos += region.Width + Spacing;
                 }
 
