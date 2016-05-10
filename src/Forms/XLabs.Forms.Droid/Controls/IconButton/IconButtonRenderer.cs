@@ -61,48 +61,41 @@ namespace XLabs.Forms.Controls
             {
                 if (_helper == null)
                     _helper = new TextViewRenderHelper(Context);
-                if (_iconSpan == null)
+               
+                _nativeBtn = (Android.Widget.Button)this.Control;
+                _iconButton = (IconButton)e.NewElement;
+                  
+                _iconFont = _helper.TrySetFont("fontawesome-webfont.ttf");
+                _textFont = _iconButton.Font.ToTypeface();
+                _iconButton.IconSize = _iconButton.IconSize == 0 ? (float)_iconButton.FontSize : _iconButton.IconSize;
+                var computedString = BuildRawTextString();
+
+                _iconSpan = BuildSpannableString(computedString);
+                if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Center)
                 {
-                    _nativeBtn = (Android.Widget.Button)this.Control;
-                    _iconButton = (IconButton)e.NewElement;
-                    //if( _iconButton.BorderWidth>0)
-                    //{
-                    //    GradientDrawable gd1 = new GradientDrawable();
-                    //    gd1.SetColor(_iconButton.BackgroundColor.ToAndroid());
-                    //    gd1.SetCornerRadius(_iconButton.BorderRadius);
-                    //    gd1.SetStroke((int)_iconButton.BorderWidth, _iconButton.BorderColor.ToAndroid());
-                    //    _nativeBtn.Background = gd1;
-                    //}
-                    _iconFont = _helper.TrySetFont("fontawesome-webfont.ttf");
-                    _textFont = _iconButton.Font.ToTypeface();
-                    _iconButton.IconSize = _iconButton.IconSize == 0 ? (float)_iconButton.FontSize : _iconButton.IconSize;
-                    var computedString = BuildRawTextString();
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Center;
 
-                    _iconSpan = BuildSpannableString(computedString);
-                    if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Center)
-                    {
-                        _nativeBtn.Gravity = Android.Views.GravityFlags.Center;
-
-                    }
-                    else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.End)
-                    {
-                        _nativeBtn.Gravity = Android.Views.GravityFlags.Right;
-                    }
-                    else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Start)
-                    {
-                        _nativeBtn.Gravity = Android.Views.GravityFlags.Left;
-                    }
-                    _nativeBtn.TransformationMethod = null;
-                    _nativeBtn.SetPadding(0, 0, 0, 0);
-                    _nativeBtn.AfterTextChanged += nativeBtn_AfterTextChanged;
                 }
+                else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.End)
+                {
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Right;
+                }
+                else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Start)
+                {
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Left;
+                }
+                _nativeBtn.TransformationMethod = null;
+                _nativeBtn.SetPadding(0, 0, 0, 0);
+                _nativeBtn.AfterTextChanged += nativeBtn_AfterTextChanged;
+                
             }
 
 
         }
 
         /// <summary>
-        /// Since they are several over write of the Test property during layout we have to set this field as long as it is not definitly set
+        /// Since they are several overwrite of the Text property during layout we have to set this field as long as it is not definitly set
+        /// Dirty workaround
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
