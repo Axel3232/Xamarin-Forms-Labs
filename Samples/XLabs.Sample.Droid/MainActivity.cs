@@ -43,6 +43,8 @@ using System.Threading.Tasks;
 using Android.Support.V4.Content;
 using Android.Support.V4.App;
 using Android.Runtime;
+using XLabs.Platform.Services.GeoLocation;
+using XLabs.Platform.Services.Geolocation;
 
 namespace XLabs.Sample.Droid
 {
@@ -171,6 +173,7 @@ namespace XLabs.Sample.Droid
                 .Register<IJsonSerializer, JsonSerializer>()
                 .Register<IEmailService, EmailService>()
                 .Register<IMediaPicker, MediaPicker>()
+                .Register<ILocationManager, LocationManager>()
                 .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)

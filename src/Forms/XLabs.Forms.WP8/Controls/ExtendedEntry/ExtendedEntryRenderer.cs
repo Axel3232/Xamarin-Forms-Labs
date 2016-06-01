@@ -56,14 +56,14 @@ namespace XLabs.Forms.Controls
             var view = (ExtendedEntry)Element;
 
             //Because Xamarin EntryRenderer switches the type of control we need to find the right one
-            if (view.IsPassword)
-            {
-                _thisPasswordBox = (PasswordBox) Control.Children.FirstOrDefault(c => c is PasswordBox);
-            }
-            else
-            {
-                _thisPhoneTextBox = (PhoneTextBox) Control.Children.FirstOrDefault(c => c is PhoneTextBox);
-            }
+            //if (view.IsPassword)
+            //{
+            //    _thisPasswordBox = (PasswordBox) Control.FirstOrDefault(c => c is PasswordBox);
+            //}
+            //else
+            //{
+            //    _thisPhoneTextBox = (PhoneTextBox) Control.Children.FirstOrDefault(c => c is PhoneTextBox);
+            //}
 
             SetFont(view);
             SetTextAlignment(view);

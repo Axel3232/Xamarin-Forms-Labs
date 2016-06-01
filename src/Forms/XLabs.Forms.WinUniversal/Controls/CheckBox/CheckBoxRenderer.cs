@@ -21,11 +21,12 @@
 
 using System.ComponentModel;
 using Windows.UI.Xaml.Media;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.UWP;
 
 using XLabs.Forms.Controls;
 using NativeCheckBox = Windows.UI.Xaml.Controls.CheckBox;
+
+using Xamarin.Forms.Platform.UWP;
+using Xamarin.Forms;
 
 [assembly: ExportRenderer(typeof(XLabs.Forms.Controls.CheckBox), typeof(CheckBoxRenderer))]
 
