@@ -36,7 +36,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86,x86_64</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkSkip />
     <BundleAssemblies>False</BundleAssemblies>

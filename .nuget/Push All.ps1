@@ -28,9 +28,16 @@ try
     $host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
     $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::White
     
+	$pushSource = "http://vfrget.azurewebsites.net/nuget"
+	$apiKey = "3d6f6b32-abe5-41eb-9491-e40b2499be95"
+
+	&$pathToNuGetPackager Sources Update -Name vfrtracks -Source ($pushSource) -UserName test -Password test
+
     Write-Host "Publish all XLabs NuGet packages" -ForegroundColor White
     Write-Host "====================================" -ForegroundColor White
     
+	
+
     ## Get list of packages (without ".symbols.") from Packages folder
     ## ---------------------------------------------------------------
     Write-Host "Get list of packages..." -ForegroundColor Yellow
@@ -39,7 +46,15 @@ try
     ## Spawn off individual publish processes...
     ## -----------------------------------------
     Write-Host "Publishing packages..." -ForegroundColor Yellow
-    $packages | ForEach { & $pathToNuGetPackager Push "$_" }
+	Foreach($pkg in $packages)
+	{
+		#$cmd = $( $pathToNuGetPackager + " Push " + $pkg + " -s http://vfrget.azurewebsites.net/nuget 3d6f6b32-abe5-41eb-9491-e40b2499be95")
+		
+		 &$pathToNuGetPackager push ($pkg) -Source $pushSource -apiKey $apiKey
+
+		
+	}
+   # $packages | ForEach { & $pathToNuGetPackager "Push" "$_" "-s http://vfrget.azurewebsites.net/nuget 3d6f6b32-abe5-41eb-9491-e40b2499be95"  }
     Write-Host "Publish all done." -ForegroundColor Green
 }
 catch 

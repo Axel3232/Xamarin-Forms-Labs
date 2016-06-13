@@ -30,6 +30,7 @@ using XLabs.Enums;
 using XLabs.Forms.Controls;
 using System.Collections.Generic;
 using Android.Graphics.Drawables;
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(IconButton), typeof(IconButtonRenderer))]
 namespace XLabs.Forms.Controls
@@ -91,6 +92,34 @@ namespace XLabs.Forms.Controls
             }
 
 
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            if(e.PropertyName == IconButton.TextProperty.PropertyName ||
+                e.PropertyName == IconButton.IconProperty.PropertyName ||
+                e.PropertyName == IconButton.TextAlignementProperty.PropertyName ||
+                e.PropertyName == IconButton.TextColorProperty.PropertyName ||
+                e.PropertyName == IconButton.IconColorProperty.PropertyName)
+            {
+                var computedString = BuildRawTextString();
+
+                _iconSpan = BuildSpannableString(computedString);
+                if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Center)
+                {
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Center;
+
+                }
+                else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.End)
+                {
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Right;
+                }
+                else if (_iconButton.TextAlignement == Xamarin.Forms.TextAlignment.Start)
+                {
+                    _nativeBtn.Gravity = Android.Views.GravityFlags.Left;
+                }
+            }
         }
 
         /// <summary>

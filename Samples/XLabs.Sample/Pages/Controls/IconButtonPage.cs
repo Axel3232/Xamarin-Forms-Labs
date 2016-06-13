@@ -63,6 +63,14 @@ namespace XLabs.Sample.Pages.Controls
                 BackgroundColor = Color.Gray,
                 FontSize = 20
             };
+            btn2.Clicked += (s, arg) =>
+             {
+                 if (btn2.Text == "Different color and size")
+                     btn2.Text = "test";
+                 else
+                     btn2.Text = "Different color and size";
+
+             };
 
             IconButton btn3 = null;
             Device.OnPlatform(null, () =>
