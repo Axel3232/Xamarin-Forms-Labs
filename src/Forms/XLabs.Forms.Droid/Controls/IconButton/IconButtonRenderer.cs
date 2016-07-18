@@ -97,12 +97,15 @@ namespace XLabs.Forms.Controls
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if(e.PropertyName == IconButton.TextProperty.PropertyName ||
-                e.PropertyName == IconButton.IconProperty.PropertyName ||
-                e.PropertyName == IconButton.TextAlignementProperty.PropertyName ||
-                e.PropertyName == IconButton.TextColorProperty.PropertyName ||
-                e.PropertyName == IconButton.IconColorProperty.PropertyName)
-            {
+            if (e.PropertyName == IconButton.IconColorProperty.PropertyName
+                || e.PropertyName == IconButton.IconProperty.PropertyName
+                || e.PropertyName == IconButton.TextProperty.PropertyName
+                || e.PropertyName == IconButton.TextColorProperty.PropertyName
+                || e.PropertyName == IconButton.IsVisibleProperty.PropertyName
+                || e.PropertyName == IconButton.IconSizeProperty.PropertyName                
+                || e.PropertyName == IconButton.FontSizeProperty.PropertyName
+                || e.PropertyName == IconButton.OrientationProperty.PropertyName)
+            { 
                 var computedString = BuildRawTextString();
 
                 _iconSpan = BuildSpannableString(computedString);
