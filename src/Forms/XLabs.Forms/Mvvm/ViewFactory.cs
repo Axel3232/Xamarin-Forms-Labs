@@ -171,18 +171,15 @@ namespace XLabs.Forms.Mvvm
 		/// <param name="args">The arguments.</param>
 		/// <returns>Page for the ViewModel.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel.</exception>
-		public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null, params object[] args)
+		public static TPage CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null, params object[] args)
 			where TViewModel : class, IViewModel
 		{
 			Action<object, object> i = (o1, o2) =>
 			{
-				if (initialiser != null)
-				{
-					initialiser((TViewModel) o1, (TPage) o2);
-				}
-			};
+                initialiser?.Invoke((TViewModel)o1, (TPage)o2);
+            };
 
-			return CreatePage(typeof (TViewModel), i, args);
+			return (TPage)CreatePage(typeof (TViewModel), i, args);
 		}
 
 		/// <summary>
