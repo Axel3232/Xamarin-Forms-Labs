@@ -24,77 +24,102 @@ using XLabs.Platform.Extensions;
 
 namespace XLabs.Platform.Device
 {
-	/// <summary>
-	/// Apple iPod.
-	/// </summary>
-	public class Pod : AppleDevice
-	{
-		/// <summary>
-		/// Enum PodVersion
-		/// </summary>
-		public enum PodVersion
-		{
-			/// <summary>
-			/// The first generation
-			/// </summary>
-			[Description("iPod Touch 1G")]
-			FirstGeneration = 1,
+    /// <summary>
+    /// Apple iPod.
+    /// </summary>
+    public class Pod : AppleDevice
+    {
+        /// <summary>
+        /// Enum PodVersion
+        /// </summary>
+        public enum PodVersion
+        {
+            /// <summary>
+            /// The first generation
+            /// </summary>
+            [Description("iPod Touch 1G")]
+            FirstGeneration = 1,
 
-			/// <summary>
-			/// The second generation
-			/// </summary>
-			[Description("iPod Touch 2G")]
-			SecondGeneration,
+            /// <summary>
+            /// The second generation
+            /// </summary>
+            [Description("iPod Touch 2G")]
+            SecondGeneration,
 
-			/// <summary>
-			/// The third generation
-			/// </summary>
-			[Description("iPod Touch 3G")]
-			ThirdGeneration,
+            /// <summary>
+            /// The third generation
+            /// </summary>
+            [Description("iPod Touch 3G")]
+            ThirdGeneration,
 
-			/// <summary>
-			/// The fourth generation
-			/// </summary>
-			[Description("iPod Touch 4G")]
-			FourthGeneration,
+            /// <summary>
+            /// The fourth generation
+            /// </summary>
+            [Description("iPod Touch 4G")]
+            FourthGeneration,
 
-			/// <summary>
-			/// The fifth generation
-			/// </summary>
-			[Description("iPod Touch 5G")]
-			FifthGeneration
-		}
+            /// <summary>
+            /// The fifth generation
+            /// </summary>
+            [Description("iPod Touch 5G")]
+            FifthGeneration,
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Pod" /> class.
-		/// </summary>
-		/// <param name="majorVersion">Major version.</param>
-		/// <param name="minorVersion">Minor version.</param>
-		public Pod(int majorVersion, int minorVersion)
-		{
-			Version = (PodVersion)majorVersion;
-			PhoneService = null;
+            /// <summary>
+            /// The fifth generation
+            /// </summary>
+            [Description("iPod Touch 6G")]
+            SixthGeneration
+        }
 
-			Name = HardwareVersion = Version.GetDescription();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pod" /> class.
+        /// </summary>
+        /// <param name="majorVersion">Major version.</param>
+        /// <param name="minorVersion">Minor version.</param>
+        public Pod(int majorVersion, int minorVersion)
+        {
+            if (majorVersion < 6)
+            {
+                Version = (PodVersion)majorVersion;
+            }
+            else if (majorVersion == 7)
+            {
+                Version = PodVersion.SixthGeneration;
+            }
 
-			if (majorVersion > 4)
-			{
-				Display = new Display(1136, 640, 326, 326);
-			}
-			else if (majorVersion > 3)
-			{
-				Display = new Display(960, 640, 326, 326);
-			}
-			else
-			{
-				Display = new Display(480, 320, 163, 163);
-			}
-		}
+            PhoneService = null;
 
-		/// <summary>
-		/// Gets the version of iPod.
-		/// </summary>
-		/// <value>The version.</value>
-		public PodVersion Version { get; private set; }
-	}
+            int width;
+            int height;
+            if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            {
+                CoreGraphics.CGRect bounds = UIKit.UIScreen.MainScreen.NativeBounds;
+                width = (int)bounds.Width;
+                height = (int)bounds.Height;
+            }
+            else
+            {
+                //All older devices are portrait by design so treat the default bounds as such
+                CoreGraphics.CGRect bounds = UIKit.UIScreen.MainScreen.Bounds;
+                width = System.Math.Min((int)bounds.Width, (int)bounds.Height);
+                height = System.Math.Max((int)bounds.Width, (int)bounds.Height);
+            }
+
+            width *= (int)UIKit.UIScreen.MainScreen.Scale;
+            height *= (int)UIKit.UIScreen.MainScreen.Scale;
+
+            double baseDPI = 163; //dpi from 1st Gen iPhone devices
+            double dpi = baseDPI * UIKit.UIScreen.MainScreen.Scale;
+
+            Display = new Display(height, width, dpi, dpi);
+
+            Name = HardwareVersion = Version.GetDescription();
+        }
+
+        /// <summary>
+        /// Gets the version of iPod.
+        /// </summary>
+        /// <value>The version.</value>
+        public PodVersion Version { get; private set; }
+    }
 }

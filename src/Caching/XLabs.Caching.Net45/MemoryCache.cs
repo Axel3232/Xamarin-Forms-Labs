@@ -2,7 +2,7 @@
 // Assembly         : XLabs.Caching.Net45
 // Author           : XLabs Team
 // Created          : 12-27-2015
-// 
+//
 // Last Modified By : XLabs Team
 // Last Modified On : 01-04-2016
 // ***********************************************************************
@@ -12,12 +12,12 @@
 // <summary>
 //       This project is licensed under the Apache 2.0 license
 //       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
+//
+//       XLabs is a open source project that aims to provide a powerfull and cross
 //       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
-// 
+//
 #region
 
 using System;
@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace XLabs.Caching
+namespace XLabs.Caching.Net45
 {
 	/// <summary>
 	/// A .NET MemoryCache if the XLabs IAsyncCacheProvider and ICacheProvider .
@@ -66,7 +66,7 @@ namespace XLabs.Caching
 			}
 		}
 
-		#region Async 
+		#region Async
 
 		#region Get
 		/// <summary>
@@ -454,6 +454,6 @@ namespace XLabs.Caching
 			return true;
 		}
 		#endregion Flush
-		#endregion Async 
+		#endregion Async
 	}
 }

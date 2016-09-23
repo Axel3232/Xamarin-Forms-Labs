@@ -1,5 +1,4 @@
-﻿#if BUSINESS_LICENSE
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Json;
 
 namespace XLabs.Serialization
@@ -12,10 +11,7 @@ namespace XLabs.Serialization
         /// <summary>
         /// Gets the format.
         /// </summary>
-        public override SerializationFormat Format
-        {
-            get { return SerializationFormat.Json; }
-        }
+        public override SerializationFormat Format => SerializationFormat.Json;
 
         /// <summary>
         /// Cleans memory.
@@ -43,7 +39,7 @@ namespace XLabs.Serialization
         /// <returns>Object of type T.</returns>
         public override T Deserialize<T>(Stream stream)
         {
-            return (T)this.Deserialize(stream, typeof (T));
+            return (T)Deserialize(stream, typeof (T));
         }
 
         /// <summary>
@@ -66,7 +62,7 @@ namespace XLabs.Serialization
         /// <returns>Object of type T.</returns>
         public override T Deserialize<T>(string data)
         {
-            return (this as IStreamSerializer).DeserializeFromString<T>(data, System.Text.Encoding.UTF8);
+            return this.DeserializeFromString<T>(data, System.Text.Encoding.UTF8);
         }
 
         /// <summary>
@@ -77,8 +73,7 @@ namespace XLabs.Serialization
         /// <returns>Serialized string of the object.</returns>
         public override string Serialize<T>(T obj)
         {
-            return (this as IStreamSerializer).SerializeToString(obj, System.Text.Encoding.UTF8);
+            return this.SerializeToString(obj, System.Text.Encoding.UTF8);
         }
     }
 }
-#endif

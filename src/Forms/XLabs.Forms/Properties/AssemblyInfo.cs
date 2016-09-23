@@ -32,7 +32,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
-#if !_USE_SHARED_ASSEMBLYINFO
+#if _USE_INDIVIDUAL_ASSEMBLYINFO
 [assembly: AssemblyCompany("XLabs Team")]
 [assembly: AssemblyProduct("XLabs")]
 [assembly: AssemblyCopyright("Copyright © XLabs Team 2016")]
@@ -52,10 +52,3 @@ using System.Runtime.CompilerServices;
 
 //[assembly: AssemblyFileVersion("2.0.*")]
 #endif
-
-[assembly: InternalsVisibleTo("XLabs.Forms.Droid")]
-[assembly: InternalsVisibleTo("XLabs.Forms.iOS")]
-[assembly: InternalsVisibleTo("XLabs.Forms.WP8")]
-[assembly: InternalsVisibleTo("Xlabs.Forms.WP81")]
-[assembly: InternalsVisibleTo("XLabs.Forms.UWP")]
-[assembly: InternalsVisibleTo("XLabs.Forms.WinUniversal")]

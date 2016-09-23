@@ -2,7 +2,7 @@
 // Assembly         : XLabs.Forms.Droid
 // Author           : XLabs Team
 // Created          : 12-27-2015
-// 
+//
 // Last Modified By : XLabs Team
 // Last Modified On : 01-04-2016
 // ***********************************************************************
@@ -12,12 +12,12 @@
 // <summary>
 //       This project is licensed under the Apache 2.0 license
 //       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
+//
+//       XLabs is a open source project that aims to provide a powerfull and cross
 //       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
-// 
+//
 
 using System;
 using Android.Graphics;
@@ -27,18 +27,18 @@ using Xamarin.Forms.Platform.Android;
 using XLabs.Forms.Controls;
 using XLabs.Forms.Extensions;
 
-[assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRender))]
+[assembly: ExportRenderer(typeof(ExtendedLabel), typeof(ExtendedLabelRenderer))]
 namespace XLabs.Forms.Controls
 {
 	/// <summary>
 	/// Class ExtendedLabelRender.
 	/// </summary>
-	public class ExtendedLabelRender : LabelRenderer
+	public class ExtendedLabelRenderer : LabelRenderer
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ExtendedLabelRender"/> class.
+		/// Initializes a new instance of the <see cref="ExtendedLabelRenderer"/> class.
 		/// </summary>
-		public ExtendedLabelRender()
+		public ExtendedLabelRenderer()
 		{
 		}
 
@@ -113,7 +113,7 @@ namespace XLabs.Forms.Controls
 		private Typeface TrySetFont(string fontName)
 		{
 			try
-			{                
+			{
 				return Typeface.CreateFromAsset(Context.Assets, "fonts/" + fontName);
 			} catch(Exception ex)
 			{

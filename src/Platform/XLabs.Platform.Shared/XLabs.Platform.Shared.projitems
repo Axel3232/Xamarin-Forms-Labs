@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>{06BE7C1D-FCBF-48BF-9886-D11734BD6150}</SharedGUID>
+    <SharedGUID>fc8dc19a-0aba-4922-9719-2debb20397f6</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>XLabs.Platform.Shared</Import_RootNamespace>

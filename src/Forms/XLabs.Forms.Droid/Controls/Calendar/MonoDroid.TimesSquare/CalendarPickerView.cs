@@ -29,6 +29,7 @@ using Android.Support.V4.View;
 using Android.Util;
 using Android.Widget;
 using Java.Lang;
+using XLabs.Forms.Droid;
 
 namespace XLabs.Forms.Controls.MonoDroid.TimesSquare
 {

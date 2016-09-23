@@ -2,7 +2,7 @@
 // Assembly         : XLabs.Platform.Droid
 // Author           : XLabs Team
 // Created          : 12-27-2015
-// 
+//
 // Last Modified By : XLabs Team
 // Last Modified On : 01-04-2016
 // ***********************************************************************
@@ -12,14 +12,15 @@
 // <summary>
 //       This project is licensed under the Apache 2.0 license
 //       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
+//
+//       XLabs is a open source project that aims to provide a powerfull and cross
 //       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
-// 
+//
 
 using System;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using Android.App;
@@ -37,6 +38,7 @@ using XLabs.Enums;
 using XLabs.Platform.Services;
 using XLabs.Platform.Services.IO;
 using XLabs.Platform.Services.Media;
+using FileMode = System.IO.FileMode;
 
 namespace XLabs.Platform.Device
 {
@@ -53,7 +55,7 @@ namespace XLabs.Platform.Device
         private INetwork network;
 
         /// <summary>
-        /// Creates a default instance of <see cref="AndroidDevice"/>. 
+        /// Creates a default instance of <see cref="AndroidDevice"/>.
         /// </summary>
         public AndroidDevice()
         {
@@ -275,20 +277,46 @@ namespace XLabs.Platform.Device
         {
             get
             {
-                var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
-
-                switch (wm.DefaultDisplay.Rotation)
+                using (var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>())
+                using (var dm = new DisplayMetrics())
                 {
-                    case SurfaceOrientation.Rotation0:
-                        return Orientation.Portrait & Orientation.PortraitUp;
-                    case SurfaceOrientation.Rotation90:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
-                    case SurfaceOrientation.Rotation180:
-                        return Orientation.Portrait & Orientation.PortraitDown;
-                    case SurfaceOrientation.Rotation270:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
-                    default:
-                        return Orientation.None;
+                    var rotation = wm.DefaultDisplay.Rotation;
+                    wm.DefaultDisplay.GetMetrics(dm);
+
+                    var width = dm.WidthPixels;
+                    var height = dm.HeightPixels;
+
+                    if (height > width && (rotation == SurfaceOrientation.Rotation0 || rotation == SurfaceOrientation.Rotation180)  ||
+                        width > height && (rotation == SurfaceOrientation.Rotation90 || rotation == SurfaceOrientation.Rotation270))
+                    {
+                        switch (rotation)
+                        {
+                            case SurfaceOrientation.Rotation0:
+                                return Orientation.Portrait & Orientation.PortraitUp;
+                            case SurfaceOrientation.Rotation90:
+                                return Orientation.Landscape & Orientation.LandscapeLeft;
+                            case SurfaceOrientation.Rotation180:
+                                return Orientation.Portrait & Orientation.PortraitDown;
+                            case SurfaceOrientation.Rotation270:
+                                return Orientation.Landscape & Orientation.LandscapeRight;
+                            default:
+                                return Orientation.None;
+                        }
+                    }
+
+                    switch (rotation)
+                    {
+                        case SurfaceOrientation.Rotation0:
+                            return Orientation.Landscape & Orientation.LandscapeLeft;
+                        case SurfaceOrientation.Rotation90:
+                            return Orientation.Portrait & Orientation.PortraitUp;
+                        case SurfaceOrientation.Rotation180:
+                            return Orientation.Landscape & Orientation.LandscapeRight;
+                        case SurfaceOrientation.Rotation270:
+                            return Orientation.Portrait & Orientation.PortraitDown;
+                        default:
+                            return Orientation.None;
+                    }
                 }
             }
         }
@@ -319,9 +347,9 @@ namespace XLabs.Platform.Device
         /// Gets the total memory in bytes.
         /// </summary>
         /// <value>The total memory in bytes.</value>
-        public long TotalMemory 
+        public long TotalMemory
         {
-            get 
+            get
             {
                 return DeviceTotalMemory;
             }
@@ -329,7 +357,17 @@ namespace XLabs.Platform.Device
 
         private static long GetTotalMemory()
         {
-            using (var reader = new RandomAccessFile("/proc/meminfo", "r")) 
+
+            using (var reader = new RandomAccessFile("/proc/meminfo", "r"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Log.Debug("Memory", line);
+                }
+            }
+
+            using (var reader = new RandomAccessFile("/proc/meminfo", "r"))
             {
                 var line = reader.ReadLine(); // first line --> MemTotal: xxxxxx kB
                 var split = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

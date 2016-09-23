@@ -2,7 +2,7 @@
 // Assembly         : XLabs.Forms
 // Author           : XLabs Team
 // Created          : 12-27-2015
-// 
+//
 // Last Modified By : XLabs Team
 // Last Modified On : 01-04-2016
 // ***********************************************************************
@@ -12,12 +12,12 @@
 // <summary>
 //       This project is licensed under the Apache 2.0 license
 //       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
+//
+//       XLabs is a open source project that aims to provide a powerfull and cross
 //       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -38,45 +38,51 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The uri property.
         /// </summary>
-        public static readonly BindableProperty UriProperty = BindableProperty.Create<HybridWebView, Uri>(p => p.Uri,
-            default(Uri));
+        public static readonly BindableProperty UriProperty = 
+            BindableProperty.Create("Uri", typeof(Uri), typeof(HybridWebView), default(Uri));
 
         /// <summary>
         /// The source property.
         /// </summary>
         public static readonly BindableProperty SourceProperty =
-            BindableProperty.Create<HybridWebView, WebViewSource>(p => p.Source, default(WebViewSource));
+            BindableProperty.Create("Source", typeof(WebViewSource), typeof(HybridWebView), default(WebViewSource));
 
         /// <summary>
         /// Boolean to indicate cleanup has been called.
         /// </summary>
-        public static readonly BindableProperty CleanupProperty = 
-            BindableProperty.Create<HybridWebView, bool> (p => p.CleanupCalled, false);
+        public static readonly BindableProperty CleanupProperty =
+            BindableProperty.Create("CleanupCalled", typeof(bool), typeof(HybridWebView), false);
 
         /// <summary>
         /// The java script load requested
         /// </summary>
         internal EventHandler<string> JavaScriptLoadRequested;
-        /// <summary>
-        /// The left swipe
-        /// </summary>
-        public EventHandler LeftSwipe;
-        /// <summary>
-        /// The load content requested
-        /// </summary>
-        internal EventHandler<LoadContentEventArgs> LoadContentRequested;
-        /// <summary>
-        /// The load finished
-        /// </summary>
-        public EventHandler LoadFinished;
+
         /// <summary>
         /// The load from content requested
         /// </summary>
         internal EventHandler<LoadContentEventArgs> LoadFromContentRequested;
+
+        /// <summary>
+        /// The load content requested
+        /// </summary>
+        internal EventHandler<LoadContentEventArgs> LoadContentRequested;
+
+        /// <summary>
+        /// The left swipe
+        /// </summary>
+        public EventHandler LeftSwipe;
+
+        /// <summary>
+        /// The load finished
+        /// </summary>
+        public EventHandler LoadFinished;
+
         /// <summary>
         /// The navigating
         /// </summary>
-        public EventHandler<XLabs.EventArgs<Uri>> Navigating;
+        public EventHandler<EventArgs<Uri>> Navigating;
+
         /// <summary>
         /// The right swipe
         /// </summary>
@@ -105,23 +111,12 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="HybridWebView" /> class.
         /// </summary>
-        /// <exception cref="Exception">Exception when there is no <see cref="IJsonSerializer"/> implementation registered.</exception>
         /// <remarks>HybridWebView will use <see cref="IJsonSerializer" /> configured
-        /// with <see cref="Resolver"/> or <see cref="DependencyService"/>. System JSON serializer was removed due to Xamarin
-        /// requirement of having a business license or higher.</remarks>
-        public HybridWebView()
+        /// with <see cref="Resolver"/> or <see cref="DependencyService"/>. 
+        /// If neither one resolves it then <see cref="SystemJsonSerializer"/> will be used.</remarks>
+        public HybridWebView() : this((Resolver.IsSet ? Resolver.Resolve<IJsonSerializer>() : null)
+                ?? DependencyService.Get<IJsonSerializer>() ?? new SystemJsonSerializer())
         {
-            if (!Resolver.IsSet || (this.jsonSerializer = Resolver.Resolve<IJsonSerializer>() ?? DependencyService.Get<IJsonSerializer>()) == null)
-            {
-#if BUSINESS_LICENSE
-                _jsonSerializer = new SystemJsonSerializer();
-#else
-                throw new Exception("HybridWebView requires IJsonSerializer implementation to be registered.");
-#endif
-            }
-
-            this.registeredActions = new Dictionary<string, Action<string>>();
-            this.registeredFunctions = new Dictionary<string, Func<string, object[]>>();
         }
 
         /// <summary>
@@ -158,7 +153,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Gets or sets the cleanup called flag.
         /// </summary>
-        public bool CleanupCalled 
+        public bool CleanupCalled
         {
             get { return (bool)GetValue (CleanupProperty); }
             set { SetValue (CleanupProperty, value); }
@@ -199,7 +194,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="name">The name of the callback.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
-        public bool RegisterNativeFunction(string name)
+        public bool RemoveNativeFunction(string name)
         {
             return this.registeredFunctions.Remove(name);
         }
@@ -211,11 +206,7 @@ namespace XLabs.Forms.Controls
         /// <param name="baseUri">Optional base Uri to use for resources.</param>
         public void LoadFromContent(string contentFullName, string baseUri = null)
         {
-            var handler = this.LoadFromContentRequested;
-            if (handler != null)
-            {
-                handler(this, new LoadContentEventArgs(contentFullName, baseUri));
-            }
+            this.LoadFromContentRequested?.Invoke(this, new LoadContentEventArgs(contentFullName, baseUri));
         }
 
         /// <summary>
@@ -225,11 +216,7 @@ namespace XLabs.Forms.Controls
         /// <param name="baseUri">Optional base Uri to use for resources.</param>
         public void LoadContent(string content, string baseUri = null)
         {
-            var handler = this.LoadContentRequested;
-            if (handler != null)
-            {
-                handler(this, new LoadContentEventArgs(content, baseUri));
-            }
+            this.LoadContentRequested?.Invoke(this, new LoadContentEventArgs(content, baseUri));
         }
 
         /// <summary>
@@ -240,11 +227,7 @@ namespace XLabs.Forms.Controls
         {
             lock (this.injectLock)
             {
-                var handler = this.JavaScriptLoadRequested;
-                if (handler != null)
-                {
-                    handler(this, script);
-                }
+                this.JavaScriptLoadRequested?.Invoke(this, script);
             }
         }
 
@@ -303,11 +286,7 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         internal void OnLoadFinished(object sender, EventArgs e)
         {
-            var handler = this.LoadFinished;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.LoadFinished?.Invoke(this, e);
         }
 
         /// <summary>
@@ -317,11 +296,7 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         internal void OnLeftSwipe(object sender, EventArgs e)
         {
-            var handler = this.LeftSwipe;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.LeftSwipe?.Invoke(this, e);
         }
 
         /// <summary>
@@ -331,11 +306,7 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         internal void OnRightSwipe(object sender, EventArgs e)
         {
-            var handler = this.RightSwipe;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.RightSwipe?.Invoke(this, e);
         }
 
         /// <summary>
@@ -344,18 +315,14 @@ namespace XLabs.Forms.Controls
         /// <param name="uri">The URI.</param>
         internal void OnNavigating(Uri uri)
         {
-            var handler = this.Navigating;
-            if (handler != null)
-            {
-                handler(this, new EventArgs<Uri>(uri));
-            }
+            this.Navigating?.Invoke(this, new EventArgs<Uri>(uri));
         }
 
         internal void MessageReceived(string message)
         {
             var m = this.jsonSerializer.Deserialize<Message>(message);
-            
-            if (m == null || m.Action == null) return;
+
+            if (m?.Action == null) return;
 
             Action<string> action;
 
@@ -372,7 +339,7 @@ namespace XLabs.Forms.Controls
                 Task.Run(() =>
                 {
                     var result = func.Invoke(m.Data.ToString());
-                    this.CallJsFunction(string.Format("NativeFuncs[{0}]", m.Callback), result);
+                    this.CallJsFunction($"NativeFuncs[{m.Callback}]", result);
                 });
             }
         }
@@ -380,7 +347,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Remove all Callbacks from this view
         /// </summary>
-        public void RemoveAllCallbacks() 
+        public void RemoveAllCallbacks()
         {
             this.registeredActions.Clear ();
         }
@@ -388,18 +355,18 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Remove all Functions from this view
         /// </summary>
-        public void RemoveAllFunctions() 
+        public void RemoveAllFunctions()
         {
             this.registeredFunctions.Clear ();
         }
 
         /// <summary>
-        ///  Called to immediately free the native web view and 
+        ///  Called to immediately free the native web view and
         /// disconnect all callbacks
-        /// Note that this web view object will no longer be usable 
+        /// Note that this web view object will no longer be usable
         /// after this call!
         /// </summary>
-        public void Cleanup() 
+        public void Cleanup()
         {
             // This removes the delegates that point to the renderer
             this.JavaScriptLoadRequested = null;

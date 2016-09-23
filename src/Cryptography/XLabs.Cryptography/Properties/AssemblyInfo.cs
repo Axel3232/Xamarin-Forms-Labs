@@ -35,7 +35,7 @@ using System.Resources;
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
-#if !_USE_SHARED_ASSEMBLYINFO
+#if _USE_INDIVIDUAL_ASSEMBLYINFO
 [assembly: AssemblyCompany("XLabs Team")]
 [assembly: AssemblyProduct("XLabs")]
 [assembly: AssemblyCopyright("Copyright © XLabs Team 2016")]

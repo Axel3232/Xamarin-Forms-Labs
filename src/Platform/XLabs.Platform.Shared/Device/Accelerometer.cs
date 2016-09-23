@@ -34,7 +34,7 @@ namespace XLabs.Platform.Device
         public const double Gravitation = 9.81;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Device.Accelerometer" /> class.
+        /// Initializes a new instance of the <see cref="Accelerometer" /> class.
         /// </summary>
         public Accelerometer()
         {

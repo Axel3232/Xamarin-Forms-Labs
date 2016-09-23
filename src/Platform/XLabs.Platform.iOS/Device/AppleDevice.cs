@@ -2,7 +2,7 @@
 // Assembly         : XLabs.Platform.iOS
 // Author           : XLabs Team
 // Created          : 12-27-2015
-// 
+//
 // Last Modified By : XLabs Team
 // Last Modified On : 01-04-2016
 // ***********************************************************************
@@ -12,12 +12,12 @@
 // <summary>
 //       This project is licensed under the Apache 2.0 license
 //       https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/LICENSE
-//       
-//       XLabs is a open source project that aims to provide a powerfull and cross 
+//
+//       XLabs is a open source project that aims to provide a powerfull and cross
 //       platform set of controls tailored to work with Xamarin Forms.
 // </summary>
 // ***********************************************************************
-// 
+//
 
 using System;
 using System.IO.IsolatedStorage;
@@ -42,17 +42,17 @@ namespace XLabs.Platform.Device
         /// <summary>
         /// The iPhone expression.
         /// </summary>
-        protected const string PhoneExpression = "iPhone([1-8]),([1-4])";
+        protected const string PhoneExpression = "iPhone([0-9]+),([0-9]+)";
 
         /// <summary>
         /// The iPod expression.
         /// </summary>
-        protected const string PodExpression = "iPod([1-5]),([1])";
+        protected const string PodExpression = "iPod([0-9]+),([0-9]+)";
 
         /// <summary>
         /// The iPad expression.
         /// </summary>
-        protected const string PadExpression = "iPad([1-4]),([1-8])";
+        protected const string PadExpression = "iPad([0-9]+),([0-9]+)";
 
         /// <summary>
         /// Generic CPU/IO.
@@ -158,11 +158,11 @@ namespace XLabs.Platform.Device
 
         [DllImport(Constants.SystemLibrary)]
         static internal extern int sysctl(
-            [MarshalAs(UnmanagedType.LPArray)] int[] name, 
-            uint namelen, 
-            out uint oldp, 
-            ref int oldlenp, 
-            IntPtr newp, 
+            [MarshalAs(UnmanagedType.LPArray)] int[] name,
+            uint namelen,
+            out uint oldp,
+            ref int oldlenp,
+            IntPtr newp,
             uint newlen);
 
 
@@ -306,11 +306,11 @@ namespace XLabs.Platform.Device
         /// Gets the total memory in bytes.
         /// </summary>
         /// <value>The total memory in bytes.</value>
-        public long TotalMemory 
+        public long TotalMemory
         {
-            get 
-            { 
-                return DeviceTotalMemory; 
+            get
+            {
+                return DeviceTotalMemory;
             }
         }
 

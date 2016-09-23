@@ -1,14 +1,14 @@
 ﻿namespace XLabs.Platform.Services
 {
-	using System;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
-	using Windows.Networking.Proximity;
-
-	/// <summary>
-	/// Class NfcDevice.
-	/// </summary>
-	public class NfcDevice : INfcDevice
+    using Windows.Networking.Proximity;
+    using XLabs;
+    /// <summary>
+    /// Class NfcDevice.
+    /// </summary>
+    public class NfcDevice : INfcDevice
 	{
 		/// <summary>
 		/// The _publish identifier
