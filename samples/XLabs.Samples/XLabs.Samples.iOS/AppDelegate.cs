@@ -32,6 +32,8 @@ using XLabs.Platform.Device;
 using XLabs.Platform.Mvvm;
 using XLabs.Platform.Services;
 using XLabs.Platform.Services.Email;
+using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.GeoLocation;
 using XLabs.Platform.Services.Media;
 
 namespace XLabs.Samples.iOS
@@ -86,7 +88,7 @@ namespace XLabs.Samples.iOS
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 .Register<XLabs.Serialization.IJsonSerializer, XLabs.Serialization.JsonNET.JsonSerializer>()
-                //.Register<IJsonSerializer, Services.Serialization.SystemJsonSerializer>()
+                .Register<ILocationManager,LocationManager>()
                 .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IEmailService, EmailService>()
                 .Register<IMediaPicker, MediaPicker>()

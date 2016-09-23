@@ -42,9 +42,9 @@ namespace XLabs.Forms.Controls
             ///     Will show popup below of the specified view
             /// </summary>
             Bottom
-       
+
             //Left,
-      
+
             //Right
         }
 
@@ -68,27 +68,43 @@ namespace XLabs.Forms.Controls
             base.Content = this.layout = new RelativeLayout();
         }
 
+        #region Content property
+
+        public new static BindableProperty ContentProperty = BindableProperty.Create(nameof(Content), typeof(View), typeof(PopupLayout),
+                                                                                     null, propertyChanged: OnContentChanged);
+
+        private void SetContent(View view)
+        {
+            if (view != null)
+                layout.Children.Remove(view);
+            content = view;
+            if (content != null)
+                layout.Children.Add(content, () => Bounds);
+        }
+
+        private static void OnContentChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var obj = bindable as PopupLayout;
+            obj.SetContent(newValue as View);
+        }
+
         /// <summary>
         /// Gets or sets the content.
         /// </summary>
         /// <value>The content.</value>
-        public  View PageContent
+        public new View Content
         {
-            get { return this.content; }
+            get
+            {
+                return GetValue(ContentProperty) as View;
+            }
             set
             {
-                if (this.content != null)
-                {
-                    this.layout.Children.Remove(this.content);
-                }
-
-                this.content = value;
-                this.layout.Children.Add(this.content, () => this.Bounds);
+                SetValue(ContentProperty, value);
             }
         }
 
-       
-
+        #endregion
 
         /// <summary>
         /// Gets a value indicating whether this instance is popup active.
@@ -108,7 +124,7 @@ namespace XLabs.Forms.Controls
             this.ShowPopup(
                 popupView,
                 Constraint.RelativeToParent(p => (this.Width - this.popup.WidthRequest) / 2),
-                Constraint.RelativeToParent(p => (this.Height- this.popup.HeightRequest) / 2)
+                Constraint.RelativeToParent(p => (this.Height - this.popup.HeightRequest) / 2)
                 );
         }
 
@@ -125,13 +141,13 @@ namespace XLabs.Forms.Controls
             DismissPopup();
             this.popup = popupView;
 
-            this.layout.InputTransparent = true;
-            this.content.InputTransparent = true;
+            if (this.content != null)
+                this.content.InputTransparent = true;
             this.layout.Children.Add(this.popup, xConstraint, yConstraint, widthConstraint, heightConstraint);
 
             this.layout.ForceLayout();
         }
-        
+
 
         /// <summary>
         /// Shows the popup.
@@ -151,22 +167,22 @@ namespace XLabs.Forms.Controls
             switch (location)
             {
                 case PopupLocation.Bottom:
-                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest)/2);
+                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest) / 2);
                     constraintY = Constraint.RelativeToParent(parent => parent.Y + presenter.Y + presenter.Height + paddingY);
                     break;
                 case PopupLocation.Top:
-                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest)/2);
+                    constraintX = Constraint.RelativeToParent(parent => presenter.X + (presenter.Width - this.popup.WidthRequest) / 2);
                     constraintY = Constraint.RelativeToParent(parent =>
-                        parent.Y + presenter.Y - this.popup.HeightRequest/2 - paddingY);
+                        parent.Y + presenter.Y - this.popup.HeightRequest / 2 - paddingY);
                     break;
-                //case PopupLocation.Left:
-                //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
-                //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y + view.Width + paddingY);
-                //    break;
-                //case PopupLocation.Right:
-                //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
-                //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y - this.popup.WidthRequest - paddingY);
-                //    break;
+                    //case PopupLocation.Left:
+                    //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
+                    //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y + view.Width + paddingY);
+                    //    break;
+                    //case PopupLocation.Right:
+                    //    constraintX = Constraint.RelativeToView(presenter, (parent, view) => ((view.X + view.Height / 2) - parent.X) + this.popup.HeightRequest / 2);
+                    //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y - this.popup.WidthRequest - paddingY);
+                    //    break;
             }
 
             this.ShowPopup(popupView, constraintX, constraintY);
@@ -182,7 +198,7 @@ namespace XLabs.Forms.Controls
                 this.layout.Children.Remove(this.popup);
                 this.popup = null;
             }
-                
+
             this.layout.InputTransparent = false;
 
             if (this.content != null)

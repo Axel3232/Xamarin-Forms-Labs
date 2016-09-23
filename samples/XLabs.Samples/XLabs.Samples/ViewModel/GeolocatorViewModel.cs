@@ -31,6 +31,7 @@ using XLabs.Platform.Device;
 using XLabs.Platform.Services;
 using XLabs.Platform.Services.Email;
 using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Services.GeoLocation;
 using XLabs.Samples.Pages.Services;
 
 namespace XLabs.Samples.ViewModel
@@ -48,7 +49,7 @@ namespace XLabs.Samples.ViewModel
 		/// <summary>
 		/// The geolocator
 		/// </summary>
-		private IGeolocator _geolocator;
+		private ILocationManager _geolocator;
 		/// <summary>
 		/// The email service
 		/// </summary>
@@ -201,7 +202,7 @@ namespace XLabs.Samples.ViewModel
 					(_openPositionUri = new Command(
 						async () => 
 							{
-								var pos = await Geolocator.GetPositionAsync(5000);
+								var pos = await Geolocator.GetCurrentPosition(5000, CancellationToken.None);
 								var uri = Device.OnPlatform(
 									pos.ToAppleMaps(),
 									pos.ToUri(),
@@ -224,7 +225,7 @@ namespace XLabs.Samples.ViewModel
 					(_getDrivingDirections = new Command(
 						async () =>
 						{
-							var pos = await Geolocator.GetPositionAsync(5000);
+							var pos = await Geolocator.GetCurrentPosition(5000, CancellationToken.None);
 							var uri = Device.OnPlatform(
 								pos.ToAppleMaps(),
 								pos.ToUri(),
@@ -275,15 +276,15 @@ namespace XLabs.Samples.ViewModel
 		/// Gets the geolocator.
 		/// </summary>
 		/// <value>The geolocator.</value>
-		private IGeolocator Geolocator
+		private ILocationManager Geolocator
 		{
 			get
 			{
 				if (_geolocator == null)
 				{
-					_geolocator = DependencyService.Get<IGeolocator>() ?? Resolver.Resolve<IGeolocator>();
-					_geolocator.PositionError += OnListeningError;
-					_geolocator.PositionChanged += OnPositionChanged;
+					_geolocator = DependencyService.Get<ILocationManager>() ?? Resolver.Resolve<ILocationManager>();
+					_geolocator.Error += OnListeningError;
+					_geolocator.LocationUpdated += OnPositionChanged;
 				}
 				return _geolocator;
 			}
@@ -314,7 +315,7 @@ namespace XLabs.Samples.ViewModel
 			PositionLongitude = string.Empty;
 			IsBusy = true;
 			await
-				Geolocator.GetPositionAsync(10000, _cancelSource.Token, true)
+				Geolocator.GetCurrentPosition(10000, _cancelSource.Token, true)
 					.ContinueWith(t =>
 					{
 						IsBusy = false;
@@ -328,7 +329,7 @@ namespace XLabs.Samples.ViewModel
 						}
 						else
 						{
-							PositionStatus = t.Result.Timestamp.ToString("G");
+							PositionStatus = t.Result.LocalTimeStamp.ToString("G");
 							PositionLatitude = "La: " + t.Result.Latitude.ToString("N4");
 							PositionLongitude = "Lo: " + t.Result.Longitude.ToString("N4");
 						}
@@ -342,7 +343,7 @@ namespace XLabs.Samples.ViewModel
 		/// <returns>Task.</returns>
 		private async Task EmailPosition(int timeout = 5000)
 		{
-			var position = await Geolocator.GetPositionAsync(timeout);
+			var position = await Geolocator.GetCurrentPosition(timeout, CancellationToken.None);
 
 			var builder = new System.Text.StringBuilder();
 			builder.Append("WP8 link: ");
@@ -367,7 +368,7 @@ namespace XLabs.Samples.ViewModel
 		/// <returns>Task.</returns>
 		private async Task SmsPosition(int timeout = 5000)
 		{
-			var position = await Geolocator.GetPositionAsync(timeout);
+			var position = await Geolocator.GetCurrentPosition(timeout, CancellationToken.None);
 
 			PhoneService.SendSMS(string.Empty, position.ToUri().ToString());
 
@@ -404,7 +405,7 @@ namespace XLabs.Samples.ViewModel
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="PositionErrorEventArgs"/> instance containing the event data.</param>
-		private void OnListeningError(object sender, PositionErrorEventArgs e)
+		private void OnListeningError(object sender, ErrorEventArgs e)
 		{
 ////			BeginInvokeOnMainThread (() => {
 ////				ListenStatus.Text = e.Error.ToString();
@@ -416,7 +417,7 @@ namespace XLabs.Samples.ViewModel
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="PositionEventArgs"/> instance containing the event data.</param>
-		private void OnPositionChanged(object sender, PositionEventArgs e)
+		private void OnPositionChanged(object sender, LocationUpdatedEventArgs e)
 		{
 ////			BeginInvokeOnMainThread (() => {
 ////				ListenStatus.Text = e.Position.Timestamp.ToString("G");

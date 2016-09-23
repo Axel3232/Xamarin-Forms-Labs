@@ -34,6 +34,16 @@ namespace XLabs.Samples.Pages.Controls
             this.OpenButton.Clicked += OpenButtonClicked;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            this.Content.BackgroundColor = Color.Blue;
+            for (int i=0;i<10;i++)
+            {
+                wrap.Children.Add(new Label() { Text = "nb : " + i });
+            }
+        }
+
         void OpenButtonClicked(object sender, EventArgs e)
         {
             var popupLayout = this.Content as PopupLayout;

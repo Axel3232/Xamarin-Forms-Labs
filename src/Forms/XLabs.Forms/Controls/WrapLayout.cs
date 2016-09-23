@@ -85,8 +85,25 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="widthConstraint">The available width for the element to use.</param>
         /// <param name="heightConstraint">The available height for the element to use.</param>
-        protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
+        //protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
+        //{
+        //    if (WidthRequest > 0)
+        //        widthConstraint = Math.Min(widthConstraint, WidthRequest);
+        //    if (HeightRequest > 0)
+        //        heightConstraint = Math.Min(heightConstraint, HeightRequest);
+
+        //    double internalWidth = double.IsPositiveInfinity(widthConstraint) ? double.PositiveInfinity : Math.Max(0, widthConstraint);
+        //    double internalHeight = double.IsPositiveInfinity(heightConstraint) ? double.PositiveInfinity : Math.Max(0, heightConstraint);
+
+        //    return Orientation == StackOrientation.Vertical
+        //        ? DoVerticalMeasure(internalWidth, internalHeight)
+        //            : DoHorizontalMeasure(internalWidth, internalHeight);
+
+        //}
+
+        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
         {
+            //return base.OnMeasure(widthConstraint, heightConstraint);
             if (WidthRequest > 0)
                 widthConstraint = Math.Min(widthConstraint, WidthRequest);
             if (HeightRequest > 0)
@@ -98,7 +115,6 @@ namespace XLabs.Forms.Controls
             return Orientation == StackOrientation.Vertical
                 ? DoVerticalMeasure(internalWidth, internalHeight)
                     : DoHorizontalMeasure(internalWidth, internalHeight);
-
         }
 
         /// <summary>
@@ -119,7 +135,7 @@ namespace XLabs.Forms.Controls
 
             foreach (var item in Children)
             {
-                var size = item.GetSizeRequest(widthConstraint, heightConstraint);
+                var size = item.Measure(widthConstraint, heightConstraint);
                 width = Math.Max(width, size.Request.Width);
 
                 var newHeight = height + size.Request.Height + Spacing;
@@ -163,7 +179,7 @@ namespace XLabs.Forms.Controls
 
             foreach (var item in Children)
             {
-                var size = item.GetSizeRequest(widthConstraint, heightConstraint);
+                var size = item.Measure(widthConstraint, heightConstraint);
                 height = Math.Max(height, size.Request.Height);
 
                 var newWidth = width + size.Request.Width + Spacing;
@@ -205,7 +221,7 @@ namespace XLabs.Forms.Controls
 
                 foreach (var child in Children.Where(c => c.IsVisible))
                 {
-                    var request = child.GetSizeRequest(width, height);
+                    var request = child.Measure(width, height);
 
                     double childWidth = request.Request.Width;
                     double childHeight = request.Request.Height;
@@ -230,7 +246,7 @@ namespace XLabs.Forms.Controls
 
                 foreach (var child in Children.Where(c => c.IsVisible))
                 {
-                    var request = child.GetSizeRequest(width, height);
+                    var request = child.Measure(width, height);
 
                     double childWidth = request.Request.Width;
                     double childHeight = request.Request.Height;

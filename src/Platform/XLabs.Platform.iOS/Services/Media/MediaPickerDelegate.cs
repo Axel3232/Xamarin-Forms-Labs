@@ -33,6 +33,7 @@ using XLabs.Platform.Services.Geolocation;
 using System.Diagnostics;
 using CoreLocation;
 using System.Threading;
+using XLabs.Platform.Services.Media;
 
 namespace XLabs.Platform.Services.Media
 {

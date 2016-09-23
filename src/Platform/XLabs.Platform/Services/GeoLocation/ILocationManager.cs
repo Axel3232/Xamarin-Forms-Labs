@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +11,7 @@ namespace XLabs.Platform.Services.GeoLocation
         event EventHandler<ErrorEventArgs> Error;
         event EventHandler<LocationUpdatedEventArgs> LocationUpdated;
 
-        bool AskAuthorization(bool alsoWhenInBackground = false);
+        void AskAuthorization(bool alsoWhenInBackground = false);
 
         double Accuracy { get; }
 

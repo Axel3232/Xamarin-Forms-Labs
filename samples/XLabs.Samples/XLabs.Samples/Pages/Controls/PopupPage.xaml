@@ -7,7 +7,10 @@
     <ContentPage.Content>
         <controls:PopupLayout>
             <controls:PopupLayout.Content>
-                <Button x:Name="OpenButton" Text="Open selector popup" />
+              <controls:WrapLayout x:Name="wrap">
+               
+              </controls:WrapLayout>
+              <Button x:Name="OpenButton" Text="Open selector popup" />
             </controls:PopupLayout.Content>
         </controls:PopupLayout>
     </ContentPage.Content>

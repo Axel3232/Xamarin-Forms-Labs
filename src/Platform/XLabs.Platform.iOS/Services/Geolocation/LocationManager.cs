@@ -16,7 +16,9 @@ namespace XLabs.Platform.Services.Geolocation
         private CLLocationManager manager;
         private static readonly double[] Accuracies = { CLLocation.AccuracyBest, CLLocation.AccuracyNearestTenMeters, CLLocation.AccuracyHundredMeters, CLLocation.AccuracyKilometer, CLLocation.AccuracyThreeKilometers, CLLocation.AccurracyBestForNavigation };
 
-        public AuthorizationStatus AuthorizationStatus { get { return GetAuthStatus(); } }
+        public AuthorizationStatus AuthorizationStatus { get {
+                return GetAuthStatus();
+            } }
 
         public bool IsStarted { get { return manager != null; } }
 
@@ -40,7 +42,8 @@ namespace XLabs.Platform.Services.Geolocation
         private AuthorizationStatus GetAuthStatus()
         {
 
-            return (AuthorizationStatus)CLLocationManager.Status;
+            var status = (AuthorizationStatus)CLLocationManager.Status;
+            return status;
         }
 
         public event EventHandler<ErrorEventArgs> Error;
@@ -94,10 +97,8 @@ namespace XLabs.Platform.Services.Geolocation
             }
         }
 
-        public bool AskAuthorization(bool alsoWhenInBackground = false)
+        public void AskAuthorization(bool alsoWhenInBackground = false)
         {
-            if (AuthorizationStatus != AuthorizationStatus.NotDetermined)
-                return false;
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
@@ -106,9 +107,8 @@ namespace XLabs.Platform.Services.Geolocation
                 else
                     manager.RequestWhenInUseAuthorization();
             }
-
-            return true;
         }
+
 
 
         public bool StartPreciseLocationRecording(bool clearCachedLoc = true)
@@ -137,25 +137,6 @@ namespace XLabs.Platform.Services.Geolocation
 
         }
 
-        //public bool StartAsBackgroundTask()
-        //{
-        //    if (manager != null)
-        //    {
-        //        //if (Resolver.Resolve<IAircraftMotionDetector>().IsStarted)
-        //        //{
-        //        //    manager.StopUpdatingLocation();
-        //        //    manager.DistanceFilter = 5000;
-        //        //    manager.DesiredAccuracy = CLLocation.AccuracyThreeKilometers;
-        //        //    manager.StartUpdatingLocation();
-        //        //}
-        //        //else
-        //        //{
-        //            this.Stop();
-        //        //}
-        //        return true;
-        //    }
-        //    return Start(ActivityType.OtherNavigation, true, LocationAccuracy.AccuracyThreeKilometers, 5000);
-        //}
 
         /// <summary>
         /// 
@@ -176,7 +157,6 @@ namespace XLabs.Platform.Services.Geolocation
             manager.Failed += (sender, args) => FireError(args.Error.ToString());
             manager.LocationsUpdated += (sender, args) => FireLocationUpdated(args.Locations);
 
-            //manager.AuthorizationChanged
 
             manager.ActivityType = (CLActivityType)activity;
             manager.DesiredAccuracy = Accuracies[(int)accuracy];
@@ -284,51 +264,6 @@ namespace XLabs.Platform.Services.Geolocation
                     }
                 }
             };
-            //int currentTimerCount = 0;
-            
-            //Timer timer = new Timer((obj) =>
-            //{
-            //    Debug.WriteLine("locationManger Timer tick");
-            //    if (tcs.Task.Status == TaskStatus.Canceled || tcs.Task.Status == TaskStatus.Faulted || tcs.Task.Status == TaskStatus.RanToCompletion)
-            //        return;
-
-            //    if(token.IsCancellationRequested)
-            //    { 
-            //        this.Stop();
-            //        tcs.SetCanceled();
-            //        return;
-
-            //    }
-            //    else
-            //    {
-            //        if (result != null)
-            //        {
-
-            //            tcs.TrySetResult(result);
-            //            if (shouldStopAfterFix)
-            //                this.Stop();
-            //            else
-            //                manager.DesiredAccuracy = currentAccuracy;
-            //        }
-            //        else
-            //        {
-            //            tcs.SetCanceled();
-            //            if (shouldStopAfterFix)
-            //                this.Stop();
-            //            else
-            //                manager.DesiredAccuracy = currentAccuracy;
-
-
-
-            //        }
-            //    }
-
-
-                
-               
-
-            //}, null, timeout, 0);
-           
 
             return tcs.Task;
 

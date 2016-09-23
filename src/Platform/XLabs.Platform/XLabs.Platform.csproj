@@ -61,22 +61,30 @@
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
     <Compile Include="Services\Email\IEmailService.cs" />
-    <Compile Include="Services\GeoLocation\IGeolocator.cs" />
+    <Compile Include="Services\GeoLocation\ILocationManager.cs" />
     <Compile Include="Services\GeoLocation\Position.cs" />
     <Compile Include="Services\GeoLocation\PositionExtensions.cs" />
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Services\INetwork.cs" />
     <Compile Include="Services\INfcDevice.cs" />
     <Compile Include="Services\IO\IFileManager.cs" />
+    <Compile Include="Services\IPermissionManager.cs" />
     <Compile Include="Services\IPhoneService.cs" />
     <Compile Include="Services\ISecureStorage.cs" />
     <Compile Include="Services\ITextToSpeechService.cs" />
+    <Compile Include="Services\Media\ExifTagFriendlyValues.cs" />
+    <Compile Include="Services\Media\ExifTags.cs" />
     <Compile Include="Services\Media\IAudioStream.cs" />
+    <Compile Include="Services\Media\IExifReader.cs" />
+    <Compile Include="Services\Media\IJpegInfo.cs" />
     <Compile Include="Services\Media\IMediaPicker.cs" />
     <Compile Include="Services\Media\ISoundService.cs" />
+    <Compile Include="Services\Media\JpegInfoBase.cs" />
+    <Compile Include="Services\Media\MediaExifException.cs" />
     <Compile Include="Services\Media\MediaExtensions.cs" />
     <Compile Include="Services\Media\MediaFile.cs" />
     <Compile Include="Services\Media\MediaFileNoteFoundException.cs" />
+    <Compile Include="Services\Media\MediaFormatException.cs" />
     <Compile Include="Services\Media\MediaStorageOptions.cs" />
     <Compile Include="Services\Media\SoundFile.cs" />
     <Compile Include="Services\Media\SoundFinishedEventArgs.cs" />

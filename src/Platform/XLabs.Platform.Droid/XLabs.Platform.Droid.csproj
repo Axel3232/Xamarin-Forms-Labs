@@ -68,7 +68,10 @@
     <Compile Include="Services\Geolocation\GeolocationContinuousListener.cs" />
     <Compile Include="Services\Geolocation\GeolocationSingleListener.cs" />
     <Compile Include="Services\Geolocation\Geolocator.cs" />
+    <Compile Include="Services\Geolocation\LocationManager.cs" />
     <Compile Include="Services\KeyVaultStorage.cs" />
+    <Compile Include="Services\Media\ExifBinaryReader.cs" />
+    <Compile Include="Services\Media\JpegInfo.cs" />
     <Compile Include="Services\Media\MediaPicker.cs" />
     <Compile Include="Services\Media\MediaPickerActivity.cs" />
     <Compile Include="Services\Media\Microphone.cs" />
