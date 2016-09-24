@@ -35,11 +35,8 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing Storage for the Orientation property
         /// </summary>
-        //public static readonly BindableProperty OrientationProperty =
-        //    BindableProperty.Create<WrapLayout, StackOrientation>(w => w.Orientation, StackOrientation.Vertical);
-
         public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(WrapLayout), StackOrientation.Vertical);
+            BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(WrapLayout), StackOrientation.Horizontal);
 
         /// <summary>
         /// Orientation (Horizontal or Vertical)
@@ -53,12 +50,11 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing Storage for the Spacing property
         /// </summary>
-        //public static readonly BindableProperty SpacingProperty =
-        //    BindableProperty.Create<WrapLayout, double>(w => w.Spacing, 6,
-        //        propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
-
         public static readonly BindableProperty SpacingProperty =
-            BindableProperty.Create(nameof(Spacing), typeof(double), typeof(WrapLayout), 6d, propertyChanged: (bindable, oldvalue, newvalue) => ((WrapLayout)bindable).OnSizeChanged());
+            BindableProperty.Create(nameof(Spacing), typeof(double), typeof(WrapLayout), 6d, propertyChanged: (bindable, oldvalue, newvalue) => 
+            {
+                ((WrapLayout)bindable).InvalidateMeasure();
+            });
 
 
         /// <summary>
@@ -85,25 +81,8 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="widthConstraint">The available width for the element to use.</param>
         /// <param name="heightConstraint">The available height for the element to use.</param>
-        //protected override SizeRequest OnSizeRequest(double widthConstraint, double heightConstraint)
-        //{
-        //    if (WidthRequest > 0)
-        //        widthConstraint = Math.Min(widthConstraint, WidthRequest);
-        //    if (HeightRequest > 0)
-        //        heightConstraint = Math.Min(heightConstraint, HeightRequest);
-
-        //    double internalWidth = double.IsPositiveInfinity(widthConstraint) ? double.PositiveInfinity : Math.Max(0, widthConstraint);
-        //    double internalHeight = double.IsPositiveInfinity(heightConstraint) ? double.PositiveInfinity : Math.Max(0, heightConstraint);
-
-        //    return Orientation == StackOrientation.Vertical
-        //        ? DoVerticalMeasure(internalWidth, internalHeight)
-        //            : DoHorizontalMeasure(internalWidth, internalHeight);
-
-        //}
-
         protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
         {
-            //return base.OnMeasure(widthConstraint, heightConstraint);
             if (WidthRequest > 0)
                 widthConstraint = Math.Min(widthConstraint, WidthRequest);
             if (HeightRequest > 0)

@@ -38,10 +38,7 @@ namespace XLabs.Samples.Pages.Controls
         {
             base.OnAppearing();
             this.Content.BackgroundColor = Color.Blue;
-            for (int i=0;i<10;i++)
-            {
-                wrap.Children.Add(new Label() { Text = "nb : " + i });
-            }
+            
         }
 
         void OpenButtonClicked(object sender, EventArgs e)
@@ -54,17 +51,23 @@ namespace XLabs.Samples.Pages.Controls
             }
             else
             {
-                var list = new ListView()
+                var list = new WrapLayout()
                 {
                     BackgroundColor = Color.White,
-                    ItemsSource = new[] { "1", "2", "3" },
                     HeightRequest = this.Height * .5,
-                    WidthRequest = this.Width * .8
+                    WidthRequest = this.Width * .8,
+                    Orientation = StackOrientation.Horizontal
                 };
-
-                list.ItemSelected += (s, args) => 
+                Random random = new Random(200);
+                for (int i = 0; i < 10; i++)
+                {
+                    list.Children.Add(new Label() { Text = "nb : " + i, BackgroundColor = new Color(random.NextDouble(), random.NextDouble(), random.NextDouble()).WithLuminosity(.8).WithSaturation(0.8)  });
+                }
+               
+                Button close = new Button() { Text = "Close" };
+                close .Clicked+= (s, args) => 
                     popupLayout.DismissPopup();
-
+                list.Children.Add(close);
                 popupLayout.ShowPopup(list);
             }
         }
