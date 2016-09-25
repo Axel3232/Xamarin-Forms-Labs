@@ -3,26 +3,26 @@
 		"VersionFile": "./version.json",
 		"AssemblyInfoFile": "./src/AssemblyInfo.Shared.cs",
 		"LoadFrom": "VersionFile",
-		"AutoIncrementVersion": false,
+		"AutoIncrementVersion": true,
 		"NamespaceBase": "XLabs"
 	},
 	"build": {
 		"SourcePath": "./src",
 		"SolutionFileSpec": "./src/*.sln",
-		"TreatWarningsAsErrors": false,
+    "TreatWarningsAsErrors": false,
 		"NugetConfigPath": "./.nuget/NuGet.Config",
-		"EnableXamarinIOS": false,
-		"MacAgentIPAddress": "",
-		"MacAgentUserName": "",
-		"MacAgentUserPassword": ""
+		"EnableXamarinIOS": true,
+		"MacAgentIPAddress": "192.168.174.128",
+		"MacAgentUserName": "axelcharpentier",
+		"MacAgentUserPassword": "3108als1,"
 	},
-	"nuget": {
-		"NuGetConfig": "./.nuget/NuGet.config",
-		"FeedUrl": "https://nuget.org",
-		"FeedAPIKey": "",
-		"ArtifactsPath": "./artifacts/packages",
-		"NuspecPath": "./nuspec",
-		"UpdateVersion": true,
-		"VersionDependencyForLibrary": "exact"
-	}
+  "nuget": {
+    "NuGetConfig": "./.nuget/NuGet.config",
+    "FeedUrl": "http://vfrget.azurewebsites.net/nuget",
+    "FeedAPIKey": "3d6f6b32-abe5-41eb-9491-e40b2499be95",
+    "ArtifactsPath": "./artifacts/packages",
+    "NuspecPath": "./nuspec",
+    "UpdateVersion": true,
+    "VersionDependencyForLibrary": "exact"
+  }
 }

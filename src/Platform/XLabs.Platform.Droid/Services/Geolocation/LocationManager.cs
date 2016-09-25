@@ -27,9 +27,9 @@ namespace XLabs.Platform.Services.Geolocation
 
         public AuthorizationStatus AuthorizationStatus { get { return AuthorizationStatus.AuthorizedAlways; } }
 
-        public bool AskAuthorization(bool alsoWhenInBackground = false)
+        public void AskAuthorization(bool alsoWhenInBackground = false)
         {
-            return true;
+            
         }
 
         public string[] PermissionSet

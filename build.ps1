@@ -79,6 +79,7 @@ if ((Test-Path $PSScriptRoot) -and !(Test-Path $TOOLS_DIR)) {
     New-Item -Path $TOOLS_DIR -Type directory | out-null
 }
 
+
 # Make sure that packages.config exist.
 if (!(Test-Path $PACKAGES_CONFIG)) {
     Write-Verbose -Message "Downloading packages.config..."
@@ -86,6 +87,7 @@ if (!(Test-Path $PACKAGES_CONFIG)) {
         Throw "Could not download packages.config."
     }
 }
+
 
 # Try find NuGet.exe in path if not exists
 if (!(Test-Path $NUGET_EXE)) {
@@ -107,6 +109,7 @@ if (!(Test-Path $NUGET_EXE)) {
         Throw "Could not download NuGet.exe."
     }
 } else {
+
     # Update nuget.exe if needed
     Push-Location
     Set-Location $TOOLS_DIR
@@ -118,7 +121,8 @@ if (!(Test-Path $NUGET_EXE)) {
     Pop-Location
     if ($LASTEXITCODE -ne 0)
     {
-        exit $LASTEXITCODE
+		Write-Host "Unable to update nuget"
+       # exit $LASTEXITCODE
     }
 }
 
@@ -151,5 +155,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
+Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" --debug -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
 exit $LASTEXITCODE

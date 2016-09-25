@@ -124,13 +124,18 @@ Task("Build")
     // Build all solutions.
     foreach(var solution in solutions)
     {
+		
         Information("Building {0}", solution);
-        MSBuild(solution, settings =>
+	
+        MSBuild(solution, settings => {
+		
             settings.SetPlatformTarget(PlatformTarget.MSIL)
 				.SetMaxCpuCount(1)
                 .WithProperty("TreatWarningsAsErrors",buildSettings.Build.TreatWarningsAsErrors.ToString())
                 .WithTarget("Build")
-                .SetConfiguration(configuration));
+                .SetConfiguration(configuration);
+				});
+		
     }
 });
 
@@ -143,7 +148,7 @@ Task("Package")
 	var nugetProps = new Dictionary<string, string>() { {"Configuration", configuration} };
 	
 	CreateDirectory(artifactsPath);
-	
+
 	var nuspecFiles = GetFiles(buildSettings.NuGet.NuSpecFileSpec);
 	foreach(var nsf in nuspecFiles)
 	{
@@ -249,6 +254,7 @@ Task("IncrementVersion")
 	.IsDependentOn("UpdateVersion")
 	.Does(() =>
 {
+
 	var oldVer = versionInfo.ToString();
 	if (versionInfo.IsPreRelease) versionInfo.PreRelease++; else versionInfo.Build++;
 	
@@ -291,3 +297,4 @@ Task("Default")
 ///////////////////////////////////////////////////////////////////////////////
 
 RunTarget(target);
+
