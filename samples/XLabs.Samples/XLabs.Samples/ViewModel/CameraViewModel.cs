@@ -35,7 +35,8 @@ namespace XLabs.Samples.ViewModel
 	[ViewType(typeof(CameraPage))]
 	public class CameraViewModel : Forms.Mvvm.ViewModel
 	{
-		/// <summary>
+        private IJpegInfo _exifInfo;
+        /// <summary>
 		/// The _scheduler.
 		/// </summary>
 		private readonly TaskScheduler _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
@@ -99,11 +100,27 @@ namespace XLabs.Samples.ViewModel
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the video info.
-		/// </summary>
-		/// <value>The video info.</value>
-		public string VideoInfo
+        /// <summary>
+        /// Gets or sets the video info.
+        /// </summary>
+        /// <value>The video info.</value>
+        public IJpegInfo ExifInfo
+        {
+            get
+            {
+                return _exifInfo;
+            }
+            set
+            {
+                SetProperty(ref _exifInfo, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the video info.
+        /// </summary>
+        /// <value>The video info.</value>
+        public string VideoInfo
 		{
 			get
 			{
@@ -210,8 +227,8 @@ namespace XLabs.Samples.ViewModel
 					var mediaFile = t.Result;
 
 					ImageSource = ImageSource.FromStream(() => mediaFile.Source);
-
-					return mediaFile;
+                    ExifInfo = mediaFile.ExifTags;
+                    return mediaFile;
 				}
 
 				return null;
@@ -235,7 +252,8 @@ namespace XLabs.Samples.ViewModel
 						MaxPixelDimension = 400
 					});
 				ImageSource = ImageSource.FromStream(() => mediaFile.Source);
-			}
+                ExifInfo = mediaFile.ExifTags;
+            }
 			catch (System.Exception ex)
 			{
 				Status = ex.Message;

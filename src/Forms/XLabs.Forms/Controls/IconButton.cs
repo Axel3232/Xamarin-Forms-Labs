@@ -35,8 +35,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the orientation property.
         /// </summary>
         public static readonly BindableProperty TextAlignementProperty =
-            BindableProperty.Create<IconButton, TextAlignment>(
-                p => p.TextAlignement, TextAlignment.Center);
+            BindableProperty.Create(nameof(TextAlignement),typeof(TextAlignment), typeof(IconButton), TextAlignment.Center);
 
 
         /// <summary>
@@ -56,8 +55,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the orientation property.
         /// </summary>
         public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create<IconButton, ImageOrientation>(
-                p => p.Orientation, ImageOrientation.ImageToLeft);
+            BindableProperty.Create(nameof(Orientation), typeof(ImageOrientation), typeof(IconButton), ImageOrientation.ImageToLeft);
 
 
 
@@ -80,9 +78,8 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing field for the icon property
         /// </summary>
-        public static readonly BindableProperty IconProperty = 
-            BindableProperty.Create<IconButton, string>(
-            p => p.Icon, default(string));
+        public static readonly BindableProperty IconProperty =
+            BindableProperty.Create(nameof(Icon), typeof(string), typeof(IconButton), default(string));
 
         /// <summary>
         /// Gets or sets the icon. A set of FontAwesome icons have been included in <see cref="Icons"/>, and
@@ -104,8 +101,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the ShowIconSeparator property
         /// </summary>
         public static readonly BindableProperty ShowIconSeparatorProperty =
-            BindableProperty.Create<IconLabel, bool>(
-            p => p.ShowIconSeparator, default(bool));
+            BindableProperty.Create(nameof(ShowIconSeparator), typeof(bool), typeof(IconButton), default(bool));
 
 
         /// <summary>
@@ -124,8 +120,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon color property
         /// </summary>
         public static readonly BindableProperty IconColorProperty =
-            BindableProperty.Create<IconButton, Color>(
-                p => p.IconColor, Color.Default);
+            BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(IconButton), Color.Default);
 
         /// <summary>
         /// Gets or sets the icon's color
@@ -141,8 +136,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon size property
         /// </summary>
         public static readonly BindableProperty IconSizeProperty =
-            BindableProperty.Create<IconButton, float>(
-                p => p.IconSize, default(float));
+            BindableProperty.Create(nameof(IconSize), typeof(float), typeof(IconButton), default(float));
 
         /// <summary>
         /// Gets or set's the font size of the icon
@@ -159,9 +153,8 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Backing field for the icon font name property
         /// </summary>
-        public static readonly BindableProperty IconFontNameProperty = 
-            BindableProperty.Create<IconButton, string>(
-            p => p.IconFontName, default(string));
+        public static readonly BindableProperty IconFontNameProperty =
+            BindableProperty.Create(nameof(IconFontName), typeof(string), typeof(IconButton), default(string));
 
         /// <summary>
         /// Gets or set's the font name for the icon - currently this will default to using the FontAwesome font (http://fortawesome.github.io/Font-Awesome/cheatsheet/).

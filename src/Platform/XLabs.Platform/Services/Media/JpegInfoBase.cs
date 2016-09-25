@@ -477,7 +477,7 @@ namespace XLabs.Platform.Services.Media
             {
                 return _reader.TryGetTagValue(tag, out result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result = default(T);
                 return false;

@@ -186,6 +186,7 @@ namespace XLabs.Forms.Controls
         private UIFont GetButtonFont(IconLabel iconLabel, UILabel targetLabel, nfloat fontSize)
         {
             UIFont btnTextFont = iconLabel.Font.ToUIFont();
+            
 
             if (iconLabel.Font != Font.Default && btnTextFont != null)
                 return btnTextFont;

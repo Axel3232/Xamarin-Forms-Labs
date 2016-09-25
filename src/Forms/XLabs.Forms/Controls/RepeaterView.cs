@@ -40,8 +40,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// Element created at 15/11/2014,3:11 PM by Charles
         public static readonly BindableProperty ItemTemplateProperty =
-            BindableProperty.Create<RepeaterView<T>, DataTemplate>(
-                p => p.ItemTemplate,
+            BindableProperty.Create(nameof(ItemTemplate),typeof(DataTemplate),typeof(RepeaterView<T>),
                 default(DataTemplate));
 
         /// <summary>
@@ -49,8 +48,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// Element created at 15/11/2014,3:11 PM by Charles
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<RepeaterView<T>, IEnumerable<T>>(
-                p => p.ItemsSource,
+            BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<T>), typeof(RepeaterView<T>),
                 Enumerable.Empty<T>(),
                 BindingMode.OneWay,
                 null,
@@ -61,21 +59,22 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// Element created at 15/11/2014,3:11 PM by Charles
         public static BindableProperty ItemClickCommandProperty =
-            BindableProperty.Create<RepeaterView<T>, ICommand>(x => x.ItemClickCommand, null);
+            BindableProperty.Create(nameof(ItemClickCommand), typeof(ICommand), typeof(RepeaterView<T>), null);
 
         /// <summary>
         /// Definition for <see cref="TemplateSelector"/>
         /// </summary>
         /// Element created at 15/11/2014,3:12 PM by Charles
         public static readonly BindableProperty TemplateSelectorProperty =
-            BindableProperty.Create<RepeaterView<T>, TemplateSelector>(
-                x => x.TemplateSelector,
+            BindableProperty.Create(nameof(TemplateSelector), typeof(TemplateSelector), typeof(RepeaterView<T>),
                 default(TemplateSelector));
 
         /// <summary>
         /// The item template selector property
         /// </summary>
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<RepeaterView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+        public static readonly BindableProperty ItemTemplateSelectorProperty = 
+            BindableProperty.Create(nameof(ItemTemplateSelector), typeof(DataTemplateSelector), typeof(RepeaterView<T>), default(DataTemplateSelector),
+                propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
         /// <summary>
@@ -94,9 +93,9 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        private static void OnDataTemplateSelectorChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            ((RepeaterView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+            ((RepeaterView<T>)bindable).OnDataTemplateSelectorChanged((DataTemplateSelector)oldvalue, (DataTemplateSelector)newvalue);
         }
 
         /// <summary>
@@ -256,8 +255,8 @@ namespace XLabs.Forms.Controls
         /// <param name="newValue">New bound collection</param>
         private static void ItemsChanged(
             BindableObject bindable,
-            IEnumerable<T> oldValue,
-            IEnumerable<T> newValue)
+            object oldValue,
+            object newValue)
         {
             var control = bindable as RepeaterView<T>;
             if (control == null)
@@ -272,7 +271,7 @@ namespace XLabs.Forms.Controls
 
             control._collectionChangedHandle = new CollectionChangedHandle<View, T>(
                 control.Children,
-                newValue,
+                (IEnumerable<T>)newValue,
                 control.ViewFor,
                 (v, m, i) => control.NotifyItemAdded(v, m));
         }

@@ -55,5 +55,11 @@
   <string>Your message goes here</string>
   <key>NSLocationWhenInUseUsageDescription</key>
   <string>Your message goes here</string>
+  <key>UIAppFonts</key>
+  <array>
+       <string>Fonts/Roboto-Light.ttf</string> 
+       <string>Fonts/fontawesome-webfont.ttf</string> 
+       
+  </array>
 </dict>
 </plist>

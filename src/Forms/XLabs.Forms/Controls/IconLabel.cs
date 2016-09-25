@@ -33,8 +33,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the orientation property.
         /// </summary>
         public static readonly BindableProperty TextAlignementProperty =
-            BindableProperty.Create<IconLabel, TextAlignment>(
-                p => p.TextAlignement, TextAlignment.Center);
+            BindableProperty.Create(nameof(TextAlignement), typeof(TextAlignment), typeof(IconLabel), TextAlignment.Center);
 
 
         /// <summary>
@@ -52,8 +51,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the orientation property.
         /// </summary>
         public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create<IconLabel, ImageOrientation>(
-                p => p.Orientation, ImageOrientation.ImageToLeft);
+            BindableProperty.Create(nameof(Orientation), typeof(ImageOrientation), typeof(IconLabel), ImageOrientation.ImageToLeft);
 
 
         /// <summary>
@@ -75,8 +73,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon property
         /// </summary>
         public static readonly BindableProperty IconProperty =
-            BindableProperty.Create<IconLabel, string>(
-            p => p.Icon, default(string));
+           BindableProperty.Create(nameof(Icon), typeof(string), typeof(IconLabel), default(string));
 
 
         /// <summary>
@@ -99,8 +96,8 @@ namespace XLabs.Forms.Controls
         /// Backing field for the ShowIconSeparator property
         /// </summary>
         public static readonly BindableProperty ShowIconSeparatorProperty =
-            BindableProperty.Create<IconLabel, bool>(
-            p => p.ShowIconSeparator, default(bool));
+              BindableProperty.Create(nameof(ShowIconSeparator), typeof(bool), typeof(IconLabel), default(bool));
+
 
 
         /// <summary>
@@ -119,8 +116,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon color property
         /// </summary>
         public static readonly BindableProperty IconColorProperty =
-            BindableProperty.Create<IconLabel, Color>(
-                p => p.IconColor, Color.Default);
+             BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(IconLabel), Color.Default);
 
         /// <summary>
         /// Gets or sets the icon's color
@@ -138,8 +134,7 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon size property
         /// </summary>
         public static readonly BindableProperty IconSizeProperty =
-            BindableProperty.Create<IconLabel, double>(
-                p => p.IconSize, default(double));
+            BindableProperty.Create(nameof(IconSize), typeof(double), typeof(IconLabel), default(double));
 
         /// <summary>
         /// Gets or set's the font size of the icon
@@ -157,8 +152,8 @@ namespace XLabs.Forms.Controls
         /// Backing field for the icon font name property
         /// </summary>
         public static readonly BindableProperty IconFontNameProperty =
-            BindableProperty.Create<IconLabel, string>(
-            p => p.IconFontName, default(string));
+            BindableProperty.Create(nameof(IconFontName), typeof(string), typeof(IconLabel), default(string));
+
 
         /// <summary>
         /// Gets or set's the font name for the icon - currently this will default to using the FontAwesome font (http://fortawesome.github.io/Font-Awesome/cheatsheet/).

@@ -30,21 +30,21 @@ namespace XLabs.Forms.Validation
         /// <summary>Definition for <see cref="Property"/></summary>
         /// Element created at 08/11/2014,3:54 PM by Charles
         public BindableProperty PropertyProperty =
-            BindableProperty.Create<PropertySetter, string>(x => x.Property, default(string));
+            BindableProperty.Create(nameof(Property),typeof(string), typeof(PropertySetter), default(string));
 
         /// <summary>
         /// Definition for <see cref="ValidValue"/>
         /// </summary>
         /// Element created at 08/11/2014,3:54 PM by Charles
         public BindableProperty ValidValueProperty =
-            BindableProperty.Create<PropertySetter, string>(x => x.ValidValue, default(string));
+            BindableProperty.Create(nameof(ValidValue), typeof(string), typeof(PropertySetter), default(string));
 
         /// <summary>
         /// Definition for <see cref="InvalidValue"/>
         /// </summary>
         /// Element created at 08/11/2014,3:55 PM by Charles
         public BindableProperty InvalidValueProperty =
-            BindableProperty.Create<PropertySetter, string>(x => x.InvalidValue, default(string));
+            BindableProperty.Create(nameof(InvalidValue), typeof(string), typeof(PropertySetter), default(string));
 
         /// <summary>Gets or sets the property name.</summary>
         /// <value>The property.</value>
