@@ -110,6 +110,7 @@
     <Compile Include="Device\Accelerometer.cs" />
     <Compile Include="Device\AudioStream.cs" />
     <Compile Include="Device\Battery.cs" />
+    <Compile Include="Device\DeviceOrientation.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Device\WindowsDevice.cs" />

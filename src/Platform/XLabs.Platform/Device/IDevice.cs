@@ -140,7 +140,7 @@ namespace XLabs.Platform.Device
         /// <summary>
         /// Gets the <see cref="Orientation"/> of the device.
         /// </summary>
-        Orientation Orientation { get; }
+        IDeviceOrientation Orientation { get; }
 
         /// <summary>
         /// Starts the default app associated with the URI for the specified URI.

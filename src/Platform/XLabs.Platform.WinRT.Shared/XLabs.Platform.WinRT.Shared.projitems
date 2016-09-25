@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Device\Battery.old.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device\BluetoothDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device\BluetoothHub.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Device\DeviceOrientation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device\DeviceProperties.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device\DeviceProperties1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device\Gyroscope.cs" />

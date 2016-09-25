@@ -51,6 +51,7 @@
     <Compile Include="Device\BluetoothDevice.cs" />
     <Compile Include="Device\BluetoothHub.cs" />
     <Compile Include="Device\BroadcastMonitor.cs" />
+    <Compile Include="Device\DeviceOrientation.cs" />
     <Compile Include="Device\Display.cs" />
     <Compile Include="Device\Gyroscope.cs" />
     <Compile Include="Extensions\BroadcastReceiverExtensions.cs" />

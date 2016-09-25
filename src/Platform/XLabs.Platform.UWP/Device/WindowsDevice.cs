@@ -52,6 +52,8 @@ namespace XLabs.Platform.Device
 
         private IMediaPicker _mediaPicker;
 
+        private IDeviceOrientation _deviceOrientation;
+
         private INetwork _network;
 
         private IAudioStream _microphone;
@@ -66,7 +68,7 @@ namespace XLabs.Platform.Device
 
         private IGyroscope _gyroscope;
 
-        private Orientation _orientation = Orientation.Portrait;
+      
         #endregion Private Variables
 
         /// <summary>
@@ -265,10 +267,10 @@ namespace XLabs.Platform.Device
         /// Gets the orientation.
         /// </summary>
         /// <value>The orientation.</value>
-        public Orientation Orientation
+        public IDeviceOrientation Orientation
         {
-            get { QueryOrientation(); return _orientation; }
-            private set { _orientation = value; }
+            get { return _deviceOrientation; }
+            private set { _deviceOrientation = value; }
         }
 
         #endregion Properties
@@ -305,33 +307,12 @@ namespace XLabs.Platform.Device
             QueryDeviceDetails();
             QueryDeviceMemory();
             QueryLanguageCode();
-            QueryOrientation();
+            
             QueryTimeZoneName();
             QueryTimeZoneOffset();
         }
 
-        private void QueryOrientation()
-        {
-            switch (DeviceInfo.DeviceProperties.GetInstance().DisplayInfo.CurrentOrientation)
-            {
-
-                case Windows.Graphics.Display.DisplayOrientations.Landscape:
-                    Orientation = Orientation.Landscape & Orientation.LandscapeLeft;
-                    break;
-                case Windows.Graphics.Display.DisplayOrientations.Portrait:
-                    Orientation = Orientation.Portrait & Orientation.PortraitUp;
-                    break;
-                case Windows.Graphics.Display.DisplayOrientations.PortraitFlipped:
-                    Orientation = Orientation.Portrait & Orientation.PortraitDown;
-                    break;
-                case Windows.Graphics.Display.DisplayOrientations.LandscapeFlipped:
-                    Orientation = Orientation.Landscape & Orientation.LandscapeRight;
-                    break;
-                default:
-                    Orientation = Orientation.None;
-                    break;
-            }
-        }
+       
 
         private void QueryLanguageCode()
         {

@@ -49,6 +49,7 @@
     <Compile Include="Device\IBluetoothDevice.cs" />
     <Compile Include="Device\IBluetoothHub.cs" />
     <Compile Include="Device\IDevice.cs" />
+    <Compile Include="Device\IDeviceOrientation.cs" />
     <Compile Include="Device\IDisplay.cs" />
     <Compile Include="Device\IGyroscope.cs" />
     <Compile Include="Device\ISensor.cs" />

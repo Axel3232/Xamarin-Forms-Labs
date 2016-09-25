@@ -77,6 +77,11 @@ namespace XLabs.Platform.Device
         private IFileManager fileManager;
 
         /// <summary>
+        /// The device orientation
+        /// </summary>
+        private IDeviceOrientation deviceOrientation;
+
+        /// <summary>
         /// Reference to the Bluetooth hub singleton.
         /// </summary>
         private IBluetoothHub bluetoothHub;
@@ -345,23 +350,11 @@ namespace XLabs.Platform.Device
         /// Gets the orientation.
         /// </summary>
         /// <value>The orientation.</value>
-        public Orientation Orientation
+        public IDeviceOrientation Orientation
         {
             get
             {
-                switch (UIApplication.SharedApplication.StatusBarOrientation)
-                {
-                    case UIInterfaceOrientation.LandscapeLeft:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
-                    case UIInterfaceOrientation.Portrait:
-                        return Orientation.Portrait & Orientation.PortraitUp;
-                    case UIInterfaceOrientation.PortraitUpsideDown:
-                        return Orientation.Portrait & Orientation.PortraitDown;
-                    case UIInterfaceOrientation.LandscapeRight:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
-                    default:
-                        return Orientation.None;
-                }
+                return this.deviceOrientation ?? (this.deviceOrientation = new DeviceOrientation());
             }
         }
 

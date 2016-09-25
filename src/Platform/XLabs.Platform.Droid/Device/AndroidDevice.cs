@@ -53,6 +53,7 @@ namespace XLabs.Platform.Device
         private IBluetoothHub btHub;
         private IFileManager fileManager;
         private INetwork network;
+        private IDeviceOrientation deviceOrientation;
 
         /// <summary>
         /// Creates a default instance of <see cref="AndroidDevice"/>.
@@ -273,54 +274,13 @@ namespace XLabs.Platform.Device
         /// Gets the orientation.
         /// </summary>
         /// <value>The orientation.</value>
-        public Orientation Orientation
+        public IDeviceOrientation Orientation
         {
             get
             {
-                using (var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>())
-                using (var dm = new DisplayMetrics())
-                {
-                    var rotation = wm.DefaultDisplay.Rotation;
-                    wm.DefaultDisplay.GetMetrics(dm);
-
-                    var width = dm.WidthPixels;
-                    var height = dm.HeightPixels;
-
-                    if (height > width && (rotation == SurfaceOrientation.Rotation0 || rotation == SurfaceOrientation.Rotation180)  ||
-                        width > height && (rotation == SurfaceOrientation.Rotation90 || rotation == SurfaceOrientation.Rotation270))
-                    {
-                        switch (rotation)
-                        {
-                            case SurfaceOrientation.Rotation0:
-                                return Orientation.Portrait & Orientation.PortraitUp;
-                            case SurfaceOrientation.Rotation90:
-                                return Orientation.Landscape & Orientation.LandscapeLeft;
-                            case SurfaceOrientation.Rotation180:
-                                return Orientation.Portrait & Orientation.PortraitDown;
-                            case SurfaceOrientation.Rotation270:
-                                return Orientation.Landscape & Orientation.LandscapeRight;
-                            default:
-                                return Orientation.None;
-                        }
-                    }
-
-                    switch (rotation)
-                    {
-                        case SurfaceOrientation.Rotation0:
-                            return Orientation.Landscape & Orientation.LandscapeLeft;
-                        case SurfaceOrientation.Rotation90:
-                            return Orientation.Portrait & Orientation.PortraitUp;
-                        case SurfaceOrientation.Rotation180:
-                            return Orientation.Landscape & Orientation.LandscapeRight;
-                        case SurfaceOrientation.Rotation270:
-                            return Orientation.Portrait & Orientation.PortraitDown;
-                        default:
-                            return Orientation.None;
-                    }
-                }
+                return this.deviceOrientation ?? (this.deviceOrientation = new DeviceOrientation());
             }
         }
-
         /// <summary>
         /// Starts the default app associated with the URI for the specified URI.
         /// </summary>

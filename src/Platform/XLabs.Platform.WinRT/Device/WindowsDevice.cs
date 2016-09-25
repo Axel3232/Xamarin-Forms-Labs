@@ -28,6 +28,7 @@ using XLabs.Enums;
 using XLabs.Platform.Services;
 using XLabs.Platform.Services.IO;
 using XLabs.Platform.Services.Media;
+using XLabs.Platform.WinRT.Shared.Device;
 
 namespace XLabs.Platform.Device
 {
@@ -41,15 +42,7 @@ namespace XLabs.Platform.Device
         /// </summary>
         private static IDevice _currentDevice;
 
-        //// <summary>
-        //// The file manager.
-        //// </summary>
-        //private IFileManager _fileManager;
-
-        //// <summary>
-        //// The media picker.
-        //// </summary>
-        //private IMediaPicker _mediaPicker;
+       
 
         /// <summary>
         /// The network.
@@ -60,6 +53,8 @@ namespace XLabs.Platform.Device
         /// The _hardware token
         /// </summary>
         private HardwareToken _hardwareToken;
+
+        private IDeviceOrientation _deviceOrientation;
 
         private EasClientDeviceInformation _clientDeviceInformation;
 
@@ -325,24 +320,13 @@ namespace XLabs.Platform.Device
         /// Gets the orientation.
         /// </summary>
         /// <value>The orientation.</value>
-        public Orientation Orientation
+        public IDeviceOrientation Orientation
         {
             get
             {
-                switch (Windows.Graphics.Display.DisplayInformation.GetForCurrentView().CurrentOrientation)
-                {
-
-                    case Windows.Graphics.Display.DisplayOrientations.Landscape:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
-                    case Windows.Graphics.Display.DisplayOrientations.Portrait:
-                        return Orientation.Portrait & Orientation.PortraitUp;
-                    case Windows.Graphics.Display.DisplayOrientations.PortraitFlipped:
-                        return Orientation.Portrait & Orientation.PortraitDown;
-                    case Windows.Graphics.Display.DisplayOrientations.LandscapeFlipped:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
-                    default:
-                        return Orientation.None;
-                }
+                if (_deviceOrientation == null)
+                    _deviceOrientation = new DeviceOrientation();
+                return _deviceOrientation;
             }
         }
 
