@@ -34,36 +34,46 @@ namespace XLabs.Forms.Validation
 	/// Element created at 07/11/2014,4:03 AM by Charles
 	public class Action : BindableObject
 	{
-		#region Static Fields
+        #region Static Fields
 
-		/// <summary>Definition for <see cref="Setters"/></summary>
-		/// Element created at 08/11/2014,4:01 PM by Charles
-		public static BindableProperty SettersProperty =
-			BindableProperty.Create<Action, PropertySetters>(x => x.Setters,
-				default(PropertySetters));
+        /// <summary>Definition for <see cref="Setters"/></summary>
+        /// Element created at 08/11/2014,4:01 PM by Charles
+        //public static BindableProperty SettersProperty =
+        //	BindableProperty.Create<Action, PropertySetters>(x => x.Setters,
+        //		default(PropertySetters));
+        public static BindableProperty SettersProperty =
+            BindableProperty.Create(nameof(Setters), typeof(PropertySetters), typeof(PropertySetters), null);
 
-		/// <summary>Property Definition for <see cref="Element" /></summary>
-		/// Element created at 07/11/2014,6:15 AM by Charles
-		public static BindableProperty ElementProperty =
-			BindableProperty.Create<Action, BindableObject>(x => x.Element,
-				default(BindableObject));
+        /// <summary>Property Definition for <see cref="Element" /></summary>
+        /// Element created at 07/11/2014,6:15 AM by Charles
+        //     public static BindableProperty ElementProperty =
+        //BindableProperty.Create<Action, BindableObject>(x => x.Element,
+        //	default(BindableObject));
+        public static BindableProperty ElementProperty =
+           BindableProperty.Create(nameof(Element), typeof(BindableObject), typeof(BindableObject), null);
 
-		/// <summary>Property Defintion for <see cref="InvalidValue" /></summary>
-		/// Element created at 07/11/2014,6:16 AM by Charles
-		public static BindableProperty InvalidValueProperty =
-			BindableProperty.Create<Action, object>(x => x.InvalidValue, null);
+        /// <summary>Property Defintion for <see cref="InvalidValue" /></summary>
+        /// Element created at 07/11/2014,6:16 AM by Charles
+        //     public static BindableProperty InvalidValueProperty =
+        //BindableProperty.Create<Action, object>(x => x.InvalidValue, null);
+        public static BindableProperty InvalidValueProperty =
+           BindableProperty.Create(nameof(InvalidValue), typeof(object), typeof(BindableObject), null);
 
-		/// <summary>Property definition for <see cref="Property" /></summary>
-		/// Element created at 07/11/2014,6:15 AM by Charles
-		public static BindableProperty PropertyProperty =
-			BindableProperty.Create<Action, string>(x => x.Property, default(string));
+        /// <summary>Property definition for <see cref="Property" /></summary>
+        /// Element created at 07/11/2014,6:15 AM by Charles
+        //     public static BindableProperty PropertyProperty =
+        //BindableProperty.Create<Action, string>(x => x.Property, default(string));
+        public static BindableProperty PropertyProperty =
+          BindableProperty.Create(nameof(Property), typeof(string), typeof(BindableObject), null);
 
-		/// <summary>Property Definition for <see cref="ValidValue" /> </summary>
-		/// Element created at 07/11/2014,6:15 AM by Charles
-		public static BindableProperty ValidValueProperty =
-			BindableProperty.Create<Action, object>(x => x.ValidValue, null);
+        /// <summary>Property Definition for <see cref="ValidValue" /> </summary>
+        /// Element created at 07/11/2014,6:15 AM by Charles
+   //     public static BindableProperty ValidValueProperty =
+			//BindableProperty.Create<Action, object>(x => x.ValidValue, null);
+        public static BindableProperty ValidValueProperty =
+            BindableProperty.Create(nameof(ValidValue), typeof(object), typeof(BindableObject),null);
 
-		private static readonly Dictionary<Type, TypeConverter> Converters = new Dictionary
+        private static readonly Dictionary<Type, TypeConverter> Converters = new Dictionary
 			<Type, TypeConverter>
 			{
 				{ typeof(Color), new ColorTypeConverter() },

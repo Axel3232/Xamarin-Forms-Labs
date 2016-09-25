@@ -56,7 +56,7 @@ namespace XLabs.Forms.Controls
             if (viewCell != null)
             {
                 var frame = new CGRect (0, 0, (float)viewCell.AccessoryView.WidthRequest, (float)viewCell.AccessoryView.HeightRequest);
-                var nativeView = RendererFactory.GetRenderer (viewCell.AccessoryView).NativeView;
+                var nativeView =  Xamarin.Forms.Platform.iOS.Platform.CreateRenderer(viewCell.AccessoryView).NativeView;
                 nativeView.Frame = frame;
                 nativeView.Bounds = frame;
                 nativeCell.AccessoryView = nativeView;
