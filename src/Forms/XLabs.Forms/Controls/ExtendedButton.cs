@@ -32,15 +32,13 @@ namespace XLabs.Forms.Controls
         /// Bindable property for button content vertical alignment.
         /// </summary>
         public static readonly BindableProperty VerticalContentAlignmentProperty =
-            BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.VerticalContentAlignment, TextAlignment.Center);
+            BindableProperty.Create(nameof(VerticalContentAlignment), typeof(TextAlignment), typeof(ExtendedButton), TextAlignment.Center);
 
         /// <summary>
         /// Bindable property for button content horizontal alignment.
         /// </summary>
         public static readonly BindableProperty HorizontalContentAlignmentProperty =
-            BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.HorizontalContentAlignment, TextAlignment.Center);
+            BindableProperty.Create(nameof(HorizontalContentAlignment), typeof(TextAlignment), typeof(ExtendedButton), TextAlignment.Center);
 
         /// <summary>
         /// Gets or sets the content vertical alignment.

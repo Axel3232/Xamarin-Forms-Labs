@@ -32,7 +32,8 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The item template selector property
         /// </summary>
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<ExtendedListView, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+        public static readonly BindableProperty ItemTemplateSelectorProperty = 
+            BindableProperty.Create(nameof(ItemTemplateSelector), typeof(DataTemplateSelector), typeof(ExtendedLabel), default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
         /// <summary>
@@ -57,9 +58,9 @@ namespace XLabs.Forms.Controls
         /// <param name="bindable">The bindable.</param>
         /// <param name="oldvalue">The oldvalue.</param>
         /// <param name="newvalue">The newvalue.</param>
-        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        private static void OnDataTemplateSelectorChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            ((ExtendedListView)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+            ((ExtendedListView)bindable).OnDataTemplateSelectorChanged((DataTemplateSelector)oldvalue, (DataTemplateSelector)newvalue);
         }
 
         /// <summary>

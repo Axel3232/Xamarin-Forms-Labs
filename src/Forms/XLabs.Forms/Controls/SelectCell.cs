@@ -34,7 +34,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The items property
 		/// </summary>
-		public static readonly BindableProperty ItemsProperty = BindableProperty.Create<SelectCell, List<string>>(p => p.Items, default(List<string>));
+		public static readonly BindableProperty ItemsProperty = 
+            BindableProperty.Create(nameof(Items), typeof(List<string>), typeof(SelectCell), default(List<string>));
 		/// <summary>
 		/// Gets or sets the items.
 		/// </summary>
@@ -48,7 +49,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The selected item property
 		/// </summary>
-		public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create<SelectCell, string>(p => p.SelectedItem, default(string));
+		public static readonly BindableProperty SelectedItemProperty = 
+            BindableProperty.Create(nameof(SelectedItem), typeof(string), typeof(SelectCell), default(string));
 		/// <summary>
 		/// Gets or sets the selected item.
 		/// </summary>

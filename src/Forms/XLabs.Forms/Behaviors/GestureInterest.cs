@@ -30,27 +30,27 @@ namespace XLabs.Forms.Behaviors
 	/// </summary>
 	public class GestureInterest : BindableObject
 	{
-		/// <summary>
-		/// The property definition for <see cref="Notification"/>
-		/// </summary>
-		public static BindableProperty NotifcationProperty = BindableProperty.Create<GestureInterest, GestureNotification>(x => x.Notification, GestureNotification.None);
-		/// <summary>
-		/// The property defintion for <see cref="GestureType"/>
-		/// </summary>
-		public static BindableProperty GestureTypeProperty =BindableProperty.Create<GestureInterest, GestureType>(x => x.GestureType, GestureType.Unknown);
+        /// <summary>
+        /// The property definition for <see cref="Notification"/>
+        /// </summary>
+        public static BindableProperty NotifcationProperty = BindableProperty.Create(nameof(Notification), typeof(GestureNotification), typeof(GestureInterest), GestureNotification.None);
+        /// <summary>
+        /// The property defintion for <see cref="GestureType"/>
+        /// </summary>
+        public static BindableProperty GestureTypeProperty = BindableProperty.Create(nameof(GestureType), typeof(GestureType), typeof(GestureInterest),  GestureType.Unknown);
 		/// <summary>
 		/// The property definitionf for <see cref="Direction"/>
 		/// </summary>
-		public static BindableProperty DirectionProperty = BindableProperty.Create<GestureInterest, Directionality>(x => x.Direction, Directionality.None);
+		public static BindableProperty DirectionProperty = BindableProperty.Create(nameof(Direction), typeof(Directionality), typeof(GestureInterest), Directionality.None);
 
 		/// <summary>
 		/// The property definition for <see cref="GestureCommand"/>
 		/// </summary>
-		public static BindableProperty GestureCommandProperty =BindableProperty.Create<GestureInterest, IGesture>(x => x.GestureCommand,default(IGesture));
+		public static BindableProperty GestureCommandProperty =BindableProperty.Create(nameof(GestureCommand), typeof(IGesture), typeof(GestureInterest), default(IGesture));
 		/// <summary>
 		/// The property definition for <see cref="GestureParameter"/>
 		/// </summary>
-		public static BindableProperty GestureParameterProperty =BindableProperty.Create<GestureInterest, object>(x => x.GestureParameter, default(object));
+		public static BindableProperty GestureParameterProperty =BindableProperty.Create(nameof(GestureParameter), typeof(object), typeof(GestureInterest), default(object));
 
 		/// <summary>
 		/// The notification to use with this gesture

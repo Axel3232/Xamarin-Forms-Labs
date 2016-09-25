@@ -97,9 +97,15 @@
     </Compile>
     <None Include="app.config" />
     <None Include="Entitlements.plist" />
-    <None Include="Resources\Fonts\fontawesome-webfont.ttf" />
-    <None Include="Resources\Fonts\Open 24 Display St.ttf" />
-    <None Include="Resources\Fonts\Roboto-Light.ttf" />
+    <BundleResource Include="Resources\Fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Open 24 Display St.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />

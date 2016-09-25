@@ -25,7 +25,7 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Samples.Pages.Controls
 {
-    public partial class PopupPage
+    public partial class PopupPage : ContentPage
     {
         public PopupPage()
         {

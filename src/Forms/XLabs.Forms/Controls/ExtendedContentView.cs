@@ -32,8 +32,7 @@ namespace XLabs.Forms.Controls
         /// The width request in inches property.
         /// </summary>
         public static readonly BindableProperty WidthRequestInInchesProperty =
-            BindableProperty.Create<ExtendedContentView, double>(
-                p => p.WidthRequestInInches, default(double));
+            BindableProperty.Create(nameof(WidthRequestInInches), typeof(double), typeof(ExtendedContentView), default(double));
 
         /// <summary>
         /// Gets or sets the width request in inches.

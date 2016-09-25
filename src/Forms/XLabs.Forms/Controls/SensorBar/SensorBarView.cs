@@ -39,19 +39,23 @@ namespace XLabs.Forms.Controls.SensorBar
 		/// <summary>
 		/// The positive color property
 		/// </summary>
-		public static readonly BindableProperty PositiveColorProperty = BindableProperty.Create<SensorBarView, Color>(p => p.PositiveColor, Color.Green);
+		public static readonly BindableProperty PositiveColorProperty = 
+            BindableProperty.Create(nameof(PositiveColor), typeof(Color), typeof(SensorBarView), Color.Green);
 		/// <summary>
 		/// The negative color property
 		/// </summary>
-		public static readonly BindableProperty NegativeColorProperty = BindableProperty.Create<SensorBarView, Color>(p => p.NegativeColor, Color.Red);
+		public static readonly BindableProperty NegativeColorProperty = 
+            BindableProperty.Create(nameof(NegativeColor), typeof(Color), typeof(SensorBarView), Color.Red);
 		/// <summary>
 		/// The current value property
 		/// </summary>
-		public static readonly BindableProperty CurrentValueProperty = BindableProperty.Create<SensorBarView, double>(p => p.CurrentValue, 0);
+		public static readonly BindableProperty CurrentValueProperty = 
+            BindableProperty.Create(nameof(CurrentValue), typeof(double), typeof(SensorBarView), 0d);
 		/// <summary>
 		/// The limit property
 		/// </summary>
-		public static readonly BindableProperty LimitProperty = BindableProperty.Create<SensorBarView, double>(p => p.Limit, 1);
+		public static readonly BindableProperty LimitProperty = 
+            BindableProperty.Create(nameof(Limit), typeof(double), typeof(SensorBarView), 1d);
 
 		/// <summary>
 		/// Gets or sets the current value.

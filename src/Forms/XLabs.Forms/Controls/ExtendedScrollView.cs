@@ -51,8 +51,7 @@ namespace XLabs.Forms.Controls
 		/// The position property
 		/// </summary>
 		public static readonly BindableProperty PositionProperty = 
-			BindableProperty.Create<ExtendedScrollView,Point>(
-				p => p.Position, default(Point));
+			BindableProperty.Create(nameof(Position), typeof(Point), typeof(ExtendedScrollView), default(Point));
 
 		/// <summary>
 		/// Gets or sets the position.
@@ -67,8 +66,7 @@ namespace XLabs.Forms.Controls
 		/// The animate scroll property
 		/// </summary>
 		public static readonly BindableProperty AnimateScrollProperty = 
-			BindableProperty.Create<ExtendedScrollView,bool>(
-				p => p.AnimateScroll,true);
+			BindableProperty.Create(nameof(AnimateScroll), typeof(bool), typeof(ExtendedScrollView), true);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [animate scroll].

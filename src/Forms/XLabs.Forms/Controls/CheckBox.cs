@@ -33,29 +33,25 @@ namespace XLabs.Forms.Controls
 		/// The checked state property.
 		/// </summary>
 		public static readonly BindableProperty CheckedProperty =
-			BindableProperty.Create<CheckBox, bool>(
-				p => p.Checked, false, BindingMode.TwoWay, propertyChanged: OnCheckedPropertyChanged);
+			BindableProperty.Create(nameof(Checked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: OnCheckedPropertyChanged);
 
 		/// <summary>
 		/// The checked text property.
 		/// </summary>
 		public static readonly BindableProperty CheckedTextProperty =
-			BindableProperty.Create<CheckBox, string>(
-				p => p.CheckedText, string.Empty, BindingMode.TwoWay);
+			BindableProperty.Create(nameof(CheckedText), typeof(string), typeof(CheckBox), string.Empty, BindingMode.TwoWay);
 
 		/// <summary>
 		/// The unchecked text property.
 		/// </summary>
 		public static readonly BindableProperty UncheckedTextProperty =
-			BindableProperty.Create<CheckBox, string>(
-				p => p.UncheckedText, string.Empty);
+			BindableProperty.Create(nameof(UncheckedText), typeof(string), typeof(CheckBox), string.Empty);
 
 		/// <summary>
 		/// The default text property.
 		/// </summary>
 		public static readonly BindableProperty DefaultTextProperty =
-			BindableProperty.Create<CheckBox, string>(
-				p => p.Text, string.Empty);
+			BindableProperty.Create(nameof(DefaultText), typeof(string), typeof(CheckBox), string.Empty);
 
 		/// <summary>
 		/// Identifies the TextColor bindable property.
@@ -63,22 +59,19 @@ namespace XLabs.Forms.Controls
 		/// 
 		/// <remarks/>
 		public static readonly BindableProperty TextColorProperty =
-			BindableProperty.Create<CheckBox, Color>(
-				p => p.TextColor, Color.Default);
+			BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Default);
 
 		/// <summary>
 		/// The font size property
 		/// </summary>
 		public static readonly BindableProperty FontSizeProperty =
-			BindableProperty.Create<CheckBox, double>(
-				p => p.FontSize, -1);
+			BindableProperty.Create(nameof(FontSize), typeof(double), typeof(CheckBox), -1d);
 
 		/// <summary>
 		/// The font name property.
 		/// </summary>
 		public static readonly BindableProperty FontNameProperty =
-			BindableProperty.Create<CheckBox, string>(
-				p => p.FontName, string.Empty);
+			BindableProperty.Create(nameof(FontName), typeof(string), typeof(CheckBox), string.Empty);
 
 
 		/// <summary>
@@ -230,10 +223,10 @@ namespace XLabs.Forms.Controls
 		/// <param name="bindable">The bindable.</param>
 		/// <param name="oldvalue">if set to <c>true</c> [oldvalue].</param>
 		/// <param name="newvalue">if set to <c>true</c> [newvalue].</param>
-		private static void OnCheckedPropertyChanged(BindableObject bindable, bool oldvalue, bool newvalue)
+		private static void OnCheckedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
 		{
 			var checkBox = (CheckBox) bindable;
-			checkBox.Checked = newvalue;
+			checkBox.Checked = (bool)newvalue;
 		}
 	}
 }

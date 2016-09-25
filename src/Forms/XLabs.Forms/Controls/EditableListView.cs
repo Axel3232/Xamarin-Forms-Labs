@@ -34,7 +34,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The source property
 		/// </summary>
-		public static readonly BindableProperty SourceProperty = BindableProperty.Create<EditableListView<T>, ObservableCollection<T>>(p => p.Source, default(ObservableCollection<T>));
+		public static readonly BindableProperty SourceProperty = 
+            BindableProperty.Create(nameof(Source),typeof(ObservableCollection<T>), typeof(EditableListView<T>), default(ObservableCollection<T>));
 		/// <summary>
 		/// Gets or sets the source.
 		/// </summary>
@@ -48,7 +49,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The add row command property
 		/// </summary>
-		public static readonly BindableProperty AddRowCommandProperty = BindableProperty.Create<EditableListView<T>, Command>(p => p.AddRowCommand, default(Command));
+		public static readonly BindableProperty AddRowCommandProperty = 
+            BindableProperty.Create(nameof(AddRowCommand), typeof(Command), typeof(EditableListView<T>), default(Command));
 		/// <summary>
 		/// Gets or sets the add row command.
 		/// </summary>

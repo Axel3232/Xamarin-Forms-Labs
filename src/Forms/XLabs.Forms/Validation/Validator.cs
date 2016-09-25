@@ -38,7 +38,7 @@ namespace XLabs.Forms.Validation
         /// <summary>The Set of Validations</summary>
         /// Element created at 07/11/2014,12:00 PM by Charles
         public static BindableProperty SetsProperty =
-            BindableProperty.Create<Validator, ValidationSets>(x => x.Sets, default(ValidationSets));
+            BindableProperty.Create(nameof(Sets), typeof(ValidationSets),typeof(Validator), default(ValidationSets));
 
         #endregion
 

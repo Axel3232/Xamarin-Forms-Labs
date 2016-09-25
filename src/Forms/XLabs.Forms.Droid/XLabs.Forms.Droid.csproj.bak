@@ -5,17 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FD666BA3-7482-4C34-AFC6-C8AAF77DF021}</ProjectGuid>
+    <ProjectGuid>{3FDEEE8A-55E3-42E9-91AF-FBF94688CE71}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XLabs.Forms.Charting</RootNamespace>
-    <AssemblyName>XLabs.Forms.Charting.Droid</AssemblyName>
+    <RootNamespace>XLabs.Forms.Droid</RootNamespace>
+    <AssemblyName>XLabs.Forms.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -97,29 +97,110 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ChartRenderer.cs" />
-    <Compile Include="Controls\ChartSurface.cs" />
+    <Compile Include="Controls\Calendar\CalendarViewRenderer.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarArrowView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarCellView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarGridView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarMonthPageTransformer.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarPickerView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\CalendarRowView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\Logr.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthAdapter.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthCellDescriptor.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthDescriptor.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\MonthView.cs" />
+    <Compile Include="Controls\Calendar\MonoDroid.TimesSquare\StyleDescriptor.cs" />
+    <Compile Include="Controls\CameraView\CameraViewRenderer.cs" />
+    <Compile Include="Controls\CheckBox\CheckBoxRenderer.cs" />
+    <Compile Include="Controls\CircleImage\CircleImageRenderer.cs" />
+    <Compile Include="Controls\DragContentView\DragContentViewRenderer.cs" />
+    <Compile Include="Controls\DynamicListView\DynamicListViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedButton\ExtendedButtonRenderer.cs" />
+    <Compile Include="Controls\ExtendedEditor\ExtendedEditorRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntryCell\ExtendedEntryCellRenderer.cs" />
+    <Compile Include="Controls\ExtendedEntry\ExtendedEntryRenderer.cs" />
+    <Compile Include="Controls\ExtendedLabel\ExtendedLabelRenderer.cs" />
+    <Compile Include="Controls\ExtendedScrollView\ExtendedScrollViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedSwitch\ExtendedSwitchRenderer.cs" />
+    <Compile Include="Controls\ExtendedTableView\ExtendedTableViewRenderer.cs" />
+    <Compile Include="Controls\ExtendedTextCell\ExtendedTextCellRenderer.cs" />
+    <Compile Include="Controls\GesturesContentView\GesturesContentViewRenderer.cs" />
+    <Compile Include="Controls\GradientContentView\GradientContentViewRenderer.cs" />
+    <Compile Include="Controls\GridView\GridViewRenderer.cs" />
+    <Compile Include="Controls\HybridWebView\HybridWebViewRenderer.cs" />
+    <Compile Include="Controls\HyperLinkLabel\HyperLinkLabelRenderer.cs" />
+    <Compile Include="Controls\IconButton\CustomTypeFaceSpan.cs" />
+    <Compile Include="Controls\IconButton\IconButtonRenderer.cs" />
+    <Compile Include="Controls\IconButton\TextViewRenderHelper.cs" />
+    <Compile Include="Controls\IconLabel\IconLabelRenderer.cs" />
+    <Compile Include="Controls\ImageButton\ImageButtonRenderer.cs" />
+    <Compile Include="Controls\ImageGallery\ImageGalleryRenderer.cs" />
+    <Compile Include="Controls\RadioButton\RadioButtonRenderer.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarDroidView.cs" />
+    <Compile Include="Controls\SensorBar\SensorBarViewRenderer.cs" />
+    <Compile Include="Controls\Separator\SeparatorDroidView.cs" />
+    <Compile Include="Controls\Separator\SeparatorRenderer.cs" />
+    <Compile Include="Controls\WebImage\WebImageRenderer.cs" />
+    <Compile Include="Extensions\AlignmentExtensions.cs" />
+    <Compile Include="Extensions\FontExtensions.cs" />
+    <Compile Include="Extensions\ViewExtensions.cs" />
+    <Compile Include="Pages\ExtendedMasterDetailPageRenderer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Services\FontManager.cs" />
+    <Compile Include="XFormsApp.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resources\Resource.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
+    <AndroidResource Include="Resources\layout\calendar_pager.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XLabs.Forms.Charting\XLabs.Forms.Charting.csproj">
-      <Project>{a94e9b67-937d-443c-aeb0-1220131b590b}</Project>
-      <Name>XLabs.Forms.Charting</Name>
+    <ProjectReference Include="..\..\Core\XLabs.Core.csproj">
+      <Project>{486ABBD5-9E4D-4BD2-A6FB-82E0E3B5A163}</Project>
+      <Name>XLabs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform.Droid\XLabs.Platform.Droid.csproj">
+      <Project>{0E2E8AEC-8DC9-4C9D-8680-903805F92FD4}</Project>
+      <Name>XLabs.Platform.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\XLabs.Platform\XLabs.Platform.csproj">
+      <Project>{7b43b9f5-7c88-42f1-b217-34a24ae925d0}</Project>
+      <Name>XLabs.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XLabs.Forms\XLabs.Forms.csproj">
+      <Project>{59ad9d73-9348-4262-a869-6168057da26a}</Project>
+      <Name>XLabs.Forms</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\Calendar\MonoDroid.TimesSquare\License.txt" />
+    <AndroidResource Include="Resources\color\calendar_text_selector.xml" />
+    <AndroidResource Include="Resources\drawable\ad16.jpg" />
+    <AndroidResource Include="Resources\drawable\calendar_bg_selector.xml" />
+    <AndroidResource Include="Resources\layout\calendar_pager_layout.xml" />
+    <AndroidResource Include="Resources\layout\calendar_picker.xml" />
+    <AndroidResource Include="Resources\layout\dialog.xml" />
+    <AndroidResource Include="Resources\layout\month.xml" />
+    <AndroidResource Include="Resources\layout\week.xml" />
+    <AndroidResource Include="Resources\Values\attrs.xml" />
+    <AndroidResource Include="Resources\Values\colors.xml" />
+    <AndroidResource Include="Resources\Values\dimens.xml" />
+    <AndroidResource Include="Resources\Values\styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behavior\" />
+    <Folder Include="Controls\ImageButtonRenderer\" />
+  </ItemGroup>
+  <Import Project="..\XLabs.Forms.Shared\XLabs.Forms.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
   <Import Project="..\..\packages\NuSpec.ReferenceGenerator.2.0.0-beta-bld01\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets" Condition="Exists('..\..\packages\NuSpec.ReferenceGenerator.2.0.0-beta-bld01\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets')" />

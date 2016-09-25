@@ -90,8 +90,7 @@ namespace XLabs.Forms.Controls
 		/// The font name property.
 		/// </summary>
 		public static readonly BindableProperty FontNameProperty =
-			BindableProperty.Create<ExtendedLabel, string>(
-				p => p.FontName, string.Empty);
+			BindableProperty.Create(nameof(FontName), typeof(string), typeof(ExtendedLabel), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the name of the font file including extension. If no extension given then ttf is assumed.
@@ -115,8 +114,7 @@ namespace XLabs.Forms.Controls
 		/// This is only required on Windows Phone. If not given then the file name excl. the extension is used.
 		/// </summary>
 		public static readonly BindableProperty FriendlyFontNameProperty =
-			BindableProperty.Create<ExtendedLabel, string>(
-				p => p.FriendlyFontName, string.Empty);
+			BindableProperty.Create(nameof(FriendlyFontName), typeof(string), typeof(ExtendedLabel), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the name of the font.
@@ -138,7 +136,7 @@ namespace XLabs.Forms.Controls
 		/// The is underlined property.
 		/// </summary>
 		public static readonly BindableProperty IsUnderlineProperty =
-			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsUnderline, false);
+			BindableProperty.Create(nameof(IsUnderline), typeof(bool), typeof(ExtendedLabel), false);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the text in the label is underlined.
@@ -160,7 +158,7 @@ namespace XLabs.Forms.Controls
 		/// The is underlined property.
 		/// </summary>
 		public static readonly BindableProperty IsStrikeThroughProperty =
-			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsStrikeThrough, false);
+			BindableProperty.Create(nameof(IsStrikeThrough), typeof(bool), typeof(ExtendedLabel), false);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the text in the label is underlined.
@@ -182,7 +180,7 @@ namespace XLabs.Forms.Controls
 		/// This is the drop shadow property
 		/// </summary>
 		public static readonly BindableProperty IsDropShadowProperty =
-			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
+			BindableProperty.Create(nameof(IsDropShadow), typeof(bool), typeof(ExtendedLabel), false);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is drop shadow.
@@ -204,7 +202,7 @@ namespace XLabs.Forms.Controls
 		/// This is the drop shadow color property
 		/// </summary>
 		public static readonly BindableProperty DropShadowColorProperty =
-			BindableProperty.Create<ExtendedLabel, Color>(p => p.DropShadowColor, default(Color));
+			BindableProperty.Create(nameof(DropShadowColor), typeof(Color), typeof(ExtendedLabel), default(Color));
 
 		/// <summary>
 		/// Gets or sets the color of the drop shadow.
@@ -226,7 +224,7 @@ namespace XLabs.Forms.Controls
 		/// The placeholder property.
 		/// </summary>
 		public static readonly BindableProperty PlaceholderProperty = 
-			BindableProperty.Create<ExtendedLabel, string>(p => p.Placeholder, default(string));
+			BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(ExtendedLabel), default(string));
 
 		/// <summary>
 		/// Gets or sets the string value that is used when the label's Text property is empty.
@@ -246,7 +244,7 @@ namespace XLabs.Forms.Controls
 		/// The formatted placeholder property.
 		/// </summary>
 		public static readonly BindableProperty FormattedPlaceholderProperty = 
-			BindableProperty.Create<ExtendedLabel, FormattedString>(p => p.FormattedPlaceholder, default(FormattedString));
+			BindableProperty.Create(nameof(FormattedPlaceholder), typeof(FormattedString), typeof(ExtendedLabel), default(FormattedString));
 
 		/// <summary>
 		/// Gets or sets the FormattedString value that is used when the label's Text property is empty.

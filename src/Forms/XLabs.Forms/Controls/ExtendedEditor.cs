@@ -45,7 +45,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The font property
 		/// </summary>
-		public static readonly BindableProperty FontProperty = BindableProperty.Create<ExtendedEditor, Font> (p => p.Font, default(Font));
+		public static readonly BindableProperty FontProperty = 
+            BindableProperty.Create(nameof(Font), typeof(Font), typeof(ExtendedEditor), default(Font));
 
 		/// <summary>
 		/// Gets or sets the font.

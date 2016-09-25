@@ -39,10 +39,10 @@ namespace XLabs.Forms.Behaviors
         /// <summary>
         /// Definition for the attachable Interests Property
         /// </summary>
-        public static BindableProperty InterestsProperty =BindableProperty.CreateAttached<Gestures, GestureCollection>(
-                                                            x => x.GetValue<GestureCollection>(InterestsProperty),
+        public static BindableProperty InterestsProperty = 
+            BindableProperty.CreateAttached(nameof(Interests), typeof(GestureCollection), typeof(Gestures),
                                                             null,
-                                                            BindingMode.OneWay,  
+                                                            BindingMode.OneWay,
                                                             null,
                                                             InterestsChanged);
 
@@ -63,7 +63,7 @@ namespace XLabs.Forms.Behaviors
             set { SetValue(InterestsProperty,value);}
         }
 
-        private static void InterestsChanged(BindableObject bo, GestureCollection oldvalue, GestureCollection newvalue)
+        private static void InterestsChanged(BindableObject bo, object oldvalue, object newvalue)
         {
             var view = bo as View;
             if (view == null)
@@ -72,12 +72,12 @@ namespace XLabs.Forms.Behaviors
             var gcv = FindContentViewParent(view,false);
             if (gcv == null)
             {
-                PendingInterestParameters.Add(new PendingInterestParams { View = view, Interests = newvalue });
+                PendingInterestParameters.Add(new PendingInterestParams { View = view, Interests = (GestureCollection)newvalue });
                 view.PropertyChanged += ViewPropertyChanged;
 
             }
             else
-                gcv.RegisterInterests(view,newvalue);            
+                gcv.RegisterInterests(view,(GestureCollection)newvalue);            
         }
 
         private static void ViewPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
