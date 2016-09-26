@@ -69,8 +69,8 @@ namespace XLabs.Samples.Pages.Controls
                     var label = new Label
                     {
                         FontSize = Device.GetNamedSize(NamedSize.Medium, typeof (Label)),
-                        YAlign = TextAlignment.Center,
-                        XAlign = TextAlignment.Center
+                        VerticalTextAlignment = TextAlignment.Center,
+                        HorizontalTextAlignment = TextAlignment.Center
                     };
                     label.SetBinding(Label.TextProperty, "Title");
 

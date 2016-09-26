@@ -90,6 +90,7 @@ namespace XLabs.Samples
             ViewFactory.Register<SoundPage, SoundServiceViewModel>();
             ViewFactory.Register<RepeaterViewPage, RepeaterViewViewModel>();
             ViewFactory.Register<WaveRecorderPage, WaveRecorderViewModel>();
+            ViewFactory.Register<GestureSample, GestureSampleVm>();
 
             var mainTab = new ExtendedTabbedPage()
             {
@@ -327,6 +328,7 @@ namespace XLabs.Samples
                 {"Web hybrid page loading", typeof(WebPageLoadSample)},
                 {"Converter page", typeof(ConverterPage) },
                 {"Orientation page", typeof(OrientationPage) },
+                {"Gesture page", typeof(GestureSample) },
             };
 
             var controls = new ContentPage
