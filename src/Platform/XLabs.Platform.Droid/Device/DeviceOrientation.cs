@@ -10,9 +10,9 @@ namespace XLabs.Platform.Device
 {
     public class DeviceOrientation : IDeviceOrientation
     {
-        public event EventHandler<EventArgs<Orientation>> ScreenOrientationChanged;
+        public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
-        public Orientation GetOrientation()
+        public CurrentOrientation GetOrientation()
         {
             using (var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>())
             using (var dm = new DisplayMetrics())
@@ -29,30 +29,30 @@ namespace XLabs.Platform.Device
                     switch (rotation)
                     {
                         case SurfaceOrientation.Rotation0:
-                            return Orientation.Portrait & Orientation.PortraitUp;
+                            return new CurrentOrientation(Orientation.Portrait);
                         case SurfaceOrientation.Rotation90:
-                            return Orientation.Landscape & Orientation.LandscapeLeft;
+                            return new CurrentOrientation(Orientation.LandscapeLeft);
                         case SurfaceOrientation.Rotation180:
-                            return Orientation.Portrait & Orientation.PortraitDown;
+                            return new CurrentOrientation(Orientation.PortraitDown);
                         case SurfaceOrientation.Rotation270:
-                            return Orientation.Landscape & Orientation.LandscapeRight;
+                            return new CurrentOrientation(Orientation.LandscapeRight);
                         default:
-                            return Orientation.None;
+                            return new CurrentOrientation(Orientation.None);
                     }
                 }
 
                 switch (rotation)
                 {
                     case SurfaceOrientation.Rotation0:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
+                        return new CurrentOrientation(Orientation.LandscapeLeft);
                     case SurfaceOrientation.Rotation90:
-                        return Orientation.Portrait & Orientation.PortraitUp;
+                        return new CurrentOrientation(Orientation.Portrait);
                     case SurfaceOrientation.Rotation180:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
+                        return new CurrentOrientation(Orientation.LandscapeRight);
                     case SurfaceOrientation.Rotation270:
-                        return Orientation.Portrait & Orientation.PortraitDown;
+                        return new CurrentOrientation(Orientation.PortraitDown);
                     default:
-                        return Orientation.None;
+                        return new CurrentOrientation(Orientation.None);
                 }
             }
         }

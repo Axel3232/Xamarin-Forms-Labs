@@ -13,12 +13,12 @@ namespace XLabs.Platform.Device
         /// Triggered only when orienationation change by moving device.
         /// Not trigered when calling <see cref="SetOrientation(Orientation)"/>
         /// </summary>
-        event EventHandler<EventArgs<Orientation>> ScreenOrientationChanged;
+        event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
         /// <summary>
         /// Gets the orientation.
         /// </summary>
         /// <returns>The orientation.</returns>
-        Orientation GetOrientation();
+        CurrentOrientation GetOrientation();
         /// <summary>
         /// Force the orientation of the screen 
         /// </summary>

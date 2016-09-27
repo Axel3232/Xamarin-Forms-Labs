@@ -17,7 +17,7 @@ namespace XLabs.Platform.Device
             UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
         }
 
-        public event EventHandler<EventArgs<Orientation>> ScreenOrientationChanged;
+        public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
         /// <summary>
         /// Devices the orientation did change.
@@ -26,7 +26,7 @@ namespace XLabs.Platform.Device
         public  void DeviceOrientationDidChange(NSNotification notification)
         {
             UIDeviceOrientation orientation = UIDevice.CurrentDevice.Orientation;
-            this.OnDeviceOrientationChanged(orientation.ToOrientation());
+            this.OnDeviceOrientationChanged(new CurrentOrientation(orientation.ToOrientation()));
         }
 
        
@@ -37,20 +37,20 @@ namespace XLabs.Platform.Device
         /// Gets the orientation.
         /// </summary>
         /// <returns>The orientation.</returns>
-        public Orientation GetOrientation()
+        public CurrentOrientation GetOrientation()
         {
             switch (UIApplication.SharedApplication.StatusBarOrientation)
             {
                 case UIInterfaceOrientation.LandscapeLeft:
-                    return Orientation.Landscape & Orientation.LandscapeLeft;
+                    return new CurrentOrientation(Orientation.LandscapeLeft);
                 case UIInterfaceOrientation.Portrait:
-                    return Orientation.Portrait & Orientation.PortraitUp;
+                    return new CurrentOrientation(Orientation.Portrait);
                 case UIInterfaceOrientation.PortraitUpsideDown:
-                    return Orientation.Portrait & Orientation.PortraitDown;
+                    return new CurrentOrientation(Orientation.PortraitDown);
                 case UIInterfaceOrientation.LandscapeRight:
-                    return Orientation.Landscape & Orientation.LandscapeRight;
+                    return new CurrentOrientation(Orientation.LandscapeRight);
                 default:
-                    return Orientation.None;
+                    return new CurrentOrientation(Orientation.None);
             }
         }
 
@@ -68,7 +68,7 @@ namespace XLabs.Platform.Device
         }
 
 
-        private void OnDeviceOrientationChanged(Orientation orientation)
+        private void OnDeviceOrientationChanged(CurrentOrientation orientation)
         {
             ScreenOrientationChanged?.Invoke(this, orientation);
         }

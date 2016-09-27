@@ -178,6 +178,7 @@ Task("Publish")
 	var nupkgFiles = GetFiles(buildSettings.NuGet.NuGetPackagesSpec);
 	foreach(var pkg in nupkgFiles)
 	{
+	
 		// Lets skip everything except the current version and we can skip the symbols pkg for now
 		if (!pkg.ToString().Contains(versionInfo.ToString()) || pkg.ToString().Contains("symbols")) {
 			Information("Skipping {0}", pkg);

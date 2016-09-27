@@ -36,18 +36,18 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Property Definition for the <see cref="Accuracy"/> Property
         /// </summary>
-        public static BindableProperty AccuracyProperty =BindableProperty.Create<GesturesContentView, float>(x=>x.Accuracy,5.0f,BindingMode.OneWay,(bo, val) => val >= 5 && val<=25);
+        public static BindableProperty AccuracyProperty =BindableProperty.Create(nameof(Accuracy), typeof(float), typeof(GesturesContentView),5.0f,BindingMode.OneWay,(bo, val) => (float)val >= 5 && (float)val <=25);
 
         /// <summary>
         /// Property Definition for the Bindable <see cref="MinimumSwipeLength"/> property
         /// </summary>
-        public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create<GesturesContentView, float>(x => x.MinimumSwipeLength,25,BindingMode.OneWay,(bo, val) => val >= 10);
+        public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create(nameof(MinimumSwipeLength), typeof(float), typeof(GesturesContentView), 25,BindingMode.OneWay,(bo, val) => (float)val >= 10);
 
         /// <summary>
         /// Property Definition for the exclude children property
         /// </summary>
         /// Element created at 08/11/2014,12:45 AM by Charles
-        public static BindableProperty ExcludeChildrenProperty = BindableProperty.Create<GesturesContentView, bool>(x => x.ExcludeChildren, true);
+        public static BindableProperty ExcludeChildrenProperty = BindableProperty.Create(nameof(ExcludeChildren), typeof(bool), typeof(GesturesContentView), true);
 
         /// <summary>
         /// Gets or sets a value indicating whether or not to exclude children views.

@@ -35,7 +35,7 @@ namespace XLabs.Platform.Device
         /// <returns>True if device is in landscape, otherwise false.</returns>
         public static bool IsInLandscape(this IDevice device)
         {
-            return (device.Orientation.GetOrientation() & Orientation.Landscape) == Orientation.Landscape;
+            return device.Orientation.GetOrientation().IsLandscape;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace XLabs.Platform.Device
         /// <returns>True if device is in landscape, otherwise false.</returns>
         public static bool IsInPortrait(this IDevice device)
         {
-            return (device.Orientation.GetOrientation() & Orientation.Portrait) == Orientation.Portrait;
+            return device.Orientation.GetOrientation().IsPortrait;
         }
 
         /// <summary>
