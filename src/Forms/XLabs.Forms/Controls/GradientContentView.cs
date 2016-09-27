@@ -58,7 +58,7 @@ namespace XLabs.Forms.Controls
         /// The orientation property
         /// </summary>
         public static readonly BindableProperty OrientationProperty =
-            BindableProperty.Create<GradientContentView, GradientOrientation>(x => x.Orientation, GradientOrientation.Vertical, BindingMode.OneWay);
+            BindableProperty.Create(nameof(Orientation), typeof(GradientOrientation), typeof(GradientContentView), GradientOrientation.Vertical, BindingMode.OneWay);
 
         /// <summary>
         /// Start color of the gradient
@@ -74,7 +74,7 @@ namespace XLabs.Forms.Controls
         /// Using a BindableProperty as the backing store for StartColor.  This enables animation, styling, binding, etc...
         /// </summary>
         public static readonly BindableProperty StartColorProperty =
-            BindableProperty.Create<GradientContentView, Color>(x => x.StartColor, Color.White, BindingMode.OneWay);
+            BindableProperty.Create(nameof(StartColor), typeof(Color), typeof(GradientContentView), Color.White, BindingMode.OneWay);
 
         /// <summary>
         /// End color of the gradient
@@ -90,6 +90,6 @@ namespace XLabs.Forms.Controls
         /// Using a BindableProperty as the backing store for EndColor.  This enables animation, styling, binding, etc...
         /// </summary>
         public static readonly BindableProperty EndColorProperty =
-            BindableProperty.Create<GradientContentView, Color>(x => x.EndColor, Color.Black, BindingMode.OneWay);
+            BindableProperty.Create(nameof(EndColor), typeof(Color), typeof(GradientContentView), Color.Black, BindingMode.OneWay);
     }
 }

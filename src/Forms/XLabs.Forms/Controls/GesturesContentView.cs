@@ -41,7 +41,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Property Definition for the Bindable <see cref="MinimumSwipeLength"/> property
         /// </summary>
-        public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create(nameof(MinimumSwipeLength), typeof(float), typeof(GesturesContentView), 25,BindingMode.OneWay,(bo, val) => (float)val >= 10);
+        public static BindableProperty MinimumSwipeLengthProperty =BindableProperty.Create(nameof(MinimumSwipeLength), typeof(float), typeof(GesturesContentView), 25f,BindingMode.OneWay,(bo, val) => (float)val >= 10);
 
         /// <summary>
         /// Property Definition for the exclude children property

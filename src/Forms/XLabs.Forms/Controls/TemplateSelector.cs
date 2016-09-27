@@ -278,11 +278,13 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The wrapped template property
 		/// </summary>
-		public static readonly BindableProperty WrappedTemplateProperty = BindableProperty.Create<DataTemplateWrapper<T>, DataTemplate>(x => x.WrappedTemplate, null);
+		public static readonly BindableProperty WrappedTemplateProperty = 
+            BindableProperty.Create(nameof(WrappedTemplate), typeof(DataTemplate), typeof(DataTemplateWrapper<T>), null);
 		/// <summary>
 		/// The is default property
 		/// </summary>
-		public static readonly BindableProperty IsDefaultProperty = BindableProperty.Create<DataTemplateWrapper<T>, bool>(x => x.IsDefault, false);
+		public static readonly BindableProperty IsDefaultProperty = 
+            BindableProperty.Create(nameof(IsDefault), typeof(bool), typeof(DataTemplateWrapper<T>), false);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is default.

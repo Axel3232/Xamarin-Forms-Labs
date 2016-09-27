@@ -116,7 +116,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Property defnition for the <see cref="ViewModels" /> property
         /// </summary>
-        public static BindableProperty ViewModelsProperty = BindableProperty.Create<CarouselView<T>, ObservableCollection<T>>(x => x.ViewModels, default(ObservableCollection<T>),BindingMode.OneWay,null,ViewModelsChanged);
+        public static BindableProperty ViewModelsProperty = BindableProperty.Create(nameof(ViewModels), typeof(ObservableCollection<T>), typeof(CarouselView<T>), default(ObservableCollection<T>),BindingMode.OneWay,null,ViewModelsChanged);
         /// <summary>
         /// Property defnition for the <see cref="SelectedViewModel" /> property
         /// </summary>
@@ -316,7 +316,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="oldval">The oldval.</param>
         /// <param name="newval">The newval.</param>
-        private void ViewModelsChanged(ObservableCollection<T> oldval, ObservableCollection<T> newval)
+        private void ViewModelsChanged(object oldval, object newval)
         {
             this.currentview = -1;
             if (this.contentView != null)
@@ -324,8 +324,8 @@ namespace XLabs.Forms.Controls
                 SetupTickBoard();
                 SwitchView(true);
             }
-            if (oldval != null) oldval.CollectionChanged -= ViewModelCollectionContentsChanged;
-            newval.CollectionChanged += ViewModelCollectionContentsChanged;
+            if ((ObservableCollection<T>)oldval != null) ((ObservableCollection<T>)oldval).CollectionChanged -= ViewModelCollectionContentsChanged;
+            ((ObservableCollection<T>)newval).CollectionChanged += ViewModelCollectionContentsChanged;
         }
 
         /// <summary>
