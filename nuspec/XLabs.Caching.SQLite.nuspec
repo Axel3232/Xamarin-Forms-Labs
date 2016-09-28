@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>XLabs.Caching.SQLite</id>
-    <version>2.5835.7</version>
+    <version>2.5835.9</version>
     <title>XLabs - Caching - SQLite</title>
     <authors>XLabs Team</authors>
     <owners>XLabs Team</owners>
@@ -17,7 +17,7 @@
     <tags>Xamarin XLabs caching sqlite</tags>
     <dependencies>
       <group>
-        <dependency id="XLabs.Caching" version="[2.5835.7]" />
+        <dependency id="XLabs.Caching" version="[2.5835.9]" />
         <dependency id="SQLite.Net.Async-PCL" version="3.1.1" />
         <dependency id="SQLite.Net.Core-PCL" version="3.1.1" />
       </group>

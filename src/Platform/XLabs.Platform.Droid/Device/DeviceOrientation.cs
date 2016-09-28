@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
@@ -12,11 +13,16 @@ namespace XLabs.Platform.Device
     {
         public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
+       
+
         public CurrentOrientation GetOrientation()
         {
+           
+
             using (var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>())
             using (var dm = new DisplayMetrics())
             {
+                
                 var rotation = wm.DefaultDisplay.Rotation;
                 wm.DefaultDisplay.GetMetrics(dm);
 
@@ -55,6 +61,24 @@ namespace XLabs.Platform.Device
                         return new CurrentOrientation(Orientation.None);
                 }
             }
+        }
+
+        public void NotifyOrientationChange(Android.Content.Res.Orientation orientation)
+        {
+            switch (orientation)
+            {
+                case Android.Content.Res.Orientation.Landscape:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.Landscape)); break;
+                case Android.Content.Res.Orientation.Portrait:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.Portrait)); break;
+                default:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.None)); break;
+            }
+        }
+
+        private void OnDeviceOrientationChanged(CurrentOrientation orientation)
+        {
+            ScreenOrientationChanged?.Invoke(this, orientation);
         }
 
         public void SetOrientation(Orientation orientation)

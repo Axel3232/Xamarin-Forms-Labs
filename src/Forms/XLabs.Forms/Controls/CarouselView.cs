@@ -116,7 +116,8 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// Property defnition for the <see cref="ViewModels" /> property
         /// </summary>
-        public static BindableProperty ViewModelsProperty = BindableProperty.Create(nameof(ViewModels), typeof(ObservableCollection<T>), typeof(CarouselView<T>), default(ObservableCollection<T>),BindingMode.OneWay,null,ViewModelsChanged);
+        public static BindableProperty ViewModelsProperty = BindableProperty.Create<CarouselView<T>, ObservableCollection<T>>(x => x.ViewModels, default(ObservableCollection<T>), BindingMode.OneWay, null, ViewModelsChanged);
+
         /// <summary>
         /// Property defnition for the <see cref="SelectedViewModel" /> property
         /// </summary>

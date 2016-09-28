@@ -14,6 +14,7 @@ namespace XLabs.Platform.Device
         /// Not trigered when calling <see cref="SetOrientation(Orientation)"/>
         /// </summary>
         event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
+
         /// <summary>
         /// Gets the orientation.
         /// </summary>

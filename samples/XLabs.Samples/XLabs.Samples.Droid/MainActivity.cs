@@ -22,9 +22,6 @@
 
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using SQLite.Net;
 using XLabs.Caching;
@@ -34,6 +31,7 @@ using XLabs.Forms.Services;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
 using XLabs.Platform.Mvvm;
+
 using XLabs.Platform.Services;
 using XLabs.Platform.Services.Email;
 using XLabs.Platform.Services.Media;
@@ -47,8 +45,21 @@ namespace XLabs.Samples.Droid
     [Activity(Label = "XLabs.Samples", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : XFormsApplicationDroid
     {
+
+
+        
+
+        public override void OnConfigurationChanged(global::Android.Content.Res.Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            var dvo = Resolver.Resolve<IDevice>().Orientation as  DeviceOrientation;
+            dvo.NotifyOrientationChnage(newConfig);
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
+            
+
             //TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
 
@@ -114,7 +125,7 @@ namespace XLabs.Samples.Droid
                     t => new SQLiteSimpleCache(new SQLitePlatformAndroid(),
                         new SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()));
 
-
+            
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
     }

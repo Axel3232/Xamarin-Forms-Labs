@@ -13,11 +13,13 @@ namespace XLabs.Platform.Device
         {
             var notificationCenter = NSNotificationCenter.DefaultCenter;
             notificationCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, DeviceOrientationDidChange);
-
+            notificationCenter.AddObserver(UIApplication.WillChangeStatusBarOrientationNotification, DeviceOrientationWillChange);
             UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
         }
 
         public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
+
+        public event EventHandler<EventArgs> ScreenOrientationChanging;
 
         /// <summary>
         /// Devices the orientation did change.
@@ -29,7 +31,13 @@ namespace XLabs.Platform.Device
             this.OnDeviceOrientationChanged(new CurrentOrientation(orientation.ToOrientation()));
         }
 
-       
+        public void DeviceOrientationWillChange(NSNotification notification)
+        {
+           
+            this.OnDeviceOrientationChanging();
+        }
+
+
 
         #region IDeviceOrientation implementation
 
@@ -72,9 +80,13 @@ namespace XLabs.Platform.Device
         {
             ScreenOrientationChanged?.Invoke(this, orientation);
         }
-        
 
-        
+        private void OnDeviceOrientationChanging()
+        {
+            ScreenOrientationChanging?.Invoke(this, null);
+        }
+
+
 
         #endregion
     }

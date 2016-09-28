@@ -204,6 +204,35 @@ Task("Publish")
 	}
 });
 
+Task("PublishExsistingBuild")
+    .Description("Publishes all of the exsisting nupkg packages to the nuget server. ")
+    .Does(() =>
+{
+	var nupkgFiles = GetFiles(buildSettings.NuGet.NuGetPackagesSpec);
+	foreach(var pkg in nupkgFiles)
+	{
+	
+		
+		
+		Information("Publishing {0}", pkg);
+		
+		if (buildSettings.NuGet.FeedApiKey != "VSTS" ) {
+			NuGetPush(pkg, new NuGetPushSettings {
+				Source = buildSettings.NuGet.FeedUrl,
+				ApiKey = buildSettings.NuGet.FeedApiKey,
+				ConfigFile = buildSettings.NuGet.NuGetConfig,
+				Verbosity = NuGetVerbosity.Detailed
+			});
+		} else {
+			NuGetPush(pkg, new NuGetPushSettings {
+				Source = buildSettings.NuGet.FeedUrl,
+				ConfigFile = buildSettings.NuGet.NuGetConfig,
+				Verbosity = NuGetVerbosity.Detailed
+			});
+		}
+	}
+});
+
 Task("UnPublish")
     .Description("UnPublishes all of the current nupkg packages from the nuget server. Issue: versionToDelete must use : instead of . due to bug in cake")
     .Does(() =>
