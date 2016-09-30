@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
@@ -10,13 +11,18 @@ namespace XLabs.Platform.Device
 {
     public class DeviceOrientation : IDeviceOrientation
     {
-        public event EventHandler<EventArgs<Orientation>> ScreenOrientationChanged;
+        public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
-        public Orientation GetOrientation()
+       
+
+        public CurrentOrientation GetOrientation()
         {
+           
+
             using (var wm = Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>())
             using (var dm = new DisplayMetrics())
             {
+                
                 var rotation = wm.DefaultDisplay.Rotation;
                 wm.DefaultDisplay.GetMetrics(dm);
 
@@ -29,32 +35,50 @@ namespace XLabs.Platform.Device
                     switch (rotation)
                     {
                         case SurfaceOrientation.Rotation0:
-                            return Orientation.Portrait & Orientation.PortraitUp;
+                            return new CurrentOrientation(Orientation.Portrait);
                         case SurfaceOrientation.Rotation90:
-                            return Orientation.Landscape & Orientation.LandscapeLeft;
+                            return new CurrentOrientation(Orientation.LandscapeLeft);
                         case SurfaceOrientation.Rotation180:
-                            return Orientation.Portrait & Orientation.PortraitDown;
+                            return new CurrentOrientation(Orientation.PortraitDown);
                         case SurfaceOrientation.Rotation270:
-                            return Orientation.Landscape & Orientation.LandscapeRight;
+                            return new CurrentOrientation(Orientation.LandscapeRight);
                         default:
-                            return Orientation.None;
+                            return new CurrentOrientation(Orientation.None);
                     }
                 }
 
                 switch (rotation)
                 {
                     case SurfaceOrientation.Rotation0:
-                        return Orientation.Landscape & Orientation.LandscapeLeft;
+                        return new CurrentOrientation(Orientation.LandscapeLeft);
                     case SurfaceOrientation.Rotation90:
-                        return Orientation.Portrait & Orientation.PortraitUp;
+                        return new CurrentOrientation(Orientation.Portrait);
                     case SurfaceOrientation.Rotation180:
-                        return Orientation.Landscape & Orientation.LandscapeRight;
+                        return new CurrentOrientation(Orientation.LandscapeRight);
                     case SurfaceOrientation.Rotation270:
-                        return Orientation.Portrait & Orientation.PortraitDown;
+                        return new CurrentOrientation(Orientation.PortraitDown);
                     default:
-                        return Orientation.None;
+                        return new CurrentOrientation(Orientation.None);
                 }
             }
+        }
+
+        public void NotifyOrientationChange(Android.Content.Res.Orientation orientation)
+        {
+            switch (orientation)
+            {
+                case Android.Content.Res.Orientation.Landscape:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.Landscape)); break;
+                case Android.Content.Res.Orientation.Portrait:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.Portrait)); break;
+                default:
+                    OnDeviceOrientationChanged(new CurrentOrientation(Orientation.None)); break;
+            }
+        }
+
+        private void OnDeviceOrientationChanged(CurrentOrientation orientation)
+        {
+            ScreenOrientationChanged?.Invoke(this, orientation);
         }
 
         public void SetOrientation(Orientation orientation)

@@ -19,15 +19,15 @@ namespace XLabs.Samples.Pages.Samples
                 box1,
                 Constraint.Constant(0),
                 Constraint.Constant(0),
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? p.Width / 2 : p.Width),
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? p.Height : p.Height / 2));
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? p.Width / 2 : p.Width),
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? p.Height : p.Height / 2));
 
             rl.Children.Add(
                 box2,
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? p.Width / 2 : 0),
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? 0 : p.Height / 2),
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? p.Width / 2 : p.Width),
-                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().HasFlag(Orientation.Portrait) ? p.Height : p.Height / 2));
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? p.Width / 2 : 0),
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? 0 : p.Height / 2),
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? p.Width / 2 : p.Width),
+                Constraint.RelativeToParent(p => device.Orientation.GetOrientation().Orientation.HasFlag(Orientation.Portrait) ? p.Height : p.Height / 2));
 
             this.Content = rl;
         }

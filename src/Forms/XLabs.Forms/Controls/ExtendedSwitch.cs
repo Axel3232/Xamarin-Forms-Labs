@@ -32,8 +32,7 @@ namespace XLabs.Forms.Controls
 		///     Identifies the Switch tint color bindable property.
 		/// </summary>
 		public static readonly BindableProperty TintColorProperty =
-			BindableProperty.Create<ExtendedSwitch, Color>(
-				p => p.TintColor, Color.Black);
+			BindableProperty.Create(nameof(TintColor),typeof(Color), typeof(ExtendedSwitch), Color.Black);
 
 		/// <summary>
 		///     Gets or sets the color of the tint.

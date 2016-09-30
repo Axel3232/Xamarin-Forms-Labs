@@ -57,41 +57,37 @@ namespace XLabs.Forms.Controls
         /// The tint color property
         /// </summary>
         public static readonly BindableProperty TintColorProperty =
-            BindableProperty.Create<ExtendedTabbedPage, Color>(
-                p => p.TintColor, Color.White);
+            BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(ExtendedTabbedPage), Color.White);
 
         /// <summary>
         /// The bar tint color property
         /// </summary>
         public static readonly BindableProperty BarTintColorProperty =
-            BindableProperty.Create<ExtendedTabbedPage, Color>(
-                p => p.BarTintColor, Color.White);
+            BindableProperty.Create(nameof(BarTintColor), typeof(Color), typeof(ExtendedTabbedPage), Color.White);
 
         /// <summary>
         /// The badges property
         /// </summary>
         public static readonly BindableProperty BadgesProperty =
-           BindableProperty.Create<ExtendedTabbedPage, List<string>>(
-               p => p.Badges, null);
+           BindableProperty.Create(nameof(Badges), typeof(List<string>), typeof(ExtendedTabbedPage), null);
 
         /// <summary>
         /// The tab bar selected image property
         /// </summary>
         public static readonly BindableProperty TabBarSelectedImageProperty =
-            BindableProperty.Create<ExtendedTabbedPage, string>(
-                p => p.TabBarSelectedImage, null);
+            BindableProperty.Create(nameof(TabBarSelectedImage), typeof(string), typeof(ExtendedTabbedPage), null);
 
         /// <summary>
         /// The tab bar background image property
         /// </summary>
         public static readonly BindableProperty TabBarBackgroundImageProperty =
-            BindableProperty.Create<ExtendedTabbedPage, string>(
-                p => p.TabBarBackgroundImage, null);
+            BindableProperty.Create(nameof(TabBarBackgroundImage), typeof(string), typeof(ExtendedTabbedPage), null);
 
         /// <summary>
         /// The item template selector property
         /// </summary>
-        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<ExtendedTabbedPage, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+        public static readonly BindableProperty ItemTemplateSelectorProperty = 
+            BindableProperty.Create(nameof(ItemTemplateSelector), typeof(DataTemplateSelector), typeof(ExtendedTabbedPage), default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
 
         private DataTemplateSelector currentItemSelector;
         /// <summary>
@@ -110,9 +106,9 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        private static void OnDataTemplateSelectorChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            ((ExtendedTabbedPage)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+            ((ExtendedTabbedPage)bindable).OnDataTemplateSelectorChanged((DataTemplateSelector)oldvalue, (DataTemplateSelector)newvalue);
         }
 
         /// <summary>
@@ -336,12 +332,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         private void RaiseCurrentPageChanging()
         {
-            var handler = CurrentPageChanging;
-
-            if (handler != null)
-            {
-                handler();
-            }
+            CurrentPageChanging?.Invoke();
         }
 
         /// <summary>
@@ -349,12 +340,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         private void RaiseCurrentPageChanged()
         {
-            var handler = CurrentPageChanged;
-
-            if (handler != null)
-            {
-                handler();
-            }
+            CurrentPageChanged?.Invoke();
         }
 
         /// <summary>

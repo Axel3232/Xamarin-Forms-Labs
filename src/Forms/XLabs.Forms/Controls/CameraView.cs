@@ -40,8 +40,7 @@ namespace XLabs.Forms.Controls
         /// The camera device to use.
         /// </summary>
         public static readonly BindableProperty CameraProperty =
-            BindableProperty.Create<CameraView, CameraDevice>(
-                p => p.Camera, CameraDevice.Rear);
+            BindableProperty.Create(nameof(Camera), typeof(CameraDevice), typeof(CameraView), CameraDevice.Rear);
 
         /// <summary>
         /// Gets or sets the camera device to use.

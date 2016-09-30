@@ -70,11 +70,11 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The selected index property
 		/// </summary>
-		public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create<ButtonGroup, int>(p => p.SelectedIndex, 0, BindingMode.TwoWay);
+		public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(ButtonGroup), 0, BindingMode.TwoWay);
 		/// <summary>
 		/// The items property property
 		/// </summary>
-		public static readonly BindableProperty ItemsPropertyProperty = BindableProperty.Create<ButtonGroup, List<string>>(p => p.Items, null, BindingMode.TwoWay);
+		public static readonly BindableProperty ItemsProperty = BindableProperty.Create(nameof(Items), typeof(List<string>), typeof(ButtonGroup), null, BindingMode.TwoWay);
 		/// <summary>
 		/// The font property
 		/// </summary>
@@ -304,10 +304,10 @@ namespace XLabs.Forms.Controls
 		/// <value>The items.</value>
 		public List<string> Items
 		{
-			get { return (List<string>)GetValue(ItemsPropertyProperty); }
+			get { return (List<string>)GetValue(ItemsProperty); }
 			set
 			{
-				SetValue(ItemsPropertyProperty, value);
+				SetValue(ItemsProperty, value);
 
 				foreach (var item in Items)
 				{

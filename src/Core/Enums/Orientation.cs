@@ -58,4 +58,26 @@ namespace XLabs.Enums
         /// </summary>
         LandscapeRight = 34,
     }
+
+    public struct CurrentOrientation
+    {
+        
+        public Orientation Orientation { get; private set; }
+        public bool IsPortrait { get {
+                return Orientation == Orientation.Portrait || Orientation == Orientation.PortraitDown || Orientation == Orientation.PortraitUp;
+            } }
+
+        public bool IsLandscape
+        {
+            get
+            {
+                return Orientation == Orientation.Landscape || Orientation == Orientation.LandscapeLeft || Orientation == Orientation.LandscapeRight;
+            }
+        }
+
+        public CurrentOrientation(Orientation orientation)
+        {
+            Orientation = orientation;
+        }
+    }
 }

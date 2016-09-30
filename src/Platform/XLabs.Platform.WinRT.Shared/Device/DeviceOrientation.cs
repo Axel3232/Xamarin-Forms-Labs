@@ -8,23 +8,23 @@ namespace XLabs.Platform.WinRT.Shared.Device
 {
     public class DeviceOrientation : IDeviceOrientation
     {
-        public event EventHandler<EventArgs<Orientation>> ScreenOrientationChanged;
+        public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
-        public Orientation GetOrientation()
+        public CurrentOrientation GetOrientation()
         {
             switch (Windows.Graphics.Display.DisplayInformation.GetForCurrentView().CurrentOrientation)
             {
 
                 case Windows.Graphics.Display.DisplayOrientations.Landscape:
-                    return Orientation.Landscape & Orientation.LandscapeLeft;
+                    return new CurrentOrientation(Orientation.LandscapeLeft);
                 case Windows.Graphics.Display.DisplayOrientations.Portrait:
-                    return Orientation.Portrait & Orientation.PortraitUp;
+                    return new  CurrentOrientation(Orientation.Portrait);
                 case Windows.Graphics.Display.DisplayOrientations.PortraitFlipped:
-                    return Orientation.Portrait & Orientation.PortraitDown;
+                    return new CurrentOrientation(Orientation.PortraitDown);
                 case Windows.Graphics.Display.DisplayOrientations.LandscapeFlipped:
-                    return Orientation.Landscape & Orientation.LandscapeRight;
+                    return new CurrentOrientation(Orientation.LandscapeRight);
                 default:
-                    return Orientation.None;
+                    return new CurrentOrientation(Orientation.None);
             }
         }
 

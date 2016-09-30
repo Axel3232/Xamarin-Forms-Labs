@@ -178,11 +178,41 @@ Task("Publish")
 	var nupkgFiles = GetFiles(buildSettings.NuGet.NuGetPackagesSpec);
 	foreach(var pkg in nupkgFiles)
 	{
+	
 		// Lets skip everything except the current version and we can skip the symbols pkg for now
 		if (!pkg.ToString().Contains(versionInfo.ToString()) || pkg.ToString().Contains("symbols")) {
 			Information("Skipping {0}", pkg);
 			continue; 
 		}
+		
+		Information("Publishing {0}", pkg);
+		
+		if (buildSettings.NuGet.FeedApiKey != "VSTS" ) {
+			NuGetPush(pkg, new NuGetPushSettings {
+				Source = buildSettings.NuGet.FeedUrl,
+				ApiKey = buildSettings.NuGet.FeedApiKey,
+				ConfigFile = buildSettings.NuGet.NuGetConfig,
+				Verbosity = NuGetVerbosity.Detailed
+			});
+		} else {
+			NuGetPush(pkg, new NuGetPushSettings {
+				Source = buildSettings.NuGet.FeedUrl,
+				ConfigFile = buildSettings.NuGet.NuGetConfig,
+				Verbosity = NuGetVerbosity.Detailed
+			});
+		}
+	}
+});
+
+Task("PublishExsistingBuild")
+    .Description("Publishes all of the exsisting nupkg packages to the nuget server. ")
+    .Does(() =>
+{
+	var nupkgFiles = GetFiles(buildSettings.NuGet.NuGetPackagesSpec);
+	foreach(var pkg in nupkgFiles)
+	{
+	
+		
 		
 		Information("Publishing {0}", pkg);
 		

@@ -39,7 +39,7 @@ namespace XLabs.Forms.Controls
         /// The IsPassword property
         /// </summary>
         public static readonly BindableProperty IsPasswordProperty =
-            BindableProperty.Create<ExtendedEntryCell,bool> ( p => p.IsPassword, false);
+            BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(ExtendedEntryCell), false);
 
         /// <summary>
         /// Gets or sets IsPassword 

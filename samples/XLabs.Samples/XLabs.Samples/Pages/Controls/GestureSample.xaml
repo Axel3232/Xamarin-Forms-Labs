@@ -26,7 +26,7 @@
                 <!--  Enclosing gesture content view MUST be present  -->
                 <!--  Same as any content view a GesturesContentView can only have one direct child  -->
                 <StackLayout>
-                    <Frame HeightRequest="50"
+                    <Frame HeightRequest="200"
                            HorizontalOptions="FillAndExpand"
                            OutlineColor="White"
                            Padding="10,0">

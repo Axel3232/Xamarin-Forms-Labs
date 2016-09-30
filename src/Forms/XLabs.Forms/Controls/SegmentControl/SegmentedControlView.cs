@@ -34,8 +34,7 @@ namespace XLabs.Forms.Controls
 		/// The selected item property
 		/// </summary>
 		public static readonly BindableProperty SelectedItemProperty =
-			BindableProperty.Create<SegmentedControlView, int>(
-				p => p.SelectedItem, default(int));
+			BindableProperty.Create(nameof(SelectedItem), typeof(int), typeof(SegmentedControlView), default(int));
 
 		/// <summary>
 		/// Gets or sets the selected item.
@@ -55,8 +54,7 @@ namespace XLabs.Forms.Controls
 		/// The segments itens property
 		/// </summary>
 		public static readonly BindableProperty SegmentsItensProperty =
-			BindableProperty.Create<SegmentedControlView, string>(
-				p => p.SegmentsItens, default(string), BindingMode.TwoWay);
+			BindableProperty.Create(nameof(SegmentsItens), typeof(string), typeof(SegmentedControlView), default(string), BindingMode.TwoWay);
 
 		/// <summary>
 		/// Gets or sets the segments itens.
@@ -76,8 +74,7 @@ namespace XLabs.Forms.Controls
 		/// The tint color property
 		/// </summary>
 		public static readonly BindableProperty TintColorProperty =
-			BindableProperty.Create<SegmentedControlView, Color>(
-				p => p.TintColor, Color.Blue);
+			BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(SegmentedControlView), Color.Blue);
 
 		/// <summary>
 		/// Gets or sets the color of the tint.

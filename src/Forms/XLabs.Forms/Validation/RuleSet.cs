@@ -40,24 +40,24 @@ namespace XLabs.Forms.Validation
 		/// <summary>Property Defintion for <see cref="Actions" /></summary>
 		/// Element created at 07/11/2014,6:12 AM by Charles
 		public static BindableProperty ActionsProperty =
-			BindableProperty.Create<RuleSet, Actions>(x => x.Actions,
+			BindableProperty.Create(nameof(Actions), typeof(Actions), typeof(RuleSet),
 				default(Actions));
 
 		/// <summary>Property Definition for <see cref="IsValid" /></summary>
 		/// Element created at 07/11/2014,6:12 AM by Charles
 		public static BindableProperty IsValidProperty =
-			BindableProperty.Create<RuleSet, bool>(x => x.IsValid,
-				default(bool),
+			BindableProperty.Create(nameof(IsValid), typeof(bool), typeof(RuleSet),
+                default(bool),
 				BindingMode.TwoWay);
 
 		/// <summary>Property Definition for <see cref="Rules" /></summary>
 		/// Element created at 07/11/2014,6:13 AM by Charles
 		public static BindableProperty RulesProperty =
-			BindableProperty.Create<RuleSet, Rules>(x => x.Rules,
-				default(Rules),
+			BindableProperty.Create(nameof(Rules), typeof(Rules), typeof(RuleSet),
+                default(Rules),
 				BindingMode.OneWay,
 				null,
-				(bo, o, n) => ((RuleSet)bo).RulesChanged(o, n));
+				(bo, o, n) => ((RuleSet)bo).RulesChanged((Rules)o, (Rules)n));
 
 		#endregion
 

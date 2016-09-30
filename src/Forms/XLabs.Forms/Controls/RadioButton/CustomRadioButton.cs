@@ -33,36 +33,31 @@ namespace XLabs.Forms.Controls
         /// The checked property
         /// </summary>
         public static readonly BindableProperty CheckedProperty =
-            BindableProperty.Create<CustomRadioButton, bool>(
-                p => p.Checked, false);
+            BindableProperty.Create(nameof(Checked), typeof(bool), typeof(CustomRadioButton), false);
 
         /// <summary>
         ///     The default text property.
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create<CustomRadioButton, string>(
-                p => p.Text, string.Empty);
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomRadioButton), string.Empty);
 
         /// <summary>
         ///     The default text property.
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create<CustomRadioButton, Color>(
-                p => p.TextColor, Color.Default);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CustomRadioButton), Color.Default);
 
         /// <summary>
         /// The font size property
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create<CheckBox, double>(
-                p => p.FontSize, -1);
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(CustomRadioButton), -1d);
 
         /// <summary>
         /// The font name property.
         /// </summary>
         public static readonly BindableProperty FontNameProperty =
-            BindableProperty.Create<CheckBox, string>(
-                p => p.FontName, string.Empty);
+            BindableProperty.Create(nameof(FontName), typeof(string), typeof(CustomRadioButton), string.Empty);
 
         /// <summary>
         ///     The checked changed event.

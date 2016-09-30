@@ -33,7 +33,7 @@ namespace XLabs.Forms.Controls
 		/// The current step value property
 		/// </summary>
 		public static readonly BindableProperty CurrentStepValueProperty =
-								BindableProperty.Create<ExtendedSlider, double>(p => p.StepValue, 1.0f);
+								BindableProperty.Create(nameof(StepValue), typeof(double), typeof(ExtendedSlider), 1.0d);
 
 		/// <summary>
 		/// Gets or sets the step value.

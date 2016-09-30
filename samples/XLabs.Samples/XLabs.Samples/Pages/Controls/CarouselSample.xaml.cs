@@ -38,7 +38,7 @@ namespace XLabs.Samples.Pages.Controls
 
     //Bad practice, only doing this for quick sample....
 
-    public class CarouselVm : BaseViewModel
+    public class CarouselVm : Forms.Mvvm.ViewModel
     {
         public CarouselVm()
         {
@@ -100,7 +100,7 @@ namespace XLabs.Samples.Pages.Controls
         public PageWidget SelectedModel 
         {
             get { return _SelectedModel; }  
-            set { SetField (ref _SelectedModel, value);  }
+            set { SetProperty(ref _SelectedModel, value);  }
         }
     }
 

@@ -50,13 +50,13 @@ namespace XLabs.Forms.Controls
         /// The items source property
         /// </summary>
         public static BindableProperty ItemsSourceProperty =
-                    BindableProperty.Create<BindableRadioGroup, IEnumerable>(o => o.ItemsSource, default(IEnumerable), propertyChanged: OnItemsSourceChanged);
+                    BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(BindableRadioGroup), default(IEnumerable), propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         /// The selected index property
         /// </summary>
         public static BindableProperty SelectedIndexProperty =
-            BindableProperty.Create<BindableRadioGroup, int>(o => o.SelectedIndex, default(int), BindingMode.TwoWay,
+            BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(BindableRadioGroup), default(int), BindingMode.TwoWay,
                 propertyChanged: OnSelectedIndexChanged);
 
 
@@ -64,22 +64,19 @@ namespace XLabs.Forms.Controls
         /// The text color property
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
-            BindableProperty.Create<CheckBox, Color>(
-                p => p.TextColor, Color.Black);
+            BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(BindableRadioGroup), Color.Black);
 
         /// <summary>
         /// The font size property
         /// </summary>
         public static readonly BindableProperty FontSizeProperty =
-            BindableProperty.Create<CheckBox, double>(
-                p => p.FontSize, -1);
+            BindableProperty.Create(nameof(FontSize), typeof(double), typeof(BindableRadioGroup), -1d);
 
         /// <summary>
         /// The font name property.
         /// </summary>
         public static readonly BindableProperty FontNameProperty =
-            BindableProperty.Create<CheckBox, string>(
-                p => p.FontName, string.Empty);
+            BindableProperty.Create(nameof(FontName), typeof(string), typeof(BindableRadioGroup), string.Empty);
 
         /// <summary>
         /// Gets or sets the items source.
@@ -179,9 +176,9 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static void OnSelectedIndexChanged(BindableObject bindable, int oldvalue, int newvalue)
+        private static void OnSelectedIndexChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (newvalue == -1)
+            if ((int)newvalue == -1)
             {
                 return;
             }
@@ -199,7 +196,7 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static void OnItemsSourceChanged(BindableObject bindable, IEnumerable oldValue, IEnumerable newValue)
+        private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var radButtons = bindable as BindableRadioGroup;
 

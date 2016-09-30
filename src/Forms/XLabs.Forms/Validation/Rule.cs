@@ -45,14 +45,14 @@ namespace XLabs.Forms.Validation
 		/// </summary>
 		/// Element created at 08/11/2014,2:54 PM by Charles
 		public static BindableProperty UserDefinedProperty =
-			BindableProperty.Create<Rule, string>(x => x.UserDefined, default(string));
+			BindableProperty.Create(nameof(UserDefined), typeof(string), typeof(Rule), default(string));
 
 		/// <summary>
 		/// Actions to run when this Validation rule evaluates
 		/// </summary>
 		/// Element created at 08/11/2014,12:43 PM by Charles
 		public static BindableProperty ActionsProperty =
-			BindableProperty.Create<Rule, Actions>(x => x.Actions,
+			BindableProperty.Create(nameof(Actions), typeof(Actions), typeof(Rule),
 				default(Actions));
 
 		/// <summary>
@@ -60,82 +60,81 @@ namespace XLabs.Forms.Validation
 		/// </summary>
 		/// Element created at 07/11/2014,10:48 AM by Charles
 		public static BindableProperty CallbackProperty =
-			BindableProperty.Create<Rule, Predicate<string>>(x => x.Callback,
-				default(Predicate<string>));
+			BindableProperty.Create(nameof(Callback), typeof(Predicate<string>), typeof(Rule),
+                default(Predicate<string>));
 
 		/// <summary>
 		/// Property Definition for <see cref="Element" />
 		/// </summary>
 		/// Element created at 07/11/2014,2:54 AM by Charles
 		public static BindableProperty ElementProperty =
-			BindableProperty.Create<Rule, BindableObject>(x => x.Element,
-				default(BindableObject));
+			BindableProperty.Create(nameof(Element), typeof(BindableObject), typeof(Rule),
+                default(BindableObject));
 
 		/// <summary>
 		/// The maximum length property
 		/// </summary>
 		/// Element created at 08/11/2014,2:46 AM by Charles
 		public static BindableProperty MaximumLengthProperty =
-			BindableProperty.Create<Rule, int>(x => x.MaximumLength, default(int));
+			BindableProperty.Create(nameof(MaximumLength), typeof(int), typeof(Rule), default(int));
 
 		/// <summary>
 		/// Property Definition for <see cref="Maximum" />
 		/// </summary>
 		/// Element created at 07/11/2014,3:02 AM by Charles
 		public static BindableProperty MaximumProperty =
-			BindableProperty.Create<Rule, double>(x => x.Maximum, default(double));
+			BindableProperty.Create(nameof(Maximum), typeof(double), typeof(Rule), default(double));
 
 		/// <summary>
 		/// The minimum length property
 		/// </summary>
 		/// Element created at 07/11/2014,4:00 PM by Charles
 		public static BindableProperty MinimumLengthProperty =
-			BindableProperty.Create<Rule, int>(x => x.MinimumLength, default(int));
+			BindableProperty.Create(nameof(MinimumLength), typeof(int), typeof(Rule), default(int));
 
 		/// <summary>
 		/// Property Definition for <see cref="Minimum" />
 		/// </summary>
 		/// Element created at 07/11/2014,3:01 AM by Charles
 		public static BindableProperty MinimumProperty =
-			BindableProperty.Create<Rule, double>(x => x.Minimum, default(double));
+			BindableProperty.Create(nameof(Minimum), typeof(double), typeof(Rule), default(double));
 
 		/// <summary>
 		/// Property definition for <see cref="Property" />
 		/// </summary>
 		/// Element created at 07/11/2014,4:45 AM by Charles
 		public static BindableProperty PropertyProperty =
-			BindableProperty.Create<Rule, string>(x => x.Property, default(string));
+			BindableProperty.Create(nameof(Property), typeof(string), typeof(Rule), default(string));
 
 		/// <summary>
 		/// Property Definition for <see cref="Regex" />
 		/// </summary>
 		/// Element created at 07/11/2014,3:03 AM by Charles
 		public static BindableProperty RegexProperty =
-			BindableProperty.Create<Rule, string>(x => x.Regex, default(string));
+			BindableProperty.Create(nameof(Regex), typeof(string), typeof(Rule), default(string));
 
 		/// <summary>
 		/// Property definition for <see cref="ResultCallback" />
 		/// </summary>
 		/// Element created at 07/11/2014,11:49 AM by Charles
 		public static BindableProperty ResultCallbackProperty =
-			BindableProperty.Create<Rule, Action<BindableObject, string, RuleResult>>(
-				x => x.ResultCallback,
-				default(Action<BindableObject, string, RuleResult>));
+			BindableProperty.Create(nameof(ResultCallback), typeof(Action<BindableObject, string, RuleResult>), typeof(Rule),
+                default(Action<BindableObject, string, RuleResult>));
 
 		/// <summary>
 		/// Property definition for <see cref="RuleName" />
 		/// </summary>
 		/// Element created at 07/11/2014,11:49 AM by Charles
 		public static BindableProperty RuleNameProperty =
-			BindableProperty.Create<Rule, string>(x => x.RuleName, default(string));
+			BindableProperty.Create(nameof(RuleName), typeof(string), typeof(Rule), default(string));
 
 		/// <summary>
 		/// Property Definition for <see cref="Validators" />
 		/// </summary>
 		/// Element created at 07/11/2014,2:54 AM by Charles
 		public static BindableProperty ValidatorsProperty =
-			BindableProperty.Create<Rule, Validators>(x => x.Validators,
-				default(Validators));
+			BindableProperty.Create(nameof(Validators), typeof(Rule), typeof(Rule),
+                default(Validators));
 
 		/// <summary>
 		/// The user validator predicates

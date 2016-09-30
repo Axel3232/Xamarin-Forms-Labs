@@ -26,7 +26,7 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Samples.ViewModel
 {
-    class GestureSampleVm : BaseViewModel
+    public class GestureSampleVm : Forms.Mvvm.ViewModel
     {
         private int _gesturecount;
         private bool _excludechildren = true;
@@ -73,10 +73,10 @@ namespace XLabs.Samples.ViewModel
                     break;
             }            
         }
-        public string FrameText { get { return _frametext; } set { SetField( ref _frametext,value);} }
-        public string LabelText { get { return _labeltext; } set { SetField(ref _labeltext, value); } }
-        public bool ExcludeChildren { get { return _excludechildren; } set { SetField(ref _excludechildren, value); } }
-        public int GestureCount { get { return _gesturecount; } private set { SetField(ref _gesturecount, value); } }
+        public string FrameText { get { return _frametext; } set { SetProperty( ref _frametext,value);} }
+        public string LabelText { get { return _labeltext; } set { SetProperty(ref _labeltext, value); } }
+        public bool ExcludeChildren { get { return _excludechildren; } set { SetProperty(ref _excludechildren, value); } }
+        public int GestureCount { get { return _gesturecount; } private set { SetProperty(ref _gesturecount, value); } }
         public Command ClearGestures { get; private set; }
         public Command ToggleChildren { get; private set; }
         public RelayGesture DumpGesture { get; set; }

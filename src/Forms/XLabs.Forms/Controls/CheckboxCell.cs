@@ -37,7 +37,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The checked property
 		/// </summary>
-		public static readonly BindableProperty CheckedProperty = BindableProperty.Create<CheckboxCell, bool> (p => p.Checked, default(bool));
+		public static readonly BindableProperty CheckedProperty = 
+            BindableProperty.Create(nameof(Checked), typeof(bool), typeof(CheckboxCell), default(bool));
 		/// <summary>
 		/// Gets or sets a value indicating whether this <see cref="CheckboxCell"/> is checked.
 		/// </summary>

@@ -24,6 +24,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Xamarin.Forms;
+using XLabs.Forms.Extensions;
 
 namespace XLabs.Forms.Controls
 {
@@ -41,18 +42,14 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The title property
         /// </summary>
-        public static readonly BindableProperty TitleProperty = BindableProperty.Create((BindablePicker w) => w.Title, null);
+        public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(BindablePicker), null);
 
         /// <summary>
         /// The selected index property
         /// </summary>
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create<BindablePicker, int>(w => w.SelectedIndex, -1, BindingMode.TwoWay, null, delegate(BindableObject bindable, int oldvalue, int newvalue)
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(BindablePicker), -1, BindingMode.TwoWay, null, delegate(BindableObject bindable, object oldvalue, object newvalue)
         {
-            var selectedIndexChanged = ((BindablePicker)bindable).SelectedIndexChanged;
-            if (selectedIndexChanged != null)
-            {
-                selectedIndexChanged(bindable, EventArgs.Empty);
-            }
+            ((BindablePicker)bindable).SelectedIndexChanged?.Invoke(bindable, EventArgs.Empty);
         }, null, CoerceSelectedIndex);
 
         /// <summary>
@@ -80,13 +77,13 @@ namespace XLabs.Forms.Controls
         /// The items source property
         /// </summary>
         public static BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<BindablePicker, IList>(o => o.ItemsSource, default(IList), propertyChanged: OnItemsSourceChanged);
+            BindableProperty.Create(nameof(ItemsSource),typeof(IList),typeof(BindablePicker), default(IList), propertyChanged: OnItemsSourceChanged);
 
         /// <summary>
         /// The selected item property
         /// </summary>
         public static BindableProperty SelectedItemProperty =
-            BindableProperty.Create<BindablePicker, object>(o => o.SelectedItem, default(object), BindingMode.TwoWay,propertyChanged: OnSelectedItemChanged);
+            BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(BindablePicker), default(object), BindingMode.TwoWay,propertyChanged: OnSelectedItemChanged);
 
         /// <summary>
         /// Gets or sets the items source.
@@ -166,7 +163,7 @@ namespace XLabs.Forms.Controls
         /// <param name="bindable">The bindable.</param>
         /// <param name="oldvalue">The oldvalue.</param>
         /// <param name="newvalue">The newvalue.</param>
-        private static void OnItemsSourceChanged(BindableObject bindable, IList oldvalue, IList newvalue)
+        private static void OnItemsSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var picker = bindable as BindablePicker;
 
@@ -176,7 +173,7 @@ namespace XLabs.Forms.Controls
 
             if (newvalue == null) return;
 
-            foreach (var item in newvalue)
+            foreach (var item in (IList)newvalue)
             {
                 picker.Items.Add(picker.SourceItemLabelConverter != null
                     ? picker.SourceItemLabelConverter(item)
@@ -223,10 +220,11 @@ namespace XLabs.Forms.Controls
         /// <param name="bindable">The bindable.</param>
         /// <param name="value">The value.</param>
         /// <returns>System.Int32.</returns>
-        private static int CoerceSelectedIndex(BindableObject bindable, int value)
+        private static object CoerceSelectedIndex(BindableObject bindable, object value)
         {
             var picker = bindable as BindablePicker;
-            return (picker == null || picker.Items == null) ? - 1 : value.Clamp(-1, picker.Items.Count-1);
+            int val = (int)value;
+            return (picker == null || picker.Items == null) ? - 1 : val.Clamp<int>(-1, picker.Items.Count-1);
         }
 
         /// <summary>

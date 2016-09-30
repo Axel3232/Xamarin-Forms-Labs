@@ -110,6 +110,7 @@
     <Compile Include="Exceptions\InvalidBindableException.cs" />
     <Compile Include="Extensions\BindableObjectExtensions.cs" />
     <Compile Include="Extensions\CollectionTypeExtension.cs" />
+    <Compile Include="Extensions\CoreExtension.cs" />
     <Compile Include="Extensions\OnPlatformList.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="InternalsVisibleTo.cs" />

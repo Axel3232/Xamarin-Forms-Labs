@@ -39,7 +39,8 @@ namespace XLabs.Forms.Controls
 		/// <summary>
 		/// The detail location property
 		/// </summary>
-		public static readonly BindableProperty DetailLocationProperty = BindableProperty.Create<ExtendedTextCell, TextCellDetailLocation> (p => p.DetailLocation, default(TextCellDetailLocation));
+		public static readonly BindableProperty DetailLocationProperty = 
+            BindableProperty.Create(nameof(DetailLocation), typeof(TextCellDetailLocation), typeof(ExtendedTextCell), default(TextCellDetailLocation));
 
 		/// <summary>
 		/// Gets or sets the detail location.
@@ -54,8 +55,7 @@ namespace XLabs.Forms.Controls
 		/// The font size property
 		/// </summary>
 		public static readonly BindableProperty FontSizeProperty =
-			BindableProperty.Create<ExtendedTextCell, double>(
-				p => p.FontSize, -1);
+			BindableProperty.Create(nameof(FontSize), typeof(double),typeof(ExtendedTextCell), -1d);
 
 		/// <summary>
 		/// Gets or sets the size of the font.
@@ -71,8 +71,7 @@ namespace XLabs.Forms.Controls
 		/// The font name android property
 		/// </summary>
 		public static readonly BindableProperty FontNameAndroidProperty =
-			BindableProperty.Create<ExtendedTextCell, string>(
-				p => p.FontNameAndroid, string.Empty);
+			BindableProperty.Create(nameof(FontName), typeof(string), typeof(ExtendedTextCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the font name android.
@@ -88,8 +87,7 @@ namespace XLabs.Forms.Controls
 		/// The font name ios property
 		/// </summary>
 		public static readonly BindableProperty FontNameIosProperty =
-			BindableProperty.Create<ExtendedTextCell, string>(
-				p => p.FontNameIos, string.Empty);
+			BindableProperty.Create(nameof(FontNameIos), typeof(string), typeof(ExtendedTextCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the font name ios.
@@ -105,8 +103,7 @@ namespace XLabs.Forms.Controls
 		/// The font name wp property
 		/// </summary>
 		public static readonly BindableProperty FontNameWpProperty =
-			BindableProperty.Create<ExtendedTextCell, string>(
-				p => p.FontNameWp, string.Empty);
+			BindableProperty.Create(nameof(FontNameWp), typeof(string), typeof(ExtendedTextCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the font name wp.
@@ -123,8 +120,7 @@ namespace XLabs.Forms.Controls
 		/// The font name property
 		/// </summary>
 		public static readonly BindableProperty FontNameProperty =
-			BindableProperty.Create<ExtendedTextCell, string>(
-				p => p.FontName, string.Empty);
+			BindableProperty.Create(nameof(FontName), typeof(string), typeof(ExtendedTextCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the name of the font.
@@ -144,7 +140,7 @@ namespace XLabs.Forms.Controls
 		/// The background color property
 		/// </summary>
 		public static readonly BindableProperty BackgroundColorProperty =
-			BindableProperty.Create<ExtendedTextCell, Color>(p => p.BackgroundColor, Color.Transparent);
+			BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(ExtendedTextCell), Color.Transparent);
 
 		/// <summary>
 		/// Gets or sets the color of the background.
@@ -160,7 +156,7 @@ namespace XLabs.Forms.Controls
 		/// The separator color property
 		/// </summary>
 		public static readonly BindableProperty SeparatorColorProperty =
-			BindableProperty.Create<ExtendedTextCell, Color>(p => p.SeparatorColor, Color.FromRgba(199, 199, 204, 255));
+			BindableProperty.Create(nameof(SeparatorColor), typeof(Color), typeof(ExtendedTextCell), Color.FromRgba(199, 199, 204, 255));
 
 		/// <summary>
 		/// Gets or sets the color of the separator.
@@ -176,7 +172,7 @@ namespace XLabs.Forms.Controls
 		/// The separator padding property
 		/// </summary>
 		public static readonly BindableProperty SeparatorPaddingProperty =
-			BindableProperty.Create<ExtendedTextCell, Thickness>(p => p.SeparatorPadding, default(Thickness));
+			BindableProperty.Create(nameof(SeparatorPadding), typeof(Thickness), typeof(ExtendedTextCell), default(Thickness));
 
 		/// <summary>
 		/// Gets or sets the separator padding.
@@ -193,7 +189,7 @@ namespace XLabs.Forms.Controls
 		/// The show separator property
 		/// </summary>
 		public static readonly BindableProperty ShowSeparatorProperty =
-			BindableProperty.Create<ExtendedTextCell, bool>(p => p.ShowSeparator, true);
+			BindableProperty.Create(nameof(ShowSeparator), typeof(bool), typeof(ExtendedTextCell), true);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [show separator].
@@ -210,7 +206,7 @@ namespace XLabs.Forms.Controls
 		/// The show disclousure property
 		/// </summary>
 		public static readonly BindableProperty ShowDisclousureProperty =
-			BindableProperty.Create<ExtendedTextCell, bool>(p => p.ShowDisclousure, true);
+			BindableProperty.Create(nameof(ShowDisclousure), typeof(bool), typeof(ExtendedTextCell), true);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [show disclousure].
@@ -226,8 +222,7 @@ namespace XLabs.Forms.Controls
 		/// The disclousure image property
 		/// </summary>
 		public static readonly BindableProperty DisclousureImageProperty =
-			BindableProperty.Create<ExtendedTextCell, string>(
-				p => p.DisclousureImage, string.Empty);
+			BindableProperty.Create(nameof(DisclousureImage), typeof(string), typeof(ExtendedTextCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the disclousure image.

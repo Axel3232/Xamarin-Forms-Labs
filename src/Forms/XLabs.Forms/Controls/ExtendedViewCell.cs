@@ -35,11 +35,11 @@ namespace XLabs.Forms.Controls
 		{
 		}
 
-		/// <summary>
-		/// The background color property
-		/// </summary>
-		public static readonly BindableProperty BackgroundColorProperty =
-			BindableProperty.Create<ExtendedViewCell, Color>(p => p.BackgroundColor, Color.Transparent);
+        /// <summary>
+        /// The background color property
+        /// </summary>
+        public static readonly BindableProperty BackgroundColorProperty =
+            BindableProperty.Create(nameof(BackgroundColor), typeof(Color),typeof(ExtendedViewCell),  Color.Transparent);
 
 		/// <summary>
 		/// Gets or sets the color of the background.
@@ -55,7 +55,7 @@ namespace XLabs.Forms.Controls
 		/// The separator color property
 		/// </summary>
 		public static readonly BindableProperty SeparatorColorProperty =
-			BindableProperty.Create<ExtendedViewCell, Color>(p => p.SeparatorColor, Color.FromRgba(199, 199, 204, 255));
+			BindableProperty.Create(nameof(SeparatorColor), typeof(Color), typeof(ExtendedViewCell), Color.FromRgba(199, 199, 204, 255));
 
 		/// <summary>
 		/// Gets or sets the color of the separator.
@@ -71,7 +71,7 @@ namespace XLabs.Forms.Controls
 		/// The separator padding property
 		/// </summary>
 		public static readonly BindableProperty SeparatorPaddingProperty =
-			BindableProperty.Create<ExtendedViewCell, Thickness>(p => p.SeparatorPadding, default(Thickness));
+			BindableProperty.Create(nameof(SeparatorPadding), typeof(Thickness), typeof(ExtendedViewCell), default(Thickness));
 
 		/// <summary>
 		/// Gets or sets the separator padding.
@@ -88,7 +88,7 @@ namespace XLabs.Forms.Controls
 		/// The show separator property
 		/// </summary>
 		public static readonly BindableProperty ShowSeparatorProperty =
-			BindableProperty.Create<ExtendedViewCell, bool>(p => p.ShowSeparator, true);
+			BindableProperty.Create(nameof(ShowSeparator), typeof(bool), typeof(ExtendedViewCell), true);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [show separator].
@@ -105,7 +105,7 @@ namespace XLabs.Forms.Controls
 		/// The show disclousure property
 		/// </summary>
 		public static readonly BindableProperty ShowDisclousureProperty =
-			BindableProperty.Create<ExtendedViewCell, bool>(p => p.ShowDisclousure, true);
+			BindableProperty.Create(nameof(ShowDisclousure), typeof(bool), typeof(ExtendedViewCell), true);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether [show disclousure].
@@ -121,8 +121,7 @@ namespace XLabs.Forms.Controls
 		/// The disclousure image property
 		/// </summary>
 		public static readonly BindableProperty DisclousureImageProperty =
-			BindableProperty.Create<ExtendedViewCell, string>(
-				p => p.DisclousureImage, string.Empty);
+			BindableProperty.Create(nameof(DisclousureImage), typeof(string), typeof(ExtendedViewCell), string.Empty);
 
 		/// <summary>
 		/// Gets or sets the disclousure image.

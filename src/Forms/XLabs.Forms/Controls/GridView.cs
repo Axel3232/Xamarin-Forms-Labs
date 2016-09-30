@@ -44,37 +44,44 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The items source property
         /// </summary>
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource", typeof(IEnumerable), typeof(GridView), null, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ItemsSourceProperty = 
+            BindableProperty.Create("ItemsSource", typeof(IEnumerable), typeof(GridView), null, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The item template property
         /// </summary>
-        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(GridView), null, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ItemTemplateProperty = 
+            BindableProperty.Create("ItemTemplate", typeof(DataTemplate), typeof(GridView), null, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The row spacing property
         /// </summary>
-        public static readonly BindableProperty RowSpacingProperty = BindableProperty.Create("RowSpacing", typeof(double), typeof(GridView), 0.0, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty RowSpacingProperty = 
+            BindableProperty.Create("RowSpacing", typeof(double), typeof(GridView), 0.0, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The column spacing property
         /// </summary>
-        public static readonly BindableProperty ColumnSpacingProperty = BindableProperty.Create("ColumnSpacing", typeof(double), typeof(GridView), 0.0, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ColumnSpacingProperty = 
+            BindableProperty.Create("ColumnSpacing", typeof(double), typeof(GridView), 0.0, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The item width property
         /// </summary>
-        public static readonly BindableProperty ItemWidthProperty = BindableProperty.Create("ItemWidth", typeof(double), typeof(GridView), 100.0, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ItemWidthProperty = 
+            BindableProperty.Create("ItemWidth", typeof(double), typeof(GridView), 100.0, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The item height property
         /// </summary>
-        public static readonly BindableProperty ItemHeightProperty = BindableProperty.Create("ItemHeight", typeof(double), typeof(GridView), 100.0, BindingMode.OneWay, null, null, null, null);
+        public static readonly BindableProperty ItemHeightProperty = 
+            BindableProperty.Create("ItemHeight", typeof(double), typeof(GridView), 100.0, BindingMode.OneWay, null, null, null, null);
 
         /// <summary>
         /// The padding property
         /// </summary>
-        public static readonly BindableProperty PaddingProperty = BindableProperty.Create<GridView, Thickness>(view => view.Padding, new Thickness(0), BindingMode.OneWay);
+        public static readonly BindableProperty PaddingProperty = 
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(GridView), new Thickness(0), BindingMode.OneWay);
 
         //
         // Properties
