@@ -53,7 +53,7 @@ namespace XLabs.Samples.Droid
         {
             base.OnConfigurationChanged(newConfig);
             var dvo = Resolver.Resolve<IDevice>().Orientation as  DeviceOrientation;
-            dvo.NotifyOrientationChnage(newConfig);
+            dvo.NotifyOrientationChange(newConfig.Orientation);
         }
 
         protected override void OnCreate(Bundle bundle)

@@ -6,20 +6,19 @@ using XLabs.Platform.Extensions;
 
 namespace XLabs.Platform.Device
 {
-    public class DeviceOrientation : IDeviceOrientation
+    public class DeviceOrientation : IDeviceOrientation, IDisposable
     {
-       
+        NSObject orientationObserver;
         public DeviceOrientation()
         {
             var notificationCenter = NSNotificationCenter.DefaultCenter;
-            notificationCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, DeviceOrientationDidChange);
-            notificationCenter.AddObserver(UIApplication.WillChangeStatusBarOrientationNotification, DeviceOrientationWillChange);
+            orientationObserver =notificationCenter.AddObserver(UIDevice.OrientationDidChangeNotification, DeviceOrientationDidChange);
             UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
         }
 
         public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
 
-        public event EventHandler<EventArgs> ScreenOrientationChanging;
+
 
         /// <summary>
         /// Devices the orientation did change.
@@ -31,10 +30,11 @@ namespace XLabs.Platform.Device
             this.OnDeviceOrientationChanged(new CurrentOrientation(orientation.ToOrientation()));
         }
 
-        public void DeviceOrientationWillChange(NSNotification notification)
+       
+
+        public void Dispose()
         {
-           
-            this.OnDeviceOrientationChanging();
+            NSNotificationCenter.DefaultCenter.RemoveObserver(orientationObserver);
         }
 
 
@@ -81,10 +81,7 @@ namespace XLabs.Platform.Device
             ScreenOrientationChanged?.Invoke(this, orientation);
         }
 
-        private void OnDeviceOrientationChanging()
-        {
-            ScreenOrientationChanging?.Invoke(this, null);
-        }
+       
 
 
 

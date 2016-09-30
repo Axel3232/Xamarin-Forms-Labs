@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Xamarin.Forms;
-using XLabs.Forms.Extensions;
+using XLabs;
 
 namespace XLabs.Forms.Controls
 {
@@ -224,7 +224,7 @@ namespace XLabs.Forms.Controls
         {
             var picker = bindable as BindablePicker;
             int val = (int)value;
-            return (picker == null || picker.Items == null) ? - 1 : val.Clamp<int>(-1, picker.Items.Count-1);
+            return (picker == null || picker.Items == null) ? - 1 : val.Clamp(-1, picker.Items.Count-1);
         }
 
         /// <summary>
