@@ -6,13 +6,13 @@ using XLabs.Platform.Extensions;
 
 namespace XLabs.Platform.Device
 {
-    public class DeviceOrientation : IDeviceOrientation
+    public class DeviceOrientation : IDeviceOrientation, IDisposable
     {
-       
+        NSObject notificationObserver;
         public DeviceOrientation()
         {
             var notificationCenter = NSNotificationCenter.DefaultCenter;
-            notificationCenter.AddObserver(UIApplication.DidChangeStatusBarOrientationNotification, DeviceOrientationDidChange);
+            notificationObserver = notificationCenter.AddObserver(UIDevice.OrientationDidChangeNotification, DeviceOrientationDidChange);
 
             UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
         }
@@ -29,7 +29,12 @@ namespace XLabs.Platform.Device
             this.OnDeviceOrientationChanged(orientation.ToOrientation());
         }
 
-       
+        public void Dispose()
+        {
+            NSNotificationCenter.DefaultCenter.RemoveObserver(notificationObserver);
+        }
+
+
 
         #region IDeviceOrientation implementation
 
