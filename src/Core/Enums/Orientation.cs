@@ -57,6 +57,8 @@ namespace XLabs.Enums
         /// The landscape right
         /// </summary>
         LandscapeRight = 34,
+        FaceUp = 40,
+        FaceDown = 50
     }
 
     public struct CurrentOrientation

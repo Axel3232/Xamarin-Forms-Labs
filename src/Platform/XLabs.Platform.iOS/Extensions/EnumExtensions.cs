@@ -49,22 +49,13 @@ namespace XLabs.Platform.Extensions
         /// Transform an <see cref="UIDeviceOrientation"/> into an <see cref="Orientation"/>
         /// </summary>
         /// <remarks>
-        /// The UIDeviceOrientation values FaceUp and FaceDown are not handled and return Orientation.None
+        /// The UIDeviceOrientation
         /// </remarks>
         /// <param name="self"></param>
         /// <returns>Orientation</returns>
         public static Orientation ToOrientation(this UIDeviceOrientation self)
         {
-            switch(self)
-            {
-                case UIDeviceOrientation.Unknown: return Orientation.None;
-                case UIDeviceOrientation.Portrait: return Orientation.Portrait;
-                case UIDeviceOrientation.PortraitUpsideDown: return Orientation.PortraitDown;
-                case UIDeviceOrientation.LandscapeLeft: return Orientation.LandscapeLeft;
-                case UIDeviceOrientation.LandscapeRight: return Orientation.LandscapeRight;
-                default: return Orientation.None;
-            }
-       
-    }
+            return self.ToOrientation();
+        }
     }
 }
