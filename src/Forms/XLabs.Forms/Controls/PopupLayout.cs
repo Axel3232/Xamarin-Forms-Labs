@@ -19,6 +19,7 @@
 // ***********************************************************************
 // 
 
+using System;
 using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
@@ -47,6 +48,10 @@ namespace XLabs.Forms.Controls
 
             //Right
         }
+
+        public event EventHandler<View> PopupDisplayed;
+
+        public event EventHandler<View> PopupDismissed;
 
         /// <summary>
         /// The content
@@ -186,6 +191,7 @@ namespace XLabs.Forms.Controls
             }
 
             this.ShowPopup(popupView, constraintX, constraintY);
+            OnPopupDisplayed();
         }
 
         /// <summary>
@@ -200,11 +206,21 @@ namespace XLabs.Forms.Controls
             }
 
             this.layout.InputTransparent = false;
-
+            OnPopupDismissed();
             if (this.content != null)
             {
                 this.content.InputTransparent = false;
             }
+        }
+
+        private void OnPopupDisplayed()
+        {
+            PopupDisplayed?.Invoke(this, popup);
+        }
+
+        private void OnPopupDismissed()
+        {
+            PopupDismissed?.Invoke(this, popup);
         }
     }
 }
