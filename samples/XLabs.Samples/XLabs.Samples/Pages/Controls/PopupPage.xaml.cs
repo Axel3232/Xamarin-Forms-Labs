@@ -20,6 +20,7 @@
 // 
 
 using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 
@@ -44,7 +45,8 @@ namespace XLabs.Samples.Pages.Controls
         void OpenButtonClicked(object sender, EventArgs e)
         {
             var popupLayout = this.Content as PopupLayout;
-
+            popupLayout.PopupDismissed += PopupLayout_PopupDismissed;
+            popupLayout.PopupDisplayed += PopupLayout_PopupDisplayed;
             if (popupLayout.IsPopupActive)
             {
                 popupLayout.DismissPopup();
@@ -70,6 +72,16 @@ namespace XLabs.Samples.Pages.Controls
                 list.Children.Add(close);
                 popupLayout.ShowPopup(list);
             }
+        }
+
+        private void PopupLayout_PopupDisplayed(object sender, View e)
+        {
+            Debug.WriteLine("PopupLayout_PopupDisplayed");
+        }
+
+        private void PopupLayout_PopupDismissed(object sender, View e)
+        {
+            Debug.WriteLine("PopupLayout_PopupDismissed");
         }
     }
 }

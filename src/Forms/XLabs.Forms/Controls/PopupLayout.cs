@@ -149,7 +149,7 @@ namespace XLabs.Forms.Controls
             if (this.content != null)
                 this.content.InputTransparent = true;
             this.layout.Children.Add(this.popup, xConstraint, yConstraint, widthConstraint, heightConstraint);
-
+            OnPopupDisplayed();
             this.layout.ForceLayout();
         }
 
@@ -189,9 +189,9 @@ namespace XLabs.Forms.Controls
                     //    constraintY = Constraint.RelativeToView(presenter, (parent, view) => parent.Y + view.Y - this.popup.WidthRequest - paddingY);
                     //    break;
             }
-
+            
             this.ShowPopup(popupView, constraintX, constraintY);
-            OnPopupDisplayed();
+            
         }
 
         /// <summary>
@@ -203,10 +203,13 @@ namespace XLabs.Forms.Controls
             {
                 this.layout.Children.Remove(this.popup);
                 this.popup = null;
+                OnPopupDismissed();
             }
+            
+                
 
             this.layout.InputTransparent = false;
-            OnPopupDismissed();
+            
             if (this.content != null)
             {
                 this.content.InputTransparent = false;
