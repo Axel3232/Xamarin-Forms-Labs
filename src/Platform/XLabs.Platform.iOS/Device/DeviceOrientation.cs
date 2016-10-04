@@ -47,19 +47,7 @@ namespace XLabs.Platform.Device
         /// <returns>The orientation.</returns>
         public CurrentOrientation GetOrientation()
         {
-            switch (UIApplication.SharedApplication.StatusBarOrientation)
-            {
-                case UIInterfaceOrientation.LandscapeLeft:
-                    return new CurrentOrientation(Orientation.LandscapeLeft);
-                case UIInterfaceOrientation.Portrait:
-                    return new CurrentOrientation(Orientation.Portrait);
-                case UIInterfaceOrientation.PortraitUpsideDown:
-                    return new CurrentOrientation(Orientation.PortraitDown);
-                case UIInterfaceOrientation.LandscapeRight:
-                    return new CurrentOrientation(Orientation.LandscapeRight);
-                default:
-                    return new CurrentOrientation(Orientation.None);
-            }
+            return new CurrentOrientation(UIDevice.CurrentDevice.Orientation.ToOrientation());
         }
 
         public void SetOrientation(Orientation orientation)

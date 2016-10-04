@@ -55,7 +55,17 @@ namespace XLabs.Platform.Extensions
         /// <returns>Orientation</returns>
         public static Orientation ToOrientation(this UIDeviceOrientation self)
         {
-            return self.ToOrientation();
+            switch (self)
+            {
+                case UIDeviceOrientation.Unknown: return Orientation.None;
+                case UIDeviceOrientation.Portrait: return Orientation.Portrait;
+                case UIDeviceOrientation.PortraitUpsideDown: return Orientation.PortraitDown;
+                case UIDeviceOrientation.LandscapeLeft: return Orientation.LandscapeLeft;
+                case UIDeviceOrientation.LandscapeRight: return Orientation.LandscapeRight;
+                case UIDeviceOrientation.FaceUp: return Orientation.FaceUp;
+                case UIDeviceOrientation.FaceDown: return Orientation.FaceDown;
+                default: return Orientation.None;
+            }
         }
     }
 }
