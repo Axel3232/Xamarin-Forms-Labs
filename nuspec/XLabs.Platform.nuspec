@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>XLabs.Platform</id>
-    <version>2.5835.16</version>
+    <version>2.5835.17</version>
     <title>XLabs - Platform</title>
     <authors>XLabs Team</authors>
     <owners>XLabs Team</owners>
@@ -17,24 +17,24 @@
     <tags>Xamarin XLabs</tags>
     <dependencies>
       <group>
-        <dependency id="XLabs.IoC" version="[2.5835.16]" />
-        <dependency id="XLabs.Core" version="[2.5835.16]" />
-        <dependency id="XLabs.Serialization" version="[2.5835.16]" />
+        <dependency id="XLabs.IoC" version="[2.5835.17]" />
+        <dependency id="XLabs.Core" version="[2.5835.17]" />
+        <dependency id="XLabs.Serialization" version="[2.5835.17]" />
         <dependency id="ExifLib.PCL" version="1.0.1" />
       </group>
       <group targetFramework="wpa81">
-        <dependency id="XLabs.IoC" version="[2.5835.16]" />
-        <dependency id="XLabs.Core" version="[2.5835.16]" />
-        <dependency id="XLabs.Serialization" version="[2.5835.16]" />
+        <dependency id="XLabs.IoC" version="[2.5835.17]" />
+        <dependency id="XLabs.Core" version="[2.5835.17]" />
+        <dependency id="XLabs.Serialization" version="[2.5835.17]" />
         <dependency id="SharpDX" version="3.0.2" />
         <dependency id="SharpDX.Direct2D1" version="3.0.2" />
         <dependency id="SharpDX.DXGI" version="3.0.2" />
         <dependency id="ExifLib.PCL" version="1.0.1" />
       </group>
       <group targetFramework="win81">
-        <dependency id="XLabs.IoC" version="[2.5835.16]" />
-        <dependency id="XLabs.Core" version="[2.5835.16]" />
-        <dependency id="XLabs.Serialization" version="[2.5835.16]" />
+        <dependency id="XLabs.IoC" version="[2.5835.17]" />
+        <dependency id="XLabs.Core" version="[2.5835.17]" />
+        <dependency id="XLabs.Serialization" version="[2.5835.17]" />
         <dependency id="SharpDX" version="3.0.2" />
         <dependency id="SharpDX.Direct2D1" version="3.0.2" />
         <dependency id="SharpDX.DXGI" version="3.0.2" />

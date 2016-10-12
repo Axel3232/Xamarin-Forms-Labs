@@ -13,7 +13,10 @@ namespace XLabs.Platform.Device
         {
             var notificationCenter = NSNotificationCenter.DefaultCenter;
             orientationObserver =notificationCenter.AddObserver(UIDevice.OrientationDidChangeNotification, DeviceOrientationDidChange);
+
             UIDevice.CurrentDevice.BeginGeneratingDeviceOrientationNotifications();
+
+            
         }
 
         public event EventHandler<EventArgs<CurrentOrientation>> ScreenOrientationChanged;
