@@ -58,6 +58,11 @@ namespace XLabs.Platform.Services.Media
         /// </summary>
         private string _sourceFilePath;
 
+        /// <summary>
+        /// The file path of the jpeg 
+        /// </summary>
+        private byte[] _imageByteArray;
+
         public int PixelWidth { get; private set; }
 
         public int PixelHeight { get; private set; }
@@ -65,6 +70,11 @@ namespace XLabs.Platform.Services.Media
         public ExifBinaryReader(string filePath)
         {
             _sourceFilePath = filePath;
+        }
+
+        public ExifBinaryReader(byte[] image)
+        {
+            _imageByteArray = image;
         }
 
 
@@ -558,8 +568,12 @@ namespace XLabs.Platform.Services.Media
             try
             {
                 if (!_isInitilazed)
-
-                    ReadJpeg(File.OpenRead(_sourceFilePath), true, true);
+                {
+                    if(!string.IsNullOrEmpty(_sourceFilePath))
+                        ReadJpeg(File.OpenRead(_sourceFilePath), true, true);
+                    else
+                        ReadJpeg(new MemoryStream(_imageByteArray), true, true);
+                }
 
                 // Select the correct catalogue based on the tag value. Note that the thumbnail catalogue (ifd1)
                 // is only used for thumbnails, never for tag retrieval

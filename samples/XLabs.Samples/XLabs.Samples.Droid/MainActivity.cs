@@ -39,6 +39,7 @@ using XLabs.Serialization;
 using System.IO;
 using SQLite.Net.Platform.XamarinAndroid;
 using XLabs.Serialization.JsonNET;
+using Xamarin.Forms.Platform.Android;
 
 namespace XLabs.Samples.Droid
 {
@@ -46,7 +47,7 @@ namespace XLabs.Samples.Droid
     public class MainActivity : XFormsApplicationDroid
     {
 
-
+     
         
 
         public override void OnConfigurationChanged(global::Android.Content.Res.Configuration newConfig)
@@ -54,14 +55,16 @@ namespace XLabs.Samples.Droid
             base.OnConfigurationChanged(newConfig);
             var dvo = Resolver.Resolve<IDevice>().Orientation as  DeviceOrientation;
             dvo.NotifyOrientationChange(newConfig.Orientation);
+            
         }
 
         protected override void OnCreate(Bundle bundle)
         {
-            
+
 
             //TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
+        
 
             base.OnCreate(bundle);
 
@@ -81,6 +84,7 @@ namespace XLabs.Samples.Droid
             {
                 var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
                 if (app != null) app.AppContext = this;
+               
             }
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
@@ -92,7 +96,7 @@ namespace XLabs.Samples.Droid
                     e.NativeView.ContentDescription = e.View.StyleId;
                 }
             };
-
+           
             LoadApplication(new XLabs.Samples.App());
         }
 
@@ -104,7 +108,7 @@ namespace XLabs.Samples.Droid
             var resolverContainer = new SimpleContainer();
 
             var app = new XFormsAppDroid();
-
+            
             app.Init(this);
 
             var documents = app.AppDataDirectory;
@@ -113,13 +117,14 @@ namespace XLabs.Samples.Droid
             resolverContainer.Register<IDevice>(t => AndroidDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
-                //.Register<IJsonSerializer, Services.Serialization.JsonNET.JsonSerializer>()
                 .Register<IJsonSerializer, JsonSerializer>()
                 .Register<IEmailService, EmailService>()
                 .Register<IMediaPicker, MediaPicker>()
+                .Register<IExifReader, ExifBinaryReader>()
                 .Register<ITextToSpeechService, TextToSpeechService>()
                 .Register<IDependencyContainer>(resolverContainer)
                 .Register<IXFormsApp>(app)
+                .Register<Activity>(t => app.AppContext)
                 .Register<ISecureStorage>(t => new KeyVaultStorage(t.Resolve<IDevice>().Id.ToCharArray()))
                 .Register<ICacheProvider>(
                     t => new SQLiteSimpleCache(new SQLitePlatformAndroid(),
@@ -128,6 +133,10 @@ namespace XLabs.Samples.Droid
             
             Resolver.SetResolver(resolverContainer.GetResolver());
         }
+
+
+       
+       
     }
 }
 

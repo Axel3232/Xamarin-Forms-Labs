@@ -1,11 +1,15 @@
 using Android.App;
 using Android.Content;
-
+using Android.Content.PM;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using XLabs.Enums;
+using XLabs.Ioc;
+using XLabs.Platform.Mvvm;
 
 namespace XLabs.Platform.Device
 {
@@ -81,9 +85,48 @@ namespace XLabs.Platform.Device
             ScreenOrientationChanged?.Invoke(this, orientation);
         }
 
-        public void SetOrientation(Orientation orientation)
+        public async void SetOrientation(Orientation orientation)
         {
-            throw new NotImplementedException();
+            ScreenOrientation request = ScreenOrientation.Unspecified;
+            switch(orientation)
+            {
+                case Orientation.PortraitDown: request = ScreenOrientation.ReversePortrait;break;              
+                case Orientation.Landscape: request = ScreenOrientation.Landscape; break;
+                case Orientation.LandscapeLeft: request = ScreenOrientation.Landscape; break;
+                case Orientation.LandscapeRight: request = ScreenOrientation.ReverseLandscape ; break;
+                default: request = ScreenOrientation.Sensor;break;
+            }
+            //Necessite Register<Activity>(t=>app.AppContext)
+            Activity act = Resolver.Resolve<Activity>();
+            if (act != null)
+            {
+                act.RequestedOrientation = request;
+                //Quand on demande une orientation explicitement l'orientation automatique est désactivée
+                //Il faut remettre RequestedOrientation = ScreenOrientation.Sensor afin de retablire l'orientation auto
+                //On attend que l'utilisteur bouge effectivement le téléphone pour remettre la valeur
+                //Sensor
+                await Task.Delay(2000);
+                act.RequestedOrientation = ScreenOrientation.Sensor;
+            }
+            else
+                Debug.WriteLine("WARN Resolver.Resolve<Activity>() returned null did you register Register<Activity>(t=>app.AppContext)");
+            
+        }
+
+        private async Task WaitFor(Func<bool> predicate, TimeSpan timeout)
+        {
+
+            TimeSpan elapsed = TimeSpan.Zero;
+            while (predicate())
+            {
+                if (elapsed >= timeout)
+                {
+                    Debug.WriteLine("WARNING TIMEOUT WaitFor");
+                    break;
+                }
+                await Task.Delay(250);
+                elapsed = elapsed.Add(TimeSpan.FromMilliseconds(250));
+            }
         }
     }
 }

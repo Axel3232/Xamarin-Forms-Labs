@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Threading.Tasks;
+using Xamarin.Forms;
 using XLabs.Enums;
 using XLabs.Ioc;
 using XLabs.Platform.Device;
@@ -36,9 +37,24 @@ namespace XLabs.Samples.Pages.Samples
             box1.Children.Add(PageH);
             
             rl.Children.Add(box1);
+
+            Button changeOrientation = new Button()
+            {
+                Text = "Change"
+            };
+            changeOrientation.Clicked += ChangeOrientation_Clicked;
+            rl.Children.Add(changeOrientation);
             orientationSvc.ScreenOrientationChanged += Orientation_ScreenOrientationChanged;
 
             this.Content = rl;
+        }
+
+        private void ChangeOrientation_Clicked(object sender, System.EventArgs e)
+        {
+            if (orientationSvc.GetOrientation().IsLandscape)
+                orientationSvc.SetOrientation(Orientation.Portrait);
+            else
+                orientationSvc.SetOrientation(Orientation.Landscape);
         }
 
         protected override void OnAppearing()

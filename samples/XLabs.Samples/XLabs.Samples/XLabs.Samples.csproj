@@ -233,6 +233,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\WebHybridTest.html" />
+    <None Include="IMG_2493.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\AutoCompletePage.xaml">

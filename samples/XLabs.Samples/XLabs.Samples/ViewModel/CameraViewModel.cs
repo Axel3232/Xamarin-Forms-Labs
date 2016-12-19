@@ -19,6 +19,8 @@
 // ***********************************************************************
 // 
 
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XLabs.Forms.Mvvm;
@@ -66,10 +68,12 @@ namespace XLabs.Samples.ViewModel
 		/// </summary>
 		private Command _selectPictureCommand;
 
-		/// <summary>
-		/// The select video command.
-		/// </summary>
-		private Command _selectVideoCommand;
+        private Command _loadFromBinaryCommand;
+
+        /// <summary>
+        /// The select video command.
+        /// </summary>
+        private Command _selectVideoCommand;
 
 		private string _status;
 
@@ -173,14 +177,25 @@ namespace XLabs.Samples.ViewModel
 																		   () => true)); 
 			}
 		}
+        
+        public Command LoadFromBinaryCommand
+        {
+            get
+            {
+                return _loadFromBinaryCommand ?? (_loadFromBinaryCommand = new Command(
+                                                                           async () => await LoadFromBinary(),
+                                                                           () => true));
+            }
+        }
 
-		/// <summary>
-		/// Gets the status.
-		/// </summary>
-		/// <value>
-		/// The status.
-		/// </value>
-		public string Status
+
+        /// <summary>
+        /// Gets the status.
+        /// </summary>
+        /// <value>
+        /// The status.
+        /// </value>
+        public string Status
 		{
 			get { return _status; }
 			private set { SetProperty(ref _status, value); }
@@ -260,11 +275,32 @@ namespace XLabs.Samples.ViewModel
 			}
 		}
 
-		/// <summary>
-		/// Selects the video.
-		/// </summary>
-		/// <returns>Select Video Task.</returns>
-		private async Task SelectVideo()
+        private async Task LoadFromBinary()
+        {
+            //ImageSource = null;
+            
+           
+            //StreamImageSource s = (StreamImageSource)StreamImageSource.FromFile("IMG_2493.JPG");
+
+            //using (Stream st = await s.Stream.Invoke(CancellationToken.None))
+            //{
+            //    using (MemoryStream ms = new MemoryStream())
+            //    {
+            //        st.CopyTo(ms);
+                    
+            //        IExifReader r = DependencyService.Get<IMediaPicker>().GetExifReader(ms.ToArray());
+
+
+            //    }
+                   
+            //}
+        }
+
+        /// <summary>
+        /// Selects the video.
+        /// </summary>
+        /// <returns>Select Video Task.</returns>
+        private async Task SelectVideo()
 		{
 			Setup();
 

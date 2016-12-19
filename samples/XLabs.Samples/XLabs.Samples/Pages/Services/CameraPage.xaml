@@ -9,6 +9,7 @@
         <Button Text="Take Picture" Command="{Binding TakePictureCommand}" />
         <Button Text="Select Image from Picture Library" Command="{Binding SelectPictureCommand}" />
         <Button Text="Select Video from Picture Library " Command="{Binding SelectVideoCommand}" />
+        <Button Text="Load Binarie" Command="{Binding LoadFromBinaryCommand}" />
         <Image Source="{Binding ImageSource}" VerticalOptions="CenterAndExpand" />
         <Entry Text="{Binding VideoInfo}" VerticalOptions="CenterAndExpand" />
 

@@ -58,7 +58,12 @@ namespace XLabs.Enums
         /// </summary>
         LandscapeRight = 34,
         FaceUp = 40,
-        FaceDown = 50
+        FaceDown = 50,
+        /// <summary>
+        /// Sur android, demander un orientation explicitement desactive la gestion automatique de l'orientation, 
+        /// Pour la réactiver il faut repasser cette valeur
+        /// </summary>
+        SensorAuto = 60
     }
 
     public struct CurrentOrientation

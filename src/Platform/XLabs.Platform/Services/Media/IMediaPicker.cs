@@ -84,6 +84,8 @@ namespace XLabs.Platform.Services.Media
 		/// </summary>
 		/// <value>The on error.</value>
 		EventHandler<MediaPickerErrorArgs> OnError { get; set; }
+
+        
 	}
 
 	/// <summary>
