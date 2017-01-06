@@ -88,7 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\XLabs.Web.Shared\XLabs.Web.Shared.projitems" Label="Shared" />
-  <Import Project="..\XLabs.Web.WinRT.Shared\XLabs.Web.WinRT.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="..\..\packages\NuSpec.ReferenceGenerator.2.0.0-beta-bld01\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets" Condition="Exists('..\..\packages\NuSpec.ReferenceGenerator.2.0.0-beta-bld01\build\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\NuSpec.ReferenceGenerator.targets')" />

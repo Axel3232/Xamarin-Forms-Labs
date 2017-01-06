@@ -104,7 +104,7 @@ namespace XLabs.Forms.Controls
                     BackgroundColor = targetButton.BackgroundColor,
                     Font = faFont,
             };
-            var iconRect = new NSString(renderedIcon).GetSizeUsingAttributes(iconAttributes);
+           
            
             // string attributes for the button's text. 
             // TODO: Calculate an appropriate BaselineOffset for the main button text in order to center it vertically relative to the icon
@@ -115,10 +115,12 @@ namespace XLabs.Forms.Controls
                     Font = GetButtonFont(iconButton, targetButton),
                     
             };
-            var textRect = new NSString(iconButton.Text).GetSizeUsingAttributes(btnAttributes);
+           
          
             if (!string.IsNullOrEmpty(iconButton.Text))
             {
+                var iconRect = new NSString(renderedIcon).GetSizeUsingAttributes(iconAttributes);
+                var textRect = new NSString(iconButton.Text).GetSizeUsingAttributes(btnAttributes);
                 var offset = CalculateBaseLineOffset(iconRect, textRect);
                 if (offset.Item2 == ElementToOffset.Icon)
                     iconAttributes.BaselineOffset = (float)offset.Item1;
