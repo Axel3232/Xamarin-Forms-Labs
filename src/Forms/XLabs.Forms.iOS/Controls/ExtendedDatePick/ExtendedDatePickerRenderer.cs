@@ -82,6 +82,7 @@ namespace XLabs.Forms.Controls
 		protected override void OnElementChanged (ElementChangedEventArgs<ExtendedDatePicker> e)
 		{
 			base.OnElementChanged (e);
+            if (e.NewElement == null) return;
 			NoCaretField entry = new NoCaretField {
 				BorderStyle = UITextBorderStyle.RoundedRect
 			};
@@ -146,7 +147,7 @@ namespace XLabs.Forms.Controls
 
 			var view = (ExtendedDatePicker)Element;
 
-			if (e.PropertyName == ExtendedTimePicker.HasBorderProperty.PropertyName)
+			if (e.PropertyName == ExtendedDatePicker.HasBorderProperty.PropertyName)
 				SetBorder(view);
 		}
 
