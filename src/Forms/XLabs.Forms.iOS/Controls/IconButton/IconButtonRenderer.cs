@@ -27,6 +27,9 @@ using Xamarin.Forms.Platform.iOS;
 using XLabs.Enums;
 using XLabs.Forms.Controls;
 using XLabs.Forms.Extensions;
+using System.Diagnostics;
+using CoreGraphics;
+using System;
 
 [assembly: ExportRenderer(typeof(IconButton), typeof(IconButtonRenderer))]
 namespace XLabs.Forms.Controls
@@ -92,15 +95,16 @@ namespace XLabs.Forms.Controls
                         combinedText = renderedIcon + separator + iconButton.Text;
                     break;
             }
-          
+
+            
             // string attributes for the icon
             var iconAttributes = new UIStringAttributes
             {
                     ForegroundColor = iconButton.IconColor.ToUIColorOrDefault(targetButton.TitleColor(targetButton.State)),
                     BackgroundColor = targetButton.BackgroundColor,
                     Font = faFont,
-                    TextAttachment = new NSTextAttachment()
             };
+           
            
             // string attributes for the button's text. 
             // TODO: Calculate an appropriate BaselineOffset for the main button text in order to center it vertically relative to the icon
@@ -109,9 +113,20 @@ namespace XLabs.Forms.Controls
                     BackgroundColor = iconButton.BackgroundColor.ToUIColor(),
                     ForegroundColor = iconButton.TextColor.ToUIColorOrDefault(targetButton.TitleColor(targetButton.State)),
                     Font = GetButtonFont(iconButton, targetButton),
+                    
             };
+           
+         
             if (!string.IsNullOrEmpty(iconButton.Text))
-                btnAttributes.BaselineOffset = 3;
+            {
+                var iconRect = new NSString(renderedIcon).GetSizeUsingAttributes(iconAttributes);
+                var textRect = new NSString(iconButton.Text).GetSizeUsingAttributes(btnAttributes);
+                var offset = CalculateBaseLineOffset(iconRect, textRect);
+                if (offset.Item2 == ElementToOffset.Icon)
+                    iconAttributes.BaselineOffset = (float)offset.Item1;
+                else
+                    btnAttributes.BaselineOffset = (float)offset.Item1;
+            }
 
             // Give the overall string the attributes of the button's text
             var prettyString = new NSMutableAttributedString(combinedText, btnAttributes);
@@ -162,6 +177,26 @@ namespace XLabs.Forms.Controls
                 return UIFont.SystemFontOfSize(17f);
 
             return btnTextFont;
+        }
+
+        enum ElementToOffset
+        {
+            Icon, 
+            Text
+        }
+
+        private static Tuple<double, ElementToOffset> CalculateBaseLineOffset(CGSize iconBoxSize, CGSize textBoxSize)
+        {
+            if(iconBoxSize.Height >= textBoxSize.Height)
+            {
+                //Icone plus grand que le text, c'est le text qui doit être aligné
+                return new Tuple<double, ElementToOffset>((iconBoxSize.Height - textBoxSize.Height) / 2, ElementToOffset.Text);
+            }
+            else
+            {
+                //Text plus grand que l'icone, c'est l'icone qui doit être aligné
+                return new Tuple<double, ElementToOffset>((textBoxSize.Height - iconBoxSize.Height) / 2, ElementToOffset.Icon);
+            }
         }
 
 

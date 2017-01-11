@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>XLabs.Platform</id>
-    <version>2.5837.5</version>
+    <version>2.5837.12</version>
     <title>XLabs - Platform</title>
     <authors>XLabs Team</authors>
     <owners>XLabs Team</owners>
@@ -17,24 +17,24 @@
     <tags>Xamarin XLabs</tags>
     <dependencies>
       <group>
-        <dependency id="XLabs.IoC" version="[2.5837.5]" />
-        <dependency id="XLabs.Core" version="[2.5837.5]" />
-        <dependency id="XLabs.Serialization" version="[2.5837.5]" />
+        <dependency id="XLabs.IoC" version="[2.5837.12]" />
+        <dependency id="XLabs.Core" version="[2.5837.12]" />
+        <dependency id="XLabs.Serialization" version="[2.5837.12]" />
         <dependency id="ExifLib.PCL" version="1.0.1" />
       </group>
       <group targetFramework="wpa81">
-        <dependency id="XLabs.IoC" version="[2.5837.5]" />
-        <dependency id="XLabs.Core" version="[2.5837.5]" />
-        <dependency id="XLabs.Serialization" version="[2.5837.5]" />
+        <dependency id="XLabs.IoC" version="[2.5837.12]" />
+        <dependency id="XLabs.Core" version="[2.5837.12]" />
+        <dependency id="XLabs.Serialization" version="[2.5837.12]" />
         <dependency id="SharpDX" version="3.0.2" />
         <dependency id="SharpDX.Direct2D1" version="3.0.2" />
         <dependency id="SharpDX.DXGI" version="3.0.2" />
         <dependency id="ExifLib.PCL" version="1.0.1" />
       </group>
       <group targetFramework="win81">
-        <dependency id="XLabs.IoC" version="[2.5837.5]" />
-        <dependency id="XLabs.Core" version="[2.5837.5]" />
-        <dependency id="XLabs.Serialization" version="[2.5837.5]" />
+        <dependency id="XLabs.IoC" version="[2.5837.12]" />
+        <dependency id="XLabs.Core" version="[2.5837.12]" />
+        <dependency id="XLabs.Serialization" version="[2.5837.12]" />
         <dependency id="SharpDX" version="3.0.2" />
         <dependency id="SharpDX.Direct2D1" version="3.0.2" />
         <dependency id="SharpDX.DXGI" version="3.0.2" />
@@ -61,19 +61,19 @@
     <file src="..\src\Platform\XLabs.Platform.iOS\bin\$configuration$\XLabs.Platform.iOS.dll" target="lib\Xamarin.iOS10" />
     <file src="..\src\Platform\XLabs.Platform.iOS\bin\$configuration$\XLabs.Platform.iOS.pdb" target="lib\Xamarin.iOS10" />
     <!-- Assemblies: Windows 8.1 -->
-    <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\netcore45" />
+    <!--<file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\netcore45" />
     <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.pdb" target="lib\netcore45" />
     <file src="..\src\Platform\XLabs.Platform.WinRT\bin\$configuration$\XLabs.Platform.WinRT.dll" target="lib\netcore45" />
-    <file src="..\src\Platform\XLabs.Platform.WinRT\bin\$configuration$\XLabs.Platform.WinRT.pdb" target="lib\netcore45" />
+    <file src="..\src\Platform\XLabs.Platform.WinRT\bin\$configuration$\XLabs.Platform.WinRT.pdb" target="lib\netcore45" />-->
     <!-- Assemblies: Winows Mobile 8.1 -->
-    <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\wpa81" />
+    <!--<file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\wpa81" />
     <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.pdb" target="lib\wpa81" />
     <file src="..\src\Platform\XLabs.Platform.WinRT.Phone\bin\$configuration$\XLabs.Platform.WinRT.Phone.dll" target="lib\wpa81" />
-    <file src="..\src\Platform\XLabs.Platform.WinRT.Phone\bin\$configuration$\XLabs.Platform.WinRT.Phone.pdb" target="lib\wpa81" />
+    <file src="..\src\Platform\XLabs.Platform.WinRT.Phone\bin\$configuration$\XLabs.Platform.WinRT.Phone.pdb" target="lib\wpa81" />-->
     <!-- Assemblies: .NET Core 5.0 -->
-    <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\uap10.0" />
+    <!--<file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.dll" target="lib\uap10.0" />
     <file src="..\src\Platform\XLabs.Platform\bin\$configuration$\XLabs.Platform.pdb" target="lib\uap10.0" />
     <file src="..\src\Platform\XLabs.Platform.UWP\bin\$configuration$\XLabs.Platform.UWP.dll" target="lib\uap10.0" />
-    <file src="..\src\Platform\XLabs.Platform.UWP\bin\$configuration$\XLabs.Platform.UWP.pdb" target="lib\uap10.0" />
+    <file src="..\src\Platform\XLabs.Platform.UWP\bin\$configuration$\XLabs.Platform.UWP.pdb" target="lib\uap10.0" />-->
   </files>
 </package>

@@ -146,8 +146,20 @@ namespace XLabs.Samples.Pages.Controls
                 FontSize = 20
             };
 
-         
-           
+            IconButton btn10 = new IconButton()
+            {
+                Icon = "\uf1d8",
+              
+                ShowIconSeparator = true,
+                TextColor = Color.Red,
+                IconColor = Color.White,
+                IconSize = 20,
+                BackgroundColor = Color.Gray,
+                FontSize = 20
+            };
+
+
+
 
             StackLayout content = null;
             Device.OnPlatform(() =>
@@ -164,7 +176,8 @@ namespace XLabs.Samples.Pages.Controls
                         btn7,
                         btn8,
                         btn9,
-                        
+                        btn10
+
                     }
                 };
             }, () =>
